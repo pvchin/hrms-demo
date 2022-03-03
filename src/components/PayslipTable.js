@@ -8,7 +8,7 @@ import CheckIcon from "@material-ui/icons/Check";
 import SearchIcon from "@material-ui/icons/Search";
 import BuildOutlinedIcon from "@material-ui/icons/BuildOutlined";
 import { useCustomToast } from "../helpers/useCustomToast";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { payrunState, payrunIdState, payrunStatusState } from "./data/atomdata";
 import { usePayslipsContext } from "../context/payslips_context";
@@ -51,7 +51,7 @@ const columns = [
 ];
 
 export default function PayslipTable() {
-  let history = useHistory();
+  let navigate = useNavigate();
   const toast = useCustomToast();
   const classes = useStyles();
   const { payrun } = usePayrun();
@@ -158,7 +158,7 @@ export default function PayslipTable() {
     setEditPayslipID(id);
     setIsPayslipEditingOn();
     getSinglePayslip(id);
-    history.push("/payrunbatch");
+    navigate("/payrunbatch");
   };
 
   const delete_Payslip = (data) => {

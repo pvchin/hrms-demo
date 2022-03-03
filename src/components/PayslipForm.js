@@ -16,7 +16,7 @@ import CardLayout from "../helpers/CardLayout";
 import CardLayout2 from "../helpers/CardLayout2";
 import { CustomDialog } from "../helpers/CustomDialog";
 import { Controller, useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import {
   payPeriodState,
@@ -49,7 +49,7 @@ import Payslip_Deductions from "./Payslip_Deductions";
 // };
 
 const PayslipForm = () => {
-  let history = useHistory();
+  let navigate = useNavigate();
    const classes = useStyles();
   const {
     //isPayslipEditing,
@@ -200,7 +200,7 @@ const PayslipForm = () => {
   }
 
   if (single_payslip_error) {
-    history.push("/error");
+    navigate("/error");
   }
   return (
     <div>

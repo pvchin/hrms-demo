@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import MaterialTable from "material-table";
 import clsx from "clsx";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Paper,
@@ -76,7 +76,7 @@ const columns = [
 // ];
 
 const Payrun = () => {
-  let history = useHistory();
+  let navigate = useNavigate();
   //let date = new Date();
   //let longMonth = date.toLocaleString("en-us", { month: "long" });
 
@@ -386,7 +386,7 @@ const Payrun = () => {
   };
 
   const handleNext = () => {
-    history.push("/payrunbatch");
+    navigate("/payrunbatch");
   };
 
   const add_Payrun = (period, payrun) => {

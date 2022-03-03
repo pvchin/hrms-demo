@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -41,7 +41,7 @@ const columns = [
 ];
 
 export default function DailyAllowancesTable() {
-  let history = useHistory();
+  let navigate = useNavigate();
   const classes = useStyles();
   //const toast = useCustomToast()
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -78,7 +78,7 @@ export default function DailyAllowancesTable() {
     // getSingleBatchDailyAllowsDetl(empid, period);
     //handleDialogOpen();
 
-    history.push("/singledailyallowsdetlstable");
+    navigate("/singledailyallowsdetlstable");
   };
 
   const add_DailyAllowance = async (data) => {

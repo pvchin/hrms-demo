@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as emailjs from "emailjs-com";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
@@ -95,7 +95,7 @@ const columns = [
 ];
 
 export default function DailyAllowsDetlsTableStaff() {
-  let history = useHistory();
+  let navigate = useNavigate();
   const toast = useCustomToast();
   const classes = useStyles();
   //const isFetching = useIsFetching();
@@ -277,7 +277,7 @@ export default function DailyAllowsDetlsTableStaff() {
       status: "Submitted",
     });
     handleSentEmail(allowsdata);
-    history.push("/dailyallowances");
+    navigate("/dailyallowances");
     toast({
       title: "Site Allowances table being submitted!",
       status: "success",
@@ -295,7 +295,7 @@ export default function DailyAllowsDetlsTableStaff() {
     //   totaljobbonus: totals.totalbonus,
     //   totalperdiem: totals.totaldiem,
     // });
-    history.push("/dailyallowances");
+    navigate("/dailyallowances");
     // toast({
     //   title: "Site Allowances table being submitted!",
     //   status: "success",

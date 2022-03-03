@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 import MaterialTable, { MTableToolbar } from "material-table";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Heading,
@@ -42,7 +42,7 @@ import App from "../utils/firebase";
 import EmployeeFormAdd from "./EmployeeFormAdd";
 
 export default function AllEmployeesTable() {
-  let history = useHistory();
+  let navigate = useNavigate();
   const classes = useStyles();
   const toast = useCustomToast();
   //const { designations } = useDesignations();
@@ -106,7 +106,7 @@ export default function AllEmployeesTable() {
     setIsEditingOn();
     setEmployeeId(id);
 
-    history.push("/singleemployee");
+    navigate("/singleemployee");
   };
 
   const add_Employee = async (data) => {

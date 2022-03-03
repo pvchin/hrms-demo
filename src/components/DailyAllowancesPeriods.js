@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { allowsPeriodState } from "./data/atomdata";
 import { Paper, Grid, Button, Toolbar, Typography } from "@material-ui/core";
@@ -8,7 +8,7 @@ import { useDailyAllowancesContext } from "../context/dailyallowances_context";
 import { periods } from "../utils/constants";
 
 const DailyAllowancesPeriods = () => {
-  let history = useHistory();
+  let navigate = useNavigate();
   const classes = useStyles();
   const { setDailyAllowancePeriod } = useDailyAllowancesContext();
   const setAllowsPeriod = useSetRecoilState(allowsPeriodState);
@@ -16,7 +16,7 @@ const DailyAllowancesPeriods = () => {
   const handlePeriod = (name) => {
     setDailyAllowancePeriod(name);
     setAllowsPeriod(name);
-    history.push("/batchdailyallowances");
+    navigate("/batchdailyallowances");
   };
 
   return (

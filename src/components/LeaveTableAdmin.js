@@ -108,9 +108,9 @@ export default function LeaveTable() {
     resetSingleLeave,
   } = useLeavesContext();
 
-  useEffect(() => {
-    setLeaveId(editLeaveID);
-  }, []);
+  // useEffect(() => {
+  //   setLeaveId(editLeaveID);
+  // }, []);
 
   const update_Leave = async (data) => {
     const { id } = data;

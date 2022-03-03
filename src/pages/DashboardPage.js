@@ -1,10 +1,10 @@
 import React from "react";
-import DashboardAdmin from "../components/DashboardAdmin";
+import DashboardMain from "../components/DashboardMain";
 
 const DashboardPage = () => {
   return (
     <div>
-      <DashboardAdmin />
+      <DashboardMain />
     </div>
   );
 };

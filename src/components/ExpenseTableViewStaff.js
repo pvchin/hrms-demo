@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { EditIcon } from "@chakra-ui/icons";
 //import MaterialTable from "material-table";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { List } from "@material-ui/core";
 import {  useRecoilState } from "recoil";
 import { loginLevelState } from "./data/atomdata";
@@ -55,7 +55,7 @@ import { useExpenses } from "./expenses/useExpenses";
 
 const ExpenseTableViewStaff = () => {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   //const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
   const { expenses, setFilter, setExpenseId } = useExpenses();
@@ -83,7 +83,7 @@ const ExpenseTableViewStaff = () => {
             size="md"
             aria-label="Edit"
             icon={<EditIcon />}
-            onClick={() => history.push("/expenses")}
+            onClick={() => navigate("/expenses")}
           />
         </Stack>
         {/* <Heading as="h4" size="md">

@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { EditIcon,  ViewIcon } from "@chakra-ui/icons";
 import { differenceInDays } from "date-fns";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 //import { useRecoilState } from "recoil";
 import { List } from "@material-ui/core";
 //import { loginLevelState } from "./data/atomdata";
@@ -50,7 +50,7 @@ import { useEmployees } from "./employees/useEmployees";
 const WPExpiryViewAdmin = () => {
   const classes = useStyles();
   //const toast = useCustomToast();
-  const history = useHistory();
+  const navigate = useNavigate();
   //const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const { employees,  setEmployeeId } = useEmployees();
   //const { user } = useUser();
@@ -108,7 +108,7 @@ const WPExpiryViewAdmin = () => {
     setIsEditingOn();
     setEmployeeId(id);
 
-    history.push("/singleemployee");
+    navigate("/singleemployee");
   };
 
   // useEffect(() => {
@@ -142,7 +142,7 @@ const WPExpiryViewAdmin = () => {
             size="md"
             aria-label="Edit"
             icon={<EditIcon />}
-            onClick={() => history.push("/allemployees")}
+            onClick={() => navigate("/allemployees")}
           />
         </Stack>
         {emp.map((row) => {

@@ -11,7 +11,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { EditIcon } from "@chakra-ui/icons";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { differenceInDays } from "date-fns";
 import { useRecoilState } from "recoil";
 import { List } from "@material-ui/core";
@@ -43,7 +43,7 @@ import { useEmployees } from "./employees/useEmployees";
 
 const WPExpiryViewStaff = () => {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   //const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const { employees } = useEmployees();
   //const { user } = useUser();
@@ -68,7 +68,7 @@ const WPExpiryViewStaff = () => {
             size="md"
             aria-label="Edit"
             icon={<EditIcon />}
-            onClick={() => history.push("/singleemployee")}
+            onClick={() => navigate("/singleemployee")}
           />
         </Stack>
         {employees

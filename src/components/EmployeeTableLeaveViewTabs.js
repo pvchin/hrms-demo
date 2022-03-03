@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable from "material-table";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import {  Tab, Tabs, TabList, TabPanels, TabPanel} from "@chakra-ui/react"
 import { makeStyles } from "@material-ui/core/styles";
@@ -88,7 +88,7 @@ const columns = [
 
 export default function EmployeeTableLeaveView({ year }) {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { employees, setEmployeeId } = useEmployees();
   const { leaves } = useLeaves();
   const [empdata, setEmpData] = useState([]);
@@ -120,7 +120,7 @@ export default function EmployeeTableLeaveView({ year }) {
     setIsEditingOn();
     setEmployeeId(id);
 
-    history.push("/singleemployee");
+    navigate("/singleemployee");
   };
 
   const Build_EmpData = (YEAR) => {

@@ -62,7 +62,7 @@ const MenuListItems = () => {
         </ListItem>
       </Link>
 
-      <Link to="/leave">
+      {/* <Link to="/leave">
         <ListItem button>
           <ListItemIcon className={classes.itemIcon}>
             <FlightIcon />
@@ -72,7 +72,7 @@ const MenuListItems = () => {
             className={classes.categoryHeaderPrimary}
           />
         </ListItem>
-      </Link>
+      </Link> */}
 
       {/* <Link to="/expenses">
         <ListItem button>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 //import { makeStyles } from "@material-ui/core/styles";
 //import clsx from "clsx";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as emailjs from "emailjs-com";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { FiSave, FiCheckCircle, FiMail } from "react-icons/fi";
@@ -16,6 +16,7 @@ import {
   Flex,
   Heading,
   Stack,
+  VStack,
   //Spacer,
   Tabs,
   TabList,
@@ -160,7 +161,7 @@ const columns = [
 ];
 
 const Payrunbatch = () => {
-  let history = useHistory();
+  let navigate = useNavigate();
   //const classes = useStyles();
   const toast = useCustomToast();
   //const componentRef = useRef();
@@ -283,7 +284,7 @@ const Payrunbatch = () => {
       title: "Changes have been saved!",
       status: "success",
     });
-    history.push("/payslip");
+    navigate("/payslip");
   };
 
   const saveIndividualPayslips = () => {
@@ -389,7 +390,7 @@ const Payrunbatch = () => {
       totalsitesallows: payrundata.totalsiteallows,
       totalexpensesclaims: payrundata.totalexpensesclaims,
     });
-    history.push("/payslip");
+    navigate("/payslip");
   };
 
   const handleVerifyPayslips = (e) => {
@@ -529,115 +530,120 @@ const Payrunbatch = () => {
       h="100%"
       style={{ backgroundColor: "lightcyan" }}
     >
-      <Grid templateRows="repeat(10,1fr)" templateColumns="repeat(1,1fr)">
-        <GridItem rowSpan={1} colSpan={1}>
-          <Grid templateRows="repeat(1,1fr)" templateColumns="repeat(10,1fr)">
-            <GridItem rowSpan={1} colSpan={2}></GridItem>
-            <GridItem rowSpan={1} colSpan={4}>
-              <Box textAlign="center" alignItems="center">
-                <Heading pl="10" pt={2}>
-                  Payroll
-                </Heading>
-              </Box>
-            </GridItem>
-            <GridItem rowSpan={1} colSpan={4} pt={0}>
-              <Box pt="2" pr={5} alignItems="right" align="right">
-                <Stack spacing={4} direction="row" align="center" pl={150}>
-                  <Button
-                    width="800px"
-                    colorScheme="blue"
-                    isDisabled={
-                      payrundata.status === "Verified" ||
-                      payrundata.status === "Approved" ||
-                      !isShow
-                        ? true
-                        : false
-                    }
-                    onClick={(e) => handleSavePayslips(e)}
-                    leftIcon={<FiSave color="white" fontSize="1.5em" />}
-                  >
-                    Save/Exit
-                  </Button>
-                  <Button
-                    isDisabled={!isShow}
-                    width="500px"
-                    colorScheme="blue"
-                    onClick={(e) => handlePrintSummary(e)}
-                    leftIcon={<FiSave color="white" fontSize="1.5em" />}
-                  >
-                    Print
-                  </Button>
+      <VStack>
+        <Grid templateRows="repeat(1,1fr)" templateColumns="repeat(1,1fr)">
+          <GridItem rowSpan={1} colSpan={1}>
+            <Grid templateRows="repeat(1,1fr)" templateColumns="repeat(10,1fr)">
+              <GridItem rowSpan={1} colSpan={2}></GridItem>
+              <GridItem rowSpan={1} colSpan={4}>
+                <Box textAlign="center" alignItems="center">
+                  <Heading pl="10" pt={2}>
+                    Payroll
+                  </Heading>
+                </Box>
+              </GridItem>
+              <GridItem rowSpan={1} colSpan={4} pt={0}>
+                <Box pt="2" pr={5} alignItems="right" align="right">
+                  <Stack spacing={4} direction="row" align="center" pl={150}>
+                    <Button
+                      width="800px"
+                      colorScheme="blue"
+                      isDisabled={
+                        payrundata.status === "Verified" ||
+                        payrundata.status === "Approved" ||
+                        !isShow
+                          ? true
+                          : false
+                      }
+                      onClick={(e) => handleSavePayslips(e)}
+                      leftIcon={<FiSave color="white" fontSize="1.5em" />}
+                    >
+                      Save/Exit
+                    </Button>
+                    <Button
+                      isDisabled={!isShow}
+                      width="500px"
+                      colorScheme="blue"
+                      onClick={(e) => handlePrintSummary(e)}
+                      leftIcon={<FiSave color="white" fontSize="1.5em" />}
+                    >
+                      Print
+                    </Button>
 
-                  <Button
-                    width="500px"
-                    colorScheme="blue"
-                    isDisabled={
-                      payrundata.status === "Verified" ||
-                      payrundata.status === "Approved" ||
-                      payrundata.status === "New" ||
-                      !isShow
-                        ? true
-                        : false
-                    }
-                    onClick={(e) => handleVerifyPayslips(e)}
-                    leftIcon={<FiCheckCircle color="white" fontSize="1.5em" />}
-                  >
-                    Verify
-                  </Button>
-                  <Button
-                    width="500px"
-                    colorScheme="blue"
-                    isDisabled={payrundata.status !== "Approved" ? true : false}
-                    onClick={onOpen}
-                    leftIcon={<FiMail color="white" fontSize="1.5em" />}
-                  >
-                    Email
-                  </Button>
-                </Stack>
-              </Box>
-            </GridItem>
-          </Grid>
-          <Divider
-            style={{ border: "1px solid lightgrey" }}
-            orientation="horizontal"
-            colorScheme="red"
-            variant="solid"
-          />
-        </GridItem>
-
-        <Tabs defaultIndex={0} onChange={(index) => handleTabChange(index)}>
-          <TabList marginLeft={4}>
-            <Tab>
-              <Box>
-                <Heading size="sm">Details</Heading>
-              </Box>
-            </Tab>
-            <Tab>
-              <Box>
-                <Heading size="sm">Summary</Heading>
-              </Box>
-            </Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <Grid
-                templateRows="repeat(1,1fr)"
-                templateColumns="repeat(10,1fr)"
-              >
-                <GridItem colSpan={2}>
-                  <Box textAlign="center" p={4}>
-                    <Heading size="sm" alignItems="center">
-                      Employees
-                    </Heading>
+                    <Button
+                      width="500px"
+                      colorScheme="blue"
+                      isDisabled={
+                        payrundata.status === "Verified" ||
+                        payrundata.status === "Approved" ||
+                        payrundata.status === "New" ||
+                        !isShow
+                          ? true
+                          : false
+                      }
+                      onClick={(e) => handleVerifyPayslips(e)}
+                      leftIcon={
+                        <FiCheckCircle color="white" fontSize="1.5em" />
+                      }
+                    >
+                      Verify
+                    </Button>
+                    <Button
+                      width="500px"
+                      colorScheme="blue"
+                      isDisabled={
+                        payrundata.status !== "Approved" ? true : false
+                      }
+                      onClick={onOpen}
+                      leftIcon={<FiMail color="white" fontSize="1.5em" />}
+                    >
+                      Email
+                    </Button>
+                  </Stack>
+                </Box>
+              </GridItem>
+            </Grid>
+            <Divider
+              style={{ border: "1px solid lightgrey" }}
+              orientation="horizontal"
+              colorScheme="red"
+              variant="solid"
+            />
+          </GridItem>
+          <GridItem rowSpan={1} colSpan={1}>
+            <Tabs defaultIndex={0} onChange={(index) => handleTabChange(index)}>
+              <TabList marginLeft={4}>
+                <Tab>
+                  <Box>
+                    <Heading size="sm">Details</Heading>
                   </Box>
-                  <Divider backgroundColor="white" />
-                  <Box
-                    h="550"
-                    border="2px solid white"
-                    backgroundColor="cyan.100"
-                    overflow="scroll"
+                </Tab>
+                <Tab>
+                  <Box>
+                    <Heading size="sm">Summary</Heading>
+                  </Box>
+                </Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel>
+                  <Grid
+                    templateRows="repeat(1,1fr)"
+                    templateColumns="repeat(10,1fr)"
                   >
-                    {/* {payslipsbatch &&
+                    <GridItem colSpan={2}>
+                      <Box textAlign="center" p={4}>
+                        <Heading size="sm" alignItems="center">
+                          Employees
+                        </Heading>
+                      </Box>
+                      <Divider backgroundColor="white" />
+                      <Box
+                        h="550"
+                        border="2px solid white"
+                        backgroundColor="cyan.100"
+                        overflow="scroll"
+                      >
+                        {/* {payslipsbatch &&
                       payslipsbatch.map((item, index) => {
                         return (
                           <div>
@@ -659,77 +665,81 @@ const Payrunbatch = () => {
                           </div>
                         );
                       })} */}
-                    <Table variant="simple">
-                      {/* <Thead>
+                        <Table variant="simple">
+                          {/* <Thead>
                         <Tr>
                           <Th>Employees</Th>
                         </Tr>
                       </Thead> */}
-                      <Tbody>
-                        {payslipsbatch.map((item, index) => {
-                          return (
-                            <div>
-                              <Button
-                                //className={classes.empbtn}
-                                fontSize={{
-                                  base: "10px",
-                                  md: "10px",
-                                  lg: "12px",
-                                  xl: "16px",
-                                }}
-                                variant="outlined"
-                                height={[
-                                  `${item.name.length > 30 ? "60px" : "40px"}`,
-                                  "40px",
-                                ]}
-                                style={{
-                                  whiteSpace: "normal",
-                                  wordWrap: "break-word",
-                                }}
-                                // ${index === value && "activebtn"}
-                                onClick={(e) => {
-                                  setRowIndex(index);
-                                  setIsStart(false);
-                                  handleEmpButtonClick(index);
-                                }}
-                              >
-                                <Text align="left">{item.name}</Text>
-                              </Button>
-                              <Divider backgroundColor="white" />
-                            </div>
-                          );
-                        })}
-                      </Tbody>
-                    </Table>
-                  </Box>
-                </GridItem>
-                <GridItem colSpan={8}>
-                  <PayForm
-                    formdata={formdata}
-                    setFormdata={setFormdata}
-                    loadFormdata={loadFormdata}
-                    setLoadFormdata={setLoadFormdata}
-                    payitems={payitems}
-                    setLoadUpdatedata={setLoadUpdatedata}
+                          <Tbody>
+                            {payslipsbatch.map((item, index) => {
+                              return (
+                                <div>
+                                  <Button
+                                    //className={classes.empbtn}
+                                    fontSize={{
+                                      base: "10px",
+                                      md: "10px",
+                                      lg: "12px",
+                                      xl: "16px",
+                                    }}
+                                    variant="outlined"
+                                    height={[
+                                      `${
+                                        item.name.length > 30 ? "60px" : "40px"
+                                      }`,
+                                      "40px",
+                                    ]}
+                                    style={{
+                                      whiteSpace: "normal",
+                                      wordWrap: "break-word",
+                                    }}
+                                    // ${index === value && "activebtn"}
+                                    onClick={(e) => {
+                                      setRowIndex(index);
+                                      setIsStart(false);
+                                      handleEmpButtonClick(index);
+                                    }}
+                                  >
+                                    <Text align="left">{item.name}</Text>
+                                  </Button>
+                                  <Divider backgroundColor="white" />
+                                </div>
+                              );
+                            })}
+                          </Tbody>
+                        </Table>
+                      </Box>
+                    </GridItem>
+                    <GridItem colSpan={8}>
+                      <PayForm
+                        formdata={formdata}
+                        setFormdata={setFormdata}
+                        loadFormdata={loadFormdata}
+                        setLoadFormdata={setLoadFormdata}
+                        payitems={payitems}
+                        setLoadUpdatedata={setLoadUpdatedata}
+                        singlebatchpayslip={singlebatchpayslip}
+                        rowindex={rowindex}
+                        isCalc={isCalc}
+                        isStart={isStart}
+                        setIsStart={setIsStart}
+                        setIsCalc={setIsCalc}
+                      />
+                    </GridItem>
+                  </Grid>
+                </TabPanel>
+                <TabPanel>
+                  <PaySummary
+                    payrundata={payrundata}
                     singlebatchpayslip={singlebatchpayslip}
-                    rowindex={rowindex}
-                    isCalc={isCalc}
-                    isStart={isStart}
-                    setIsStart={setIsStart}
-                    setIsCalc={setIsCalc}
                   />
-                </GridItem>
-              </Grid>
-            </TabPanel>
-            <TabPanel>
-              <PaySummary
-                payrundata={payrundata}
-                singlebatchpayslip={singlebatchpayslip}
-              />
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-      </Grid>
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+          </GridItem>
+        </Grid>
+      </VStack>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

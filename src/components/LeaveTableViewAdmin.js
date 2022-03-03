@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 //import clsx from "clsx";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { differenceInDays } from "date-fns";
 //import axios from "axios";
 //import MaterialTable from "material-table";
@@ -54,7 +54,7 @@ const initial_form = {
 
 const LeaveTableViewStaff = () => {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   //const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const { leaves } = useLeaves();
   //const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
@@ -111,7 +111,7 @@ const LeaveTableViewStaff = () => {
             size="md"
             aria-label="Edit"
             icon={<EditIcon />}
-            onClick={() => history.push("/leave")}
+            onClick={() => navigate("/leave")}
           />
         </Stack>
 

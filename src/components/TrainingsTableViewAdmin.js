@@ -11,7 +11,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { EditIcon, ViewIcon } from "@chakra-ui/icons";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { differenceInDays } from "date-fns";
 import { List } from "@material-ui/core";
 //import { useRecoilState } from "recoil";
@@ -24,7 +24,7 @@ import { useEmployees } from "./employees/useEmployees";
 
 const TrainingsTableViewAdmin = () => {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   //const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const { trainings } = useTrainings();
   //const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
@@ -54,7 +54,7 @@ const TrainingsTableViewAdmin = () => {
     setIsEditingOn();
     setEmployeeId(id);
 
-    history.push("/singleemployee");
+    navigate("/singleemployee");
   };
 
   return (
@@ -70,7 +70,7 @@ const TrainingsTableViewAdmin = () => {
             size="md"
             aria-label="Edit"
             icon={<EditIcon />}
-            onClick={() => history.push("/allemployees")}
+            onClick={() => navigate("/allemployees")}
           />
         </Stack>
 

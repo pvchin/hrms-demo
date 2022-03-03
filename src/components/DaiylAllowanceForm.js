@@ -11,7 +11,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { useEmployeesContext } from "../context/employees_context";
 import { useDailyAllowancesContext } from "../context/dailyallowances_context";
 import { Controller, useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const initial_values = {
   name: "",
@@ -24,7 +24,7 @@ const initial_values = {
 };
 
 const DailyAllowanceForm = () => {
-  let history = useHistory();
+  let navigate = useNavigate();
   const classes = useStyles();
   const {
     isDailyAllowanceEditing,
@@ -52,7 +52,7 @@ const DailyAllowanceForm = () => {
       addDailyAllowance({ ...data });
     }
     loadDailyAllowances();
-    history.push("/batchdailyallowances");
+    navigate("/batchdailyallowances");
   };
 
   if (single_dailyallowance_loading) {

@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button, Heading, HStack, Tooltip } from "@chakra-ui/react";
 import Toolbar from "@material-ui/core/Toolbar";
 //import Tooltip from "@material-ui/core/Tooltip";
@@ -26,7 +26,7 @@ const Appbanner = ({
   open,
   title,
 }) => {
-  let history = useHistory();
+  let navigate = useNavigate()
   const classes = useStyles();
   const { user, clearUser } = useUser();
   const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
@@ -36,7 +36,7 @@ const Appbanner = ({
     setLoginLevel({ ...loginLevel, login: false });
     clearUser();
     App.auth().signOut();
-    history.push("/");
+    navigate("/");
   };
 
   return (
@@ -71,7 +71,7 @@ const Appbanner = ({
             colorScheme="white"
             aria-label="Staff"
             onClick={() => {
-              history.push("/");
+              navigate("/");
               handleSelect("Staff");
             }}
           >
@@ -83,7 +83,7 @@ const Appbanner = ({
               colorScheme="white"
               aria-label="Admin"
               onClick={() => {
-                history.push("/");
+                navigate("/");
                 handleSelect("Admin");
               }}
             >
@@ -96,7 +96,7 @@ const Appbanner = ({
               colorScheme="white"
               aria-label="Ops Supervisor"
               onClick={() => {
-                history.push("/");
+                navigate("/");
                 handleSelect("OpsSpvr");
               }}
             >
@@ -109,7 +109,7 @@ const Appbanner = ({
               colorScheme="white"
               aria-label="Admin Manager"
               onClick={() => {
-                history.push("/");
+                navigate("/");
                 handleSelect("AdminManager");
               }}
             >
@@ -122,7 +122,7 @@ const Appbanner = ({
               colorScheme="white"
               aria-label="Manager"
               onClick={() => {
-                history.push("/");
+                navigate("/");
                 handleSelect("Manager");
               }}
             >
@@ -135,7 +135,7 @@ const Appbanner = ({
               colorScheme="white"
               aria-label="Director"
               onClick={() => {
-                history.push("/");
+                navigate("/");
                 handleSelect("Director");
               }}
             >

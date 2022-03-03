@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { payPeriodState, payPeriodEndMonthState } from "./data/atomdata";
 import { usePayslipsContext } from "../context/payslips_context";
@@ -15,7 +15,7 @@ import { periods } from "../utils/constants";
 //import BatchPayslips from "./BatchPayslips";
 
 const PayslipsPeriods = () => {
-  let history = useHistory();
+  let navigate = useNavigate();
   const classes = useStyles();
   const setPayPeriod = useSetRecoilState(payPeriodState);
   const setPayPeriodEndMonth = useSetRecoilState(payPeriodEndMonthState);
@@ -28,7 +28,7 @@ const PayslipsPeriods = () => {
     setPayPeriodEndMonth(monthenddate);
     setPayslipPeriod(name);
     setPayslipEndMonthDate(monthenddate);
-    history.push("/batchpayslips");
+    navigate("/batchpayslips");
   };
 
   useEffect(() => {

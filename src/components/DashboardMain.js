@@ -1,8 +1,14 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { Redirect, useHistory } from "react-router-dom";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Routes,
+  Route,
+  Link,
+} from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { Flex } from "@chakra-ui/react";
 // import Chart from "./Chart";
@@ -56,7 +62,6 @@ const drawerWidth = 0;
 
 export default function DashboardMain() {
   const classes = useStyles();
-  const history = useHistory();
   const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
   const [open, setOpen] = React.useState(true);
   const [login, setLogin] = React.useState(true);
@@ -73,7 +78,7 @@ export default function DashboardMain() {
   const handleSelect = (title) => {
     setLoginLevel({ ...loginLevel, loginLevel: title });
     setSelect(title);
-    <Redirect to="/" />;
+    <Navigate to="/" />;
   };
 
   //  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -105,66 +110,67 @@ export default function DashboardMain() {
             //   handleDrawerOpen={handleDrawerOpen}
             //   handleDrawerClose={handleDrawerClose}
             // />
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route exact path="/payroll">
-                <Payroll />
-              </Route>
-              <Route exact path="/payslips">
-                <PayslipStaff />
-              </Route>
-              <Route exact path="/singlepayslip">
-                <SinglePayslip />
-              </Route>
-              <Route exact path="/batchpayslips">
-                <BatchPayslips />
-              </Route>
-              <Route exact path="/leave">
-                <LeaveStaff />
-              </Route>
-              <Route exact path="/hoc">
-                <Hoc />
-              </Route>
-              <Route exact path="/trainings">
-                <TrainingsStaff />
-              </Route>
+            <Routes>
+              <Route exact path="/" element={<Home />} />
 
-              <Route exact path="/dailyallowances">
-                <DailyAllowancesStaff />
-              </Route>
-              <Route exact path="/singledailyallowsdetlstable">
-                <SingleDailyAllowsDetlsStaff />
-              </Route>
-              <Route exact path="/expenses">
-                <ExpensesStaff />
-              </Route>
-              <Route exact path="/example">
-                <Example />
-              </Route>
-              <Route exact path="/singleemployee">
-                <SingleEmployeeStaff />
-              </Route>
-              <Route exact path="/singleleave">
-                <SingleLeave />
-              </Route>
-              <Route exact path="/singleexpense">
-                <SingleExpense />
-              </Route>
-              <Route exact path="/singledailyallowance">
-                <SingleDailyAllowance />
-              </Route>
-              <Route exact path="/batchdailyallowances">
-                <BatchDailyAllowances />
-              </Route>
-              <Route exact path="/error">
-                <Error />
-              </Route>
-              <Route path="*">
-                <Error />
-              </Route>
-            </Switch>
+              <Route exact path="/payroll" element={<Payroll />} />
+
+              <Route exact path="/payslips" element={<PayslipStaff />} />
+
+              <Route exact path="/singlepayslip" element={<SinglePayslip />} />
+
+              <Route exact path="/batchpayslips" element={<BatchPayslips />} />
+
+              <Route exact path="/leave" element={<LeaveStaff />} />
+
+              <Route exact path="/hoc" element={<Hoc />} />
+
+              <Route exact path="/trainings" element={<TrainingsStaff />} />
+
+              <Route
+                exact
+                path="/dailyallowances"
+                element={<DailyAllowancesStaff />}
+              />
+
+              <Route
+                exact
+                path="/singledailyallowsdetlstable"
+                element={<SingleDailyAllowsDetlsStaff />}
+              ></Route>
+              <Route exact path="/expenses" element={<ExpensesStaff />} />
+
+              <Route exact path="/example" element={<Example />}></Route>
+              <Route
+                exact
+                path="/singleemployee"
+                element={<SingleEmployeeStaff />}
+              ></Route>
+
+              <Route
+                exact
+                path="/singleleave"
+                element={<SingleLeave />}
+              ></Route>
+              <Route
+                exact
+                path="/singleexpense"
+                element={<SingleExpense />}
+              ></Route>
+              <Route
+                exact
+                path="/singledailyallowance"
+                element={<SingleDailyAllowance />}
+              ></Route>
+              <Route
+                exact
+                path="/batchdailyallowances"
+                element={<BatchDailyAllowances />}
+              ></Route>
+              <Route exact path="/error" element={<Error />} />
+
+              <Route path="*" element={<Error />} />
+            </Routes>
           )}
           {select === "Admin" && (
             // <DashboardAdmin
@@ -172,51 +178,47 @@ export default function DashboardMain() {
             //   handleDrawerOpen={handleDrawerOpen}
             //   handleDrawerClose={handleDrawerClose}
             // />
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route exact path="/allemployees">
-                <AllEmployees />
-              </Route>
+            <Routes>
+              <Route exact path="/" element={<Home />}></Route>
+              <Route
+                exact
+                path="/allemployees"
+                element={<AllEmployees />}
+              ></Route>
 
-              <Route exact path="/departments">
-                <Departments />
-              </Route>
-              <Route exact path="/designation">
-                <Designation />
-              </Route>
-              <Route exact path="/tables">
-                <Tables />
-              </Route>
-              <Route exact path="/allowances">
-                <Allowances />
-              </Route>
-              <Route exact path="/clients">
-                <Clients />
-              </Route>
-              <Route exact path="/example">
-                <Example />
-              </Route>
-              <Route exact path="/singleemployee">
-                <SingleEmployee />
-              </Route>
-              <Route exact path="/singleleave">
-                <SingleLeave />
-              </Route>
-              <Route exact path="/singleexpense">
-                <SingleExpense />
-              </Route>
-              <Route exact path="/error">
-                <Error />
-              </Route>
-              <Route exact path="/leave">
-                <Leave />
-              </Route>
-              <Route path="*">
-                <Error />
-              </Route>
-            </Switch>
+              <Route
+                exact
+                path="/departments"
+                element={<Departments />}
+              ></Route>
+              <Route
+                exact
+                path="/designation"
+                element={<Designation />}
+              ></Route>
+              <Route exact path="/tables" element={<Tables />}></Route>
+              <Route exact path="/allowances" element={<Allowances />}></Route>
+              <Route exact path="/clients" element={<Clients />}></Route>
+              <Route exact path="/example" element={<Example />}></Route>
+              <Route
+                exact
+                path="/singleemployee"
+                element={<SingleEmployee />}
+              ></Route>
+              <Route
+                exact
+                path="/singleleave"
+                element={<SingleLeave />}
+              ></Route>
+              <Route
+                exact
+                path="/singleexpense"
+                element={<SingleExpense />}
+              ></Route>
+              <Route exact path="/error" element={<Error />}></Route>
+              <Route exact path="/leave" element={<Leave />}></Route>
+              <Route path="*" element={<Error />}></Route>
+            </Routes>
           )}
           {select === "OpsSpvr" && (
             // <DashboardOpsSpvr
@@ -224,51 +226,47 @@ export default function DashboardMain() {
             //   handleDrawerOpen={handleDrawerOpen}
             //   handleDrawerClose={handleDrawerClose}
             // />
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route exact path="/allemployees">
-                <AllEmployees />
-              </Route>
+            <Routes>
+              <Route exact path="/" element={<Home />}></Route>
+              <Route
+                exact
+                path="/allemployees"
+                element={<AllEmployees />}
+              ></Route>
 
-              <Route exact path="/departments">
-                <Departments />
-              </Route>
-              <Route exact path="/designation">
-                <Designation />
-              </Route>
-              <Route exact path="/tables">
-                <Tables />
-              </Route>
-              <Route exact path="/allowances">
-                <Allowances />
-              </Route>
-              <Route exact path="/clients">
-                <Clients />
-              </Route>
-              <Route exact path="/example">
-                <Example />
-              </Route>
-              <Route exact path="/singleemployee">
-                <SingleEmployee />
-              </Route>
-              <Route exact path="/singleleave">
-                <SingleLeave />
-              </Route>
-              <Route exact path="/singleexpense">
-                <SingleExpense />
-              </Route>
-              <Route exact path="/error">
-                <Error />
-              </Route>
-              <Route exact path="/leave">
-                <Leave />
-              </Route>
-              <Route path="*">
-                <Error />
-              </Route>
-            </Switch>
+              <Route
+                exact
+                path="/departments"
+                element={<Departments />}
+              ></Route>
+              <Route
+                exact
+                path="/designation"
+                element={<Designation />}
+              ></Route>
+              <Route exact path="/tables" element={<Tables />}></Route>
+              <Route exact path="/allowances" element={<Allowances />}></Route>
+              <Route exact path="/clients" element={<Clients />}></Route>
+              <Route exact path="/example" element={<Example />}></Route>
+              <Route
+                exact
+                path="/singleemployee"
+                element={<SingleEmployee />}
+              ></Route>
+              <Route
+                exact
+                path="/singleleave"
+                element={<SingleLeave />}
+              ></Route>
+              <Route
+                exact
+                path="/singleexpense"
+                element={<SingleExpense />}
+              ></Route>
+              <Route exact path="/error" element={<Error />}></Route>
+              <Route exact path="/leave" element={<Leave />}></Route>
+              <Route path="*" element={<Error />}></Route>
+            </Routes>
           )}
           {select === "AdminManager" && (
             // <DashboardAdminManager
@@ -276,83 +274,85 @@ export default function DashboardMain() {
             //   handleDrawerOpen={handleDrawerOpen}
             //   handleDrawerClose={handleDrawerClose}
             // />
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route exact path="/allemployees">
-                <AllEmployees />
-              </Route>
-              <Route exact path="/payroll">
-                <Payroll />
-              </Route>
-              <Route exact path="/payslip">
-                <Payslip />
-              </Route>
-              <Route exact path="/singlepayslip">
-                <SinglePayslip />
-              </Route>
-              <Route exact path="/batchpayslips">
-                <BatchPayslips />
-              </Route>
-              <Route exact path="/leave">
-                <Leave />
-              </Route>
-              <Route exact path="/payrun">
-                <Payrun />
-              </Route>
-              <Route exact path="/payrunbatch">
-                <Payrunbatch />
-              </Route>
-              <Route exact path="/dailyallowances">
-                <DailyAllowances />
-              </Route>
-              <Route exact path="/singledailyallowsdetlstable">
-                <SingleDailyAllowsDetls />
-              </Route>
-              <Route exact path="/expenses">
-                <Expenses />
-              </Route>
-              <Route exact path="/departments">
-                <Departments />
-              </Route>
-              <Route exact path="/designation">
-                <Designation />
-              </Route>
-              <Route exact path="/tables">
-                <Tables />
-              </Route>
-              <Route exact path="/allowances">
-                <Allowances />
-              </Route>
-              <Route exact path="/clients">
-                <Clients />
-              </Route>
-              <Route exact path="/example">
-                <Example />
-              </Route>
-              <Route exact path="/singleemployee">
-                <SingleEmployee />
-              </Route>
-              <Route exact path="/singleleave">
-                <SingleLeave />
-              </Route>
-              <Route exact path="/singleexpense">
-                <SingleExpense />
-              </Route>
-              <Route exact path="/singledailyallowance">
-                <SingleDailyAllowance />
-              </Route>
-              <Route exact path="/batchdailyallowances">
-                <BatchDailyAllowances />
-              </Route>
-              <Route exact path="/error">
-                <Error />
-              </Route>
-              <Route path="*">
-                <Error />
-              </Route>
-            </Switch>
+            <Routes>
+              <Route exact path="/" element={<Home />}></Route>
+              <Route
+                exact
+                path="/allemployees"
+                element={<AllEmployees />}
+              ></Route>
+              <Route exact path="/payroll" element={<Payroll />}></Route>
+              <Route exact path="/payslip" element={<Payslip />}></Route>
+              <Route
+                exact
+                path="/singlepayslip"
+                element={<SinglePayslip />}
+              ></Route>
+              <Route
+                exact
+                path="/batchpayslips"
+                element={<BatchPayslips />}
+              ></Route>
+              <Route exact path="/leave" element={<Leave />}></Route>
+              <Route exact path="/payrun" element={<Payrun />}></Route>
+              <Route
+                exact
+                path="/payrunbatch"
+                element={<Payrunbatch />}
+              ></Route>
+              <Route
+                exact
+                path="/dailyallowances"
+                element={<DailyAllowances />}
+              ></Route>
+              <Route
+                exact
+                path="/singledailyallowsdetlstable"
+                element={<SingleDailyAllowsDetls />}
+              ></Route>
+              <Route exact path="/expenses" element={<Expenses />}></Route>
+              <Route
+                exact
+                path="/departments"
+                element={<Departments />}
+              ></Route>
+              <Route
+                exact
+                path="/designation"
+                element={<Designation />}
+              ></Route>
+              <Route exact path="/tables" element={<Tables />}></Route>
+              <Route exact path="/allowances" element={<Allowances />}></Route>
+              <Route exact path="/clients" element={<Clients />}></Route>
+              <Route exact path="/example" element={<Example />}></Route>
+              <Route
+                exact
+                path="/singleemployee"
+                element={<SingleEmployee />}
+              ></Route>
+              <Route
+                exact
+                path="/singleleave"
+                element={<SingleLeave />}
+              ></Route>
+              <Route
+                exact
+                path="/singleexpense"
+                element={<SingleExpense />}
+              ></Route>
+              <Route
+                exact
+                path="/singledailyallowance"
+                element={<SingleDailyAllowance />}
+              ></Route>
+              <Route
+                exact
+                path="/batchdailyallowances"
+                element={<BatchDailyAllowances />}
+              ></Route>
+              <Route exact path="/error" element={<Error />}></Route>
+              <Route path="*" element={<Error />}></Route>
+            </Routes>
           )}
           {select === "Manager" && (
             // <DashboardManager
@@ -360,92 +360,96 @@ export default function DashboardMain() {
             //   handleDrawerOpen={handleDrawerOpen}
             //   handleDrawerClose={handleDrawerClose}
             // />
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              {/* <Route exact path="/home">
-              <Home />
-            </Route> */}
-              <Route exact path="/allemployees">
-                <AllEmployees />
-              </Route>
-              <Route exact path="/payroll">
-                <Payroll />
-              </Route>
-              <Route exact path="/payslip">
-                <Payslip />
-              </Route>
-              <Route exact path="/singlepayslip">
-                <SinglePayslip />
-              </Route>
-              <Route exact path="/batchpayslips">
-                <BatchPayslips />
-              </Route>
-              <Route exact path="/approval">
-                <ApprovalManager />
-              </Route>
-              <Route exact path="/leave">
-                <Leave />
-              </Route>
-              <Route exact path="/payrun">
-                <Payrun />
-              </Route>
-              <Route exact path="/payrunbatch">
-                <Payrunbatch />
-              </Route>
-              <Route exact path="/dailyallowances">
-                <DailyAllowances />
-              </Route>
-              <Route exact path="/singledailyallowsdetlstable">
-                <SingleDailyAllowsDetls />
-              </Route>
-              <Route exact path="/expenses">
-                <Expenses />
-              </Route>
-              <Route exact path="/departments">
-                <Departments />
-              </Route>
-              <Route exact path="/useraccess">
-                <UserAccessTable />
-              </Route>
-              <Route exact path="/designation">
-                <Designation />
-              </Route>
-              <Route exact path="/tables">
-                <Tables />
-              </Route>
-              <Route exact path="/allowances">
-                <Allowances />
-              </Route>
-              <Route exact path="/clients">
-                <Clients />
-              </Route>
-              <Route exact path="/example">
-                <Example />
-              </Route>
-              <Route exact path="/singleemployee">
-                <SingleEmployee />
-              </Route>
-              <Route exact path="/singleleave">
-                <SingleLeave />
-              </Route>
-              <Route exact path="/singleexpense">
-                <SingleExpense />
-              </Route>
-              <Route exact path="/singledailyallowance">
-                <SingleDailyAllowance />
-              </Route>
-              <Route exact path="/batchdailyallowances">
-                <BatchDailyAllowances />
-              </Route>
-              <Route exact path="/error">
-                <Error />
-              </Route>
-              <Route path="*">
-                <Error />
-              </Route>
-            </Switch>
+            <Routes>
+              <Route exact path="/" element={<Home />}></Route>
+
+              <Route
+                exact
+                path="/allemployees"
+                element={<AllEmployees />}
+              ></Route>
+              <Route exact path="/payroll" element={<Payroll />}></Route>
+              <Route exact path="/payslip" element={<Payslip />}></Route>
+              <Route
+                exact
+                path="/singlepayslip"
+                element={<SinglePayslip />}
+              ></Route>
+              <Route
+                exact
+                path="/batchpayslips"
+                element={<BatchPayslips />}
+              ></Route>
+              <Route
+                exact
+                path="/approval"
+                element={<ApprovalManager />}
+              ></Route>
+              <Route exact path="/leave" element={<Leave />}></Route>
+              <Route exact path="/payrun" element={<Payrun />}></Route>
+              <Route
+                exact
+                path="/payrunbatch"
+                element={<Payrunbatch />}
+              ></Route>
+              <Route
+                exact
+                path="/dailyallowances"
+                element={<DailyAllowances />}
+              ></Route>
+              <Route
+                exact
+                path="/singledailyallowsdetlstable"
+                element={<SingleDailyAllowsDetls />}
+              ></Route>
+              <Route exact path="/expenses" element={<Expenses />}></Route>
+              <Route
+                exact
+                path="/departments"
+                element={<Departments />}
+              ></Route>
+              <Route
+                exact
+                path="/useraccess"
+                element={<UserAccessTable />}
+              ></Route>
+              <Route
+                exact
+                path="/designation"
+                element={<Designation />}
+              ></Route>
+              <Route exact path="/tables" element={<Tables />}></Route>
+              <Route exact path="/allowances" element={<Allowances />}></Route>
+              <Route exact path="/clients" element={<Clients />}></Route>
+              <Route exact path="/example" element={<Example />}></Route>
+              <Route
+                exact
+                path="/singleemployee"
+                element={<SingleEmployee />}
+              ></Route>
+              <Route
+                exact
+                path="/singleleave"
+                element={<SingleLeave />}
+              ></Route>
+              <Route
+                exact
+                path="/singleexpense"
+                element={<SingleExpense />}
+              ></Route>
+              <Route
+                exact
+                path="/singledailyallowance"
+                element={<SingleDailyAllowance />}
+              ></Route>
+              <Route
+                exact
+                path="/batchdailyallowances"
+                element={<BatchDailyAllowances />}
+              ></Route>
+              <Route exact path="/error" element={<Error />}></Route>
+              <Route path="*" element={<Error />}></Route>
+            </Routes>
           )}
           {select === "Director" && (
             // <DashboardDirector
@@ -453,89 +457,96 @@ export default function DashboardMain() {
             //   handleDrawerOpen={handleDrawerOpen}
             //   handleDrawerClose={handleDrawerClose}
             // />
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route exact path="/allemployees">
-                <AllEmployees />
-              </Route>
-              <Route exact path="/payroll">
-                <Payroll />
-              </Route>
-              <Route exact path="/payslip">
-                <Payslip />
-              </Route>
-              <Route exact path="/singlepayslip">
-                <SinglePayslip />
-              </Route>
-              <Route exact path="/batchpayslips">
-                <BatchPayslips />
-              </Route>
-              <Route exact path="/approval">
-                <ApprovalManager />
-              </Route>
-              <Route exact path="/leave">
-                <Leave />
-              </Route>
-              <Route exact path="/payrun">
-                <Payrun />
-              </Route>
-              <Route exact path="/payrunbatch">
-                <Payrunbatch />
-              </Route>
-              <Route exact path="/dailyallowances">
-                <DailyAllowances />
-              </Route>
-              <Route exact path="/singledailyallowsdetlstable">
-                <SingleDailyAllowsDetls />
-              </Route>
-              <Route exact path="/expenses">
-                <Expenses />
-              </Route>
-              <Route exact path="/departments">
-                <Departments />
-              </Route>
-              <Route exact path="/useraccess">
-                <UserAccessTable />
-              </Route>
-              <Route exact path="/designation">
-                <Designation />
-              </Route>
-              <Route exact path="/tables">
-                <Tables />
-              </Route>
-              <Route exact path="/allowances">
-                <Allowances />
-              </Route>
-              <Route exact path="/clients">
-                <Clients />
-              </Route>
-              <Route exact path="/example">
-                <Example />
-              </Route>
-              <Route exact path="/singleemployee">
-                <SingleEmployee />
-              </Route>
-              <Route exact path="/singleleave">
-                <SingleLeave />
-              </Route>
-              <Route exact path="/singleexpense">
-                <SingleExpense />
-              </Route>
-              <Route exact path="/singledailyallowance">
-                <SingleDailyAllowance />
-              </Route>
-              <Route exact path="/batchdailyallowances">
-                <BatchDailyAllowances />
-              </Route>
-              <Route exact path="/error">
-                <Error />
-              </Route>
-              <Route path="*">
-                <Error />
-              </Route>
-            </Switch>
+            <Routes>
+              <Route exact path="/" element={<Home />}></Route>
+
+              <Route
+                exact
+                path="/allemployees"
+                element={<AllEmployees />}
+              ></Route>
+              <Route exact path="/payroll" element={<Payroll />}></Route>
+              <Route exact path="/payslip" element={<Payslip />}></Route>
+              <Route
+                exact
+                path="/singlepayslip"
+                element={<SinglePayslip />}
+              ></Route>
+              <Route
+                exact
+                path="/batchpayslips"
+                element={<BatchPayslips />}
+              ></Route>
+              <Route
+                exact
+                path="/approval"
+                element={<ApprovalManager />}
+              ></Route>
+              <Route exact path="/leave" element={<Leave />}></Route>
+              <Route exact path="/payrun" element={<Payrun />}></Route>
+              <Route
+                exact
+                path="/payrunbatch"
+                element={<Payrunbatch />}
+              ></Route>
+              <Route
+                exact
+                path="/dailyallowances"
+                element={<DailyAllowances />}
+              ></Route>
+              <Route
+                exact
+                path="/singledailyallowsdetlstable"
+                element={<SingleDailyAllowsDetls />}
+              ></Route>
+              <Route exact path="/expenses" element={<Expenses />}></Route>
+              <Route
+                exact
+                path="/departments"
+                element={<Departments />}
+              ></Route>
+              <Route
+                exact
+                path="/useraccess"
+                element={<UserAccessTable />}
+              ></Route>
+              <Route
+                exact
+                path="/designation"
+                element={<Designation />}
+              ></Route>
+              <Route exact path="/tables" element={<Tables />}></Route>
+              <Route exact path="/allowances" element={<Allowances />}></Route>
+              <Route exact path="/clients" element={<Clients />}></Route>
+              <Route exact path="/example" element={<Example />}></Route>
+              <Route
+                exact
+                path="/singleemployee"
+                element={<SingleEmployee />}
+              ></Route>
+              <Route
+                exact
+                path="/singleleave"
+                element={<SingleLeave />}
+              ></Route>
+              <Route
+                exact
+                path="/singleexpense"
+                element={<SingleExpense />}
+              ></Route>
+              <Route
+                exact
+                path="/singledailyallowance"
+                element={<SingleDailyAllowance />}
+              ></Route>
+              <Route
+                exact
+                path="/batchdailyallowances"
+                element={<BatchDailyAllowances />}
+              ></Route>
+              <Route exact path="/error" element={<Error />}></Route>
+              <Route path="*" element={<Error />}></Route>
+            </Routes>
           )}
         </Flex>
       </Router>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable from "material-table";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
 import { GrFormView } from "react-icons/gr";
@@ -87,7 +87,7 @@ const columns = [
 
 export default function YearendLeaveBal({ year }) {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { employees, setEmployeeId } = useEmployees();
   const { leaves } = useLeaves();
   const [empdata, setEmpData] = useState([]);
@@ -119,7 +119,7 @@ export default function YearendLeaveBal({ year }) {
     setIsEditingOn();
     setEmployeeId(id);
 
-    history.push("/singleemployee");
+    navigate("/singleemployee");
   };
 
   const Build_EmpData = (YEAR) => {
