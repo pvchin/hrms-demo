@@ -8,7 +8,7 @@ import {
   GridItem,
   HStack,
   Select,
-    Text,
+  Text,
 } from "@chakra-ui/react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useRecoilState } from "recoil";
@@ -172,6 +172,14 @@ export default function LeaveTableStaff() {
   }, [JSON.stringify(leaves)]);
 
   const Calc_Leave = () => {
+    // console.log(
+    //   "calc leave",
+    //   selectleaveyear,
+    //   typeof selectleaveyear,
+    //   typeof currentyear,
+    //   currentyear,
+    //   selectleaveyear === currentyear
+    // );
     const { leave_bf, leave_entitled, leave_cd } = loginLevel;
     const leaveTaken = leaves.reduce((acc, item) => {
       if (item.status === "Approved") {
@@ -201,7 +209,8 @@ export default function LeaveTableStaff() {
       leave_pending: leavePending,
       leave_bal: bal,
     };
-    setLeaveState(rec);
+    setLeaveState((prev) => (prev = rec));
+    //console.log("leavestate", leavestate)
   };
 
   const update_Leave = async (data) => {
@@ -225,7 +234,7 @@ export default function LeaveTableStaff() {
 
   const delete_Leave = (data) => {
     const { id } = data;
-    console.log("delete leave", id);
+
     setEditLeaveID(id);
     setIsAlertOpen(true);
     //handleAlertOpen();
@@ -259,7 +268,8 @@ export default function LeaveTableStaff() {
   };
 
   const UpdateLeaveYear = (e) => {
-    setSelectLeaveYear((prev) => (prev = e.target.value));
+    setSelectLeaveYear((prev) => (prev = parseInt(e.target.value)));
+    //Calc_Leave()
     setIsLoad(true);
   };
 
@@ -277,8 +287,8 @@ export default function LeaveTableStaff() {
             maxWidth={100}
             onChange={(e) => UpdateLeaveYear(e)}
           >
-            <option value="2021">2021</option>
-            <option value="2022">2022</option>
+            <option value={2021}>2021</option>
+            <option value={2022}>2022</option>
           </Select>
         </HStack>
       </Box>
@@ -324,13 +334,19 @@ export default function LeaveTableStaff() {
           </GridItem>
 
           <GridItem colSpan={2} bg="white" align="center">
-            <Text fontSize="20">{leavestate.leave_entitled} </Text>
+            <Text fontSize="20">
+              {selectleaveyear === currentyear ? leavestate.leave_entitled : 0}
+            </Text>
           </GridItem>
           <GridItem colSpan={2} bg="white" align="center">
-            <Text fontSize="20">{leavestate.leave_bf}</Text>
+            <Text fontSize="20">
+              {selectleaveyear === currentyear ? leavestate.leave_bf : 0}
+            </Text>
           </GridItem>
           <GridItem colSpan={2} bg="white" align="center">
-            <Text fontSize="20">{leavestate.leave_total} </Text>
+            <Text fontSize="20">
+              {selectleaveyear === currentyear ? leavestate.leave_total : 0}
+            </Text>
           </GridItem>
           <GridItem colSpan={2} bg="white" align="center">
             <Text fontSize="20">{leavestate.leave_taken}</Text>
@@ -339,7 +355,9 @@ export default function LeaveTableStaff() {
             <Text fontSize="20">{leavestate.leave_pending}</Text>
           </GridItem>
           <GridItem colSpan={2} bg="white" align="center">
-            <Text fontSize="20">{leavestate.leave_bal}</Text>
+            <Text fontSize="20">
+              {selectleaveyear === currentyear ? leavestate.leave_bal : 0}
+            </Text>
           </GridItem>
         </Grid>
       </Box>
@@ -430,7 +448,8 @@ export default function LeaveTableStaff() {
           handleClose={handleDialogClose}
           title=""
           showButton={true}
-          isFullscree={false}
+          isFullscreen={false}
+          isFullwidth={false}
         >
           <LeaveForm
             formdata={formdata}

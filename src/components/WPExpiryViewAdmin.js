@@ -147,7 +147,7 @@ const WPExpiryViewAdmin = () => {
         </Stack>
         {emp.map((row) => {
           return (
-            <Grid templateColumns="repeat(13, 1fr)" gap={3} p={1}>
+            <Grid key={row.id} templateColumns="repeat(13, 1fr)" gap={3} p={1}>
               <GridItem colSpan={1}>
                 <Box w="100%">
                   <IconButton

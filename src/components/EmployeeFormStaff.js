@@ -1025,19 +1025,19 @@ const EmployeeForm = () => {
         </Paper>
       </form>
 
-      <Grid xs={12}>
+      <Grid item xs={12}>
         <EmpJobhistory />
       </Grid>
-      <Grid xs={12}>
+      <Grid item xs={12}>
         <EmpFamily />
       </Grid>
-      <Grid xs={12}>
+      <Grid item xs={12}>
         <EmpEducations />
       </Grid>
-      <Grid xs={12}>
+      <Grid item xs={12}>
         <EmpExperiences />
       </Grid>
-      <Grid xs={12}>
+      <Grid item xs={12}>
         <EmpTrainings />
       </Grid>
     </div>
