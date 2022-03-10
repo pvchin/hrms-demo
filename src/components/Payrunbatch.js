@@ -54,7 +54,7 @@ import { usePayslipsBatch } from "./payslips/usePayslipsBatch";
 import { useUpdatePayslips } from "./payslips/useUpdatePayslips";
 import { usePayslipsContext } from "../context/payslips_context";
 import { useTablesContext } from "../context/tables_context";
-import {  useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import {
   payrunState,
   //paydataState,
@@ -188,7 +188,7 @@ const Payrunbatch = () => {
   const { loadPayitems, payitems } = useTablesContext();
   const [payrundata, setPayrundata] = useRecoilState(payrunState);
   const [payrunId] = useRecoilState(payrunIdState);
-  const  [payrunstatus, setPayrunStatus] = useRecoilState(payrunStatusState);
+  const [payrunstatus, setPayrunStatus] = useRecoilState(payrunStatusState);
   const [loadFormdata, setLoadFormdata] = useState(false);
   const [loadUpdatedata, setLoadUpdatedata] = useState(false);
   const [formdata, setFormdata] = useState(initial_formdata);
@@ -289,18 +289,18 @@ const Payrunbatch = () => {
   };
 
   const saveIndividualPayslips = () => {
-   const recs = splitArrayIntoChunksOfLen(singlebatchpayslip, 10);
+    const recs = splitArrayIntoChunksOfLen(singlebatchpayslip, 8);
     console.log("save payslip", recs, recs.length);
     for (let i = 0; i < recs.length; i++) {
-      let array = []
+      let array = [];
       recs[i].forEach((rec) => {
         const { id, rec_id, tableData, ...fields } = rec;
-        array.push({id,...fields})
-      })
-      console.log("update payslip", array)
-      updatePayslip(...array)  
+        array.push({ id, fields: { ...fields } });
+      });
+      console.log("update payslip", array);
+      updatePayslip(...array);
     }
-    
+
     // singlebatchpayslip.forEach((rec) => {
     //   const { id, rec_id, tableData, ...fields } = rec;
     //   //console.log("updatepayslip", rec);
