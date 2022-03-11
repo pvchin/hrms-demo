@@ -5,7 +5,6 @@ import { Heading } from "@chakra-ui/react";
 import { useCustomToast } from "../helpers/useCustomToast";
 import clsx from "clsx";
 import { Button, Paper, Grid, Icon, TextField } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
 import { useRecoilState } from "recoil";
 import { siteallowsState, loginLevelState } from "./data/atomdata";
 //import { useDailyAllowancesContext } from "../context/dailyallowances_context";
@@ -27,11 +26,11 @@ import { useAddDailyAllowsDetls } from "./dailyallowsdetls/useAddDailyAllowsDetl
 
 const DailyAllowancesAddPeriod = ({ handleDialogClose }) => {
   let date = new Date();
+  const toast = useCustomToast()
   //let longMonth = date.toLocaleString("en-us", { month: "long" });
   //console.log("date", date, longMonth);
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const toast = useCustomToast();
   const { dailyallows } = useDailyAllows();
   //const { dailyallowsdetls } = useDailyAllowsDetls();
   const addDailyAllows = useAddDailyAllows();
@@ -400,11 +399,11 @@ const DailyAllowancesAddPeriod = ({ handleDialogClose }) => {
             </Button>
           </div>
           <div>
-            {error && (
-              <Alert severity="error" onClose={() => setError(false)}>
-                Period already existed!
-              </Alert>
-            )}
+            {error &&
+              toast({
+                title: "Period already existed!",
+                status: "warning",
+              })}
           </div>
         </Grid>
       </form>
