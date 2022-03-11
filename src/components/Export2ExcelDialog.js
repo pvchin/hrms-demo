@@ -42,7 +42,6 @@ import {
 } from "@chakra-ui/react";
 import { useHocPeriod } from "./hoc/useHocPeriod";
 import Export2Excel from "./Export2Excel";
-import Export2ExcelTest from "./Export2ExcelTest"
 
 // const initial_state = {
 //   type: "",
@@ -221,12 +220,12 @@ const Export2ExcelDialog = ({ state, setState, dataset, onClose }) => {
       </div>
       <Divider />
       <Box p={2}>
-        <Export2ExcelTest />
-        {/* <Export2ExcelTest
+       
+        <Export2Excel
           filename={state.filename}
           dataset={hocperiod}
           title={state.title}
-        /> */}
+        />
       </Box>
       {/* <div>
           <Button
