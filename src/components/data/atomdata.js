@@ -98,7 +98,7 @@ export const payrunState = atom({
     id: "",
     copyfrom: "",
     selectmonth: "",
-    payfreq: "",
+    payfreq: "Monthly",
     fromdate: null,
     todate: null,
     paydate: null,
