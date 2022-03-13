@@ -51,8 +51,7 @@ import PayslipTableViewSummary from "./PayslipTableViewSummary";
 import LeavesTableApproval from "./LeaveTableApproval";
 //import ExportLeave2Excel from "./ExportLeave2Excel";
 //import ExportHoc2Excel from "./ExportHoc2Excel";
-import Export2Excel from "./Export2Excel";
-import Export2ExcelDialog from "./Export2ExcelDialog";
+//import Export2ExcelDialog from "./Export2ExcelDialog";
 import { useHoc } from "./hoc/useHoc";
 
 //const drawerWidth = 240;
@@ -1344,7 +1343,7 @@ const HomeAdminManager = () => {
             </TabPanel>
           </TabPanels>
         </Tabs>
-        <Modal
+        {/* <Modal
           closeOnOverlayClick={false}
           isOpen={isExport2ExcelOpen}
           onClose={onExport2ExcelClose}
@@ -1352,7 +1351,7 @@ const HomeAdminManager = () => {
         >
           <ModalOverlay />
           <ModalContent>
-            {/* <ModalHeader>Product Form</ModalHeader> */}
+            
             <ModalCloseButton />
             <ModalBody>
               <Export2ExcelDialog
@@ -1363,7 +1362,7 @@ const HomeAdminManager = () => {
               />
             </ModalBody>
           </ModalContent>
-        </Modal>
+        </Modal> */}
       </Box>
     </Container>
   );

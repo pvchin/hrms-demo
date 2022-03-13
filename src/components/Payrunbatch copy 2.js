@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 //import { makeStyles } from "@material-ui/core/styles";
 //import clsx from "clsx";
+import { splitArrayIntoChunksOfLen } from "../helpers/Utils";
 import { useNavigate } from "react-router-dom";
 import * as emailjs from "emailjs-com";
 import MaterialTable, { MTableToolbar } from "material-table";
@@ -288,11 +289,23 @@ const Payrunbatch = () => {
   };
 
   const saveIndividualPayslips = () => {
-    singlebatchpayslip.forEach((rec) => {
-      const { id, rec_id, tableData, ...fields } = rec;
-      //console.log("updatepayslip", rec);
-      updatePayslip({ id, ...fields });
-    });
+    const recs = splitArrayIntoChunksOfLen(singlebatchpayslip, 8);
+    console.log("save payslip", recs, recs.length);
+    for (let i = 0; i < recs.length; i++) {
+      let array = [];
+      recs[i].forEach((rec) => {
+        const { id, rec_id, tableData, ...fields } = rec;
+        array.push({ id, fields: { ...fields } });
+      });
+      console.log("update payslip", array);
+      updatePayslip(...array);
+    }
+
+    // singlebatchpayslip.forEach((rec) => {
+    //   const { id, rec_id, tableData, ...fields } = rec;
+    //   //console.log("updatepayslip", rec);
+    //   updatePayslip({ id, ...fields });
+    // });
   };
 
   const calcPayrunTotals = () => {
