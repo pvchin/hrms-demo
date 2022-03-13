@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 import { payslips_url } from "../../utils/constants";
-//import { useCustomToast } from "../../helpers/useCustomToast";
+import { useCustomToast } from "../../helpers/useCustomToast";
 
 async function updatePayslips(data) {
   const { id, ...fields } = data;
@@ -13,15 +13,15 @@ async function updatePayslips(data) {
 
 export function useUpdatePayslips(data) {
   const queryClient = useQueryClient();
-  //const toast = useCustomToast();
+  const toast = useCustomToast();
 
   const { mutate } = useMutation((data) => updatePayslips(data), {
     onSuccess: () => {
       queryClient.invalidateQueries("payslips");
-      // toast({
-      //   title: "Payslip record being updated!",
-      //   status: "success",
-      // });
+      toast({
+        title: "Payslip record being updated!",
+        status: "success",
+      });
     },
   });
 
