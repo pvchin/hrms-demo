@@ -291,7 +291,7 @@ const Payrunbatch = () => {
     console.log("save payslips", singlebatchpayslip)
     singlebatchpayslip.forEach((rec) => {
       const { id, rec_id, tableData, ...fields } = rec;
-      //console.log("updatepayslip", rec);
+      console.log("updatepayslip", {id, ...fields});
       updatePayslip({ id, ...fields });
     });
   };
