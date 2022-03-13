@@ -4,7 +4,7 @@ import { useCustomToast } from "../../helpers/useCustomToast";
 
 async function updatePayslips(data) {
   const { id, ...fields } = data;
-
+  console.log("upd payslip", { id, ...fields });
   await fetch(payslips_url, {
     method: "PUT",
     body: JSON.stringify({ id, ...fields }),
