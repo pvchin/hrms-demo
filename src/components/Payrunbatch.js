@@ -85,35 +85,34 @@ const initial_formdata = {
   allows_type1amt: "",
   allows_type2: "",
   allows_type2amt: "",
-  allows_type3: " ",
+  allows_type3: "",
   allows_type3amt: 0,
   allows_type4: "",
   allows_type4amt: 0,
-  allows_type5: " ",
+  allows_type5: "",
   allows_type5amt: 0,
-  allows_type6: " ",
+  allows_type6: "",
   allows_type6amt: 0,
-  allows_type7: " ",
+  allows_type7: "",
   allows_type7amt: 0,
-  allows_type8: " ",
+  allows_type8: "",
   allows_type8amt: 0,
-  deducts_type1: " ",
+  deducts_type1: "",
   deducts_type1amt: 0,
-  deducts_type2: " ",
+  deducts_type2: "",
   deducts_type2amt: 0,
-  deducts_type3: " ",
+  deducts_type3: "",
   deducts_type3amt: 0,
-  deducts_type4: " ",
+  deducts_type4: "",
   deducts_type4amt: 0,
-  deducts_type5: " ",
+  deducts_type5: "",
   deducts_type5amt: 0,
-  deducts_type6: " ",
+  deducts_type6: "",
   deducts_type6amt: 0,
-  deducts_type7: " ",
+  deducts_type7: "",
   deducts_type7amt: 0,
-  deducts_type8: " ",
+  deducts_type8: "",
   deducts_type8amt: 0,
-
   wages: 0,
   tap_amount: 0,
   scp_amount: 0,
@@ -122,7 +121,6 @@ const initial_formdata = {
   site_allows: 0,
   expenses_claims: 0,
   nett_pay: 0,
-
   wages_bnd: 0,
   site_allows_bnd: 0,
   expenses_claims_bnd: 0,
@@ -237,6 +235,10 @@ const Payrunbatch = () => {
   //   setShowSumm(!showSumm);
   // };
 
+  const sleep = (time) =>{
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
+
   const handlePrintSummary = (e) => {
     e.preventDefault();
     if (payrundata.status === "Verified" || payrundata.status === "Approved") {
@@ -293,6 +295,7 @@ const Payrunbatch = () => {
       const { id, rec_id, tableData, ...fields } = rec;
       console.log("updatepayslip", {id, ...fields});
       updatePayslip({ id, ...fields });
+      sleep(1000)
     });
   };
 
