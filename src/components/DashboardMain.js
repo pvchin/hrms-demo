@@ -89,7 +89,7 @@ export default function DashboardMain() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <Router>
+      {/* <Router> */}
         <Appbanner
           handleDrawerOpen={handleDrawerOpen}
           handleDrawerClose={handleDrawerClose}
@@ -113,7 +113,15 @@ export default function DashboardMain() {
             <Routes>
               <Route exact path="/" element={<Home />} />
 
-              <Route exact path="/payroll" element={<Payroll />} />
+              <Route
+                exact
+                path="/payroll"
+                element={
+                  <React.Suspense fallback={<>...</>}>
+                    <Payroll />
+                  </React.Suspense>
+                }
+              />
 
               <Route exact path="/payslips" element={<PayslipStaff />} />
 
@@ -549,7 +557,7 @@ export default function DashboardMain() {
             </Routes>
           )}
         </Flex>
-      </Router>
+      {/* </Router> */}
     </div>
   );
 }

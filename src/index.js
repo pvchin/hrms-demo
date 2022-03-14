@@ -18,6 +18,7 @@ import { DailyAllowancesProvider } from "./context/dailyallowances_context";
 import { TablesProvider } from "./context/tables_context";
 import { TrainingsProvider } from "./context/trainings_context";
 import { AuthProvider } from "./context/auth_context";
+import { BrowserRouter } from "react-router-dom";
 
 // const client = new ApolloClient({
 //   link: new HttpLink({
@@ -31,9 +32,10 @@ const queryClient = new QueryClient();
 
 ReactDOM.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RecoilRoot>
-        {/* <ApolloProvider client={client}> */}
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <RecoilRoot>
+          {/* <ApolloProvider client={client}> */}
           <AuthProvider>
             <EmployeesProvider>
               <PayslipsProvider>
@@ -53,10 +55,11 @@ ReactDOM.render(
               </PayslipsProvider>
             </EmployeesProvider>
           </AuthProvider>
-        {/* </ApolloProvider> */}
-      </RecoilRoot>
-      <ReactQueryDevtools />
-    </QueryClientProvider>
+          {/* </ApolloProvider> */}
+        </RecoilRoot>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   //document.getElementById("root").style.transform = "scale(1)"
   document.getElementById("root")
