@@ -245,7 +245,7 @@ const Payrunbatch = () => {
       exportPdfTable(singlebatchpayslip);
     } else {
       // save individual payslips
-      saveIndividualPayslips();
+      //saveIndividualPayslips();
       // save payrun
       updatePayrun({
         id: payrunId,
@@ -278,7 +278,7 @@ const Payrunbatch = () => {
     //   });
     // }
     // save individual payslips
-    saveIndividualPayslips();
+    //saveIndividualPayslips();
 
     //update payrun
     handleSavePayrun();
@@ -402,7 +402,7 @@ const Payrunbatch = () => {
     setPayrundata((prev) => (prev = { ...payrundata, status: "Verified" }));
     setPayrunStatus("Verified");
     // save individual payslips
-    saveIndividualPayslips();
+    //saveIndividualPayslips();
     // save payrun
     updatePayrun({
       id: payrunId,

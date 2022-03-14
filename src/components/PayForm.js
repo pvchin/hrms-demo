@@ -134,8 +134,7 @@ const PayForm = ({
   const Update_Empdata = ({ name, value }) => {
     let data = singlebatchpayslip[rowindex];
     data[name] = value;
-    const { id, rec_id, tableData, ...fields } = data;
-    updatePayslips({id, ...fields})
+  
     //console.log("update data", data);
     //console.log("update payslip", singlebatchpayslip[rowindex]);
   };
@@ -234,24 +233,36 @@ const PayForm = ({
     nettPay =
       wages + siteallows + expsclaims - totalTAP - totalSCP + allows - deducts;
 
-    wagesbnd =
+    // NEW
+    if (state.currency === "BND") {
+      wagesbnd = wages
+      allowsbnd = allows
+      deductsbnd = deducts
+      totalTAPbnd = totalTAP
+      totalSCPbnd = totalSCP
+      siteallowsbnd = siteallows
+      expsclaimsbnd = expsclaims
+      nettPaybnd = nettPay
+    } else {
+      wagesbnd =
       Math.round((wages + Number.EPSILON) * state.currency_rate * 100) / 100;
-    allowsbnd =
+      allowsbnd =
       Math.round((allows + Number.EPSILON) * state.currency_rate * 100) / 100;
-    deductsbnd =
+      deductsbnd =
       Math.round((deducts + Number.EPSILON) * state.currency_rate * 100) / 100;
-    totalTAPbnd =
+      totalTAPbnd =
       Math.round((totalTAP + Number.EPSILON) * state.currency_rate * 100) / 100;
-    totalSCPbnd =
+      totalSCPbnd =
       Math.round((totalSCP + Number.EPSILON) * state.currency_rate * 100) / 100;
-    siteallowsbnd =
+      siteallowsbnd =
       Math.round((siteallows + Number.EPSILON) * state.currency_rate * 100) /
       100;
-    expsclaimsbnd =
+      expsclaimsbnd =
       Math.round((expsclaims + Number.EPSILON) * state.currency_rate * 100) /
       100;
-    nettPaybnd =
+      nettPaybnd =
       Math.round((nettPay + Number.EPSILON) * state.currency_rate * 100) / 100;
+    }
 
     setState(
       (prev) =>
@@ -293,6 +304,11 @@ const PayForm = ({
     data.total_allowances_bnd = allowsbnd;
     data.total_deductions_bnd = deductsbnd;
     data.nett_pay_bnd = nettPaybnd;
+
+    //update payslips data NEW
+    console.log("statedata", state)
+    const { id, rec_id, tableData, ...fields } = state;
+    updatePayslips({id, ...fields})
   };
 
   return (
