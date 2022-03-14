@@ -24,7 +24,6 @@ import { usePayslipsBatch } from "./payslips/usePayslipsBatch";
 //import { useUpdatePayslips } from "./payslips/useUpdatePayslips";
 //import { usePayslipsContext } from "../context/payslips_context";
 //import { useAllowances } from "./allowances/useAllowances";
-import { useUpdatePayslips } from "./payslips/useUpdatePayslips";
 
 const initial_state = [
   {
@@ -112,7 +111,7 @@ const PayForm = ({
   const [state, setState] = useState(initial_state);
   //const { allowances } = useAllowances();
   //const { payslipsbatch, psbpayrunId, setPSBPayrunId } = usePayslipsBatch();
-  const updatePayslips = useUpdatePayslips();
+  //const updatePayslips = useUpdatePayslips();
   //const { singlebatchpayslip } = usePayslipsContext();
   const [isLoad, setIsLoad] = useState(false);
 
@@ -124,9 +123,6 @@ const PayForm = ({
   useEffect(() => {
     if (state) {
       handleCalc();
-      //save payslip
-      //let data = singlebatchpayslip[rowindex];
-      //console.log("formdata");
       setIsLoad(false);
     }
   }, [isLoad]);
@@ -134,7 +130,7 @@ const PayForm = ({
   const Update_Empdata = ({ name, value }) => {
     let data = singlebatchpayslip[rowindex];
     data[name] = value;
-  
+    data.tableData.checked = true;
     //console.log("update data", data);
     //console.log("update payslip", singlebatchpayslip[rowindex]);
   };
@@ -233,35 +229,38 @@ const PayForm = ({
     nettPay =
       wages + siteallows + expsclaims - totalTAP - totalSCP + allows - deducts;
 
-    // NEW
     if (state.currency === "BND") {
-      wagesbnd = wages
-      allowsbnd = allows
-      deductsbnd = deducts
-      totalTAPbnd = totalTAP
-      totalSCPbnd = totalSCP
-      siteallowsbnd = siteallows
-      expsclaimsbnd = expsclaims
-      nettPaybnd = nettPay
+      wagesbnd = wages;
+      allowsbnd = allows;
+      deductsbnd = deducts;
+      totalTAPbnd = totalTAP;
+      totalSCPbnd = totalSCP;
+      siteallowsbnd = siteallows;
+      expsclaimsbnd = expsclaims;
+      nettPaybnd = nettPay;
     } else {
       wagesbnd =
-      Math.round((wages + Number.EPSILON) * state.currency_rate * 100) / 100;
+        Math.round((wages + Number.EPSILON) * state.currency_rate * 100) / 100;
       allowsbnd =
-      Math.round((allows + Number.EPSILON) * state.currency_rate * 100) / 100;
+        Math.round((allows + Number.EPSILON) * state.currency_rate * 100) / 100;
       deductsbnd =
-      Math.round((deducts + Number.EPSILON) * state.currency_rate * 100) / 100;
+        Math.round((deducts + Number.EPSILON) * state.currency_rate * 100) /
+        100;
       totalTAPbnd =
-      Math.round((totalTAP + Number.EPSILON) * state.currency_rate * 100) / 100;
+        Math.round((totalTAP + Number.EPSILON) * state.currency_rate * 100) /
+        100;
       totalSCPbnd =
-      Math.round((totalSCP + Number.EPSILON) * state.currency_rate * 100) / 100;
+        Math.round((totalSCP + Number.EPSILON) * state.currency_rate * 100) /
+        100;
       siteallowsbnd =
-      Math.round((siteallows + Number.EPSILON) * state.currency_rate * 100) /
-      100;
+        Math.round((siteallows + Number.EPSILON) * state.currency_rate * 100) /
+        100;
       expsclaimsbnd =
-      Math.round((expsclaims + Number.EPSILON) * state.currency_rate * 100) /
-      100;
+        Math.round((expsclaims + Number.EPSILON) * state.currency_rate * 100) /
+        100;
       nettPaybnd =
-      Math.round((nettPay + Number.EPSILON) * state.currency_rate * 100) / 100;
+        Math.round((nettPay + Number.EPSILON) * state.currency_rate * 100) /
+        100;
     }
 
     setState(
@@ -304,11 +303,6 @@ const PayForm = ({
     data.total_allowances_bnd = allowsbnd;
     data.total_deductions_bnd = deductsbnd;
     data.nett_pay_bnd = nettPaybnd;
-
-    //update payslips data NEW
-    console.log("statedata", state)
-    const { id, rec_id, tableData, ...fields } = state;
-    updatePayslips({id, ...fields})
   };
 
   return (
