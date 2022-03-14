@@ -197,6 +197,7 @@ const Payrunbatch = () => {
   const [isCalc, setIsCalc] = useState(false);
   const [isStart, setIsStart] = useState(true);
   const [isShow, setIsShow] = useState(false);
+  const [isUpdPayslip, setIsUpdPayslip] = useState(false);
   const [tabno, setTabno] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const singlebatchpayslip = payslipsbatch;
@@ -226,6 +227,20 @@ const Payrunbatch = () => {
     calcPayrunTotals();
     setIsCalc(false);
   }, [isCalc]);
+
+  useEffect(() => {
+    saveIndividualPayslips()
+    setIsUpdPayslip(false)
+  },[isUpdPayslip])
+
+  useEffect(() => {
+    if (tabno === 1) {
+      setIsShow(true);
+    } else {
+      setIsShow(false);
+    }
+  }, [tabno]);
+
 
   // useEffect(() => {
   //   handleEmpButtonClick(0);
@@ -433,6 +448,7 @@ const Payrunbatch = () => {
     setFormdata((prev) => (prev = { ...initial_formdata, ...paydata }));
     //setFormdata({ ...initial_formdata, ...paydata });
     setLoadFormdata(true);
+    setIsUpdPayslip(true)
   };
 
   const handleTabChange = (index) => {
@@ -443,13 +459,7 @@ const Payrunbatch = () => {
     setIsShow(false);
   };
 
-  useEffect(() => {
-    if (tabno === 1) {
-      setIsShow(true);
-    } else {
-      setIsShow(false);
-    }
-  }, [tabno]);
+  
 
   const SentEmailModal = () => {
     return (
@@ -734,6 +744,7 @@ const Payrunbatch = () => {
                         isStart={isStart}
                         setIsStart={setIsStart}
                         setIsCalc={setIsCalc}
+                       
                       />
                     </GridItem>
                   </Grid>
