@@ -116,13 +116,16 @@ const PayForm = ({
   const [isLoad, setIsLoad] = useState(false);
 
   useEffect(() => {
-    setState(prev => prev = { ...formdata });
+    setState((prev) => (prev = { ...formdata }));
     setLoadFormdata(false);
   }, [loadFormdata]);
 
   useEffect(() => {
     if (state) {
       handleCalc();
+      //save payslip
+      //let data = singlebatchpayslip[rowindex];
+      //console.log("formdata", data);
       setIsLoad(false);
     }
   }, [isLoad]);
@@ -147,7 +150,7 @@ const PayForm = ({
         : value;
 
     //setFormInput({ [name]: val });
-    setState(prev => prev = { ...state, [name]: val });
+    setState((prev) => (prev = { ...state, [name]: val }));
     Update_Empdata({ name: name, value: val });
     setIsLoad(true);
   };
@@ -194,8 +197,8 @@ const PayForm = ({
     wages = isNaN(state.wages) || state.wages === undefined ? 0 : state.wages;
     totalTAP = state.tap_checkbox ? Math.ceil(wages * 0.05) : 0;
     totalSCP = state.tap_checkbox
-    ? Math.round((wages + Number.EPSILON) * 0.035 * 100) / 100
-    : 0;
+      ? Math.round((wages + Number.EPSILON) * 0.035 * 100) / 100
+      : 0;
     if (totalSCP > 98) {
       totalSCP = 98;
     }
@@ -248,25 +251,28 @@ const PayForm = ({
     nettPaybnd =
       Math.round((nettPay + Number.EPSILON) * state.currency_rate * 100) / 100;
 
-    setState(prev => prev = {
-      ...state,
-      wages: wages,
-      total_allowances: allows,
-      total_deductions: deducts,
-      tap_amount: totalTAP,
-      scp_amount: totalSCP,
-      site_allows: siteallows,
-      expenses_claims: expsclaims,
-      nett_pay: nettPay,
-      wages_bnd: wagesbnd,
-      total_allowances_bnd: allowsbnd,
-      total_deductions_bnd: deductsbnd,
-      tap_amount_bnd: totalTAPbnd,
-      scp_amount_bnd: totalSCPbnd,
-      site_allows_bnd: siteallowsbnd,
-      expenses_claims_bnd: expsclaimsbnd,
-      nett_pay_bnd: nettPaybnd,
-    });
+    setState(
+      (prev) =>
+        (prev = {
+          ...state,
+          wages: wages,
+          total_allowances: allows,
+          total_deductions: deducts,
+          tap_amount: totalTAP,
+          scp_amount: totalSCP,
+          site_allows: siteallows,
+          expenses_claims: expsclaims,
+          nett_pay: nettPay,
+          wages_bnd: wagesbnd,
+          total_allowances_bnd: allowsbnd,
+          total_deductions_bnd: deductsbnd,
+          tap_amount_bnd: totalTAPbnd,
+          scp_amount_bnd: totalSCPbnd,
+          site_allows_bnd: siteallowsbnd,
+          expenses_claims_bnd: expsclaimsbnd,
+          nett_pay_bnd: nettPaybnd,
+        })
+    );
 
     //update employee data
     //data.wages = state.wages;
@@ -1281,7 +1287,7 @@ const PayForm = ({
                 </Button>
               </div>
             </Grid>
-            
+
             {state.salary_currency && state.salary_currency !== "BND" && (
               <Grid
                 item
