@@ -6,7 +6,8 @@ module.exports = async (event) => {
     const updatedPayslip = await table.update([{ id, fields }]);
     return formattedReturn(200, updatedPayslip);
   } catch (err) {
-    console.error(err);
+    //console.error(err);
+    console.error(id, err);
     return formattedReturn(500, {});
   }
 };
