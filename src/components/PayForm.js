@@ -23,7 +23,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { usePayslipsBatch } from "./payslips/usePayslipsBatch";
 //import { useUpdatePayslips } from "./payslips/useUpdatePayslips";
 //import { usePayslipsContext } from "../context/payslips_context";
-import { useAllowances } from "./allowances/useAllowances";
+//import { useAllowances } from "./allowances/useAllowances";
+import { useUpdatePayslips } from "./payslips/useUpdatePayslips";
 
 const initial_state = [
   {
@@ -111,7 +112,7 @@ const PayForm = ({
   const [state, setState] = useState(initial_state);
   //const { allowances } = useAllowances();
   //const { payslipsbatch, psbpayrunId, setPSBPayrunId } = usePayslipsBatch();
-  //const updatePayslips = useUpdatePayslips();
+  const updatePayslips = useUpdatePayslips();
   //const { singlebatchpayslip } = usePayslipsContext();
   const [isLoad, setIsLoad] = useState(false);
 
@@ -125,7 +126,7 @@ const PayForm = ({
       handleCalc();
       //save payslip
       //let data = singlebatchpayslip[rowindex];
-      //console.log("formdata", data);
+      //console.log("formdata");
       setIsLoad(false);
     }
   }, [isLoad]);
@@ -133,7 +134,8 @@ const PayForm = ({
   const Update_Empdata = ({ name, value }) => {
     let data = singlebatchpayslip[rowindex];
     data[name] = value;
-
+    const { id, rec_id, tableData, ...fields } = data;
+    updatePayslips({id, ...fields})
     //console.log("update data", data);
     //console.log("update payslip", singlebatchpayslip[rowindex]);
   };
