@@ -39,30 +39,43 @@ import UserAccessTable from "./UserAccessTable";
 import {
   Home,
   //AllEmployees,
-  Leave,
-  DailyAllowancesStaff,
-  Expenses,
+  //Leave,
+  //DailyAllowancesStaff,
+  //Expenses,
   //Hoc,
   //LeaveStaff,
-  Payslip,
-  BatchPayslips,
-  Payroll,
-  PayslipStaff,
-  TrainingsStaff,
-  ExpensesStaff,
-  Departments,
-  Designation,
-  Tables,
-  Clients,
-  Allowances,
-  DailyAllowances,
+  //Payslip,
+  //BatchPayslips,
+  //Payroll,
+  //PayslipStaff,
+  //TrainingsStaff,
+  //ExpensesStaff,
+  //Departments,
+  //Designation,
+  //Tables,
+  //Allowances,
+  //DailyAllowances,
   PrivateRoute,
   Error,
 } from "../pages";
  
 const AllEmployees = React.lazy(() => import("../pages/AllEmployeesPage"));
 const Hoc = React.lazy(() => import("../pages/HocPage"));
+const Leave = React.lazy(() => import("../pages/LeavePage"));
+const Expenses = React.lazy(() => import("../pages/ExpensesPage"));
+const DailyAllowancesStaff = React.lazy(() => import("../pages/DailyAllowancesStaffPage"));
 const LeaveStaff = React.lazy(() => import("../pages/LeaveStaffPage"));
+const Payroll = React.lazy(() => import("../pages/PayrollPage"));
+const Payslip = React.lazy(() => import("../pages/PayslipPage"));
+const BatchPayslips = React.lazy(() => import("../pages/BatchPayslipsPage"));
+const PayslipStaff = React.lazy(() => import("../pages/PayslipStaffPage"));
+const TrainingsStaff = React.lazy(() => import("../pages/TrainingsStaffPage"));
+const ExpensesStaff = React.lazy(() => import("../pages/ExpensesStaffPage"));
+const Departments = React.lazy(() => import("../pages/DepartmentsPage"));
+const Designation = React.lazy(() => import("../pages/DesignationPage"));
+const Allowances = React.lazy(() => import("../pages/AllowancesPage"));
+const DailyAllowances = React.lazy(() => import("../pages/DailyAllowancesPage"));
+const Tables = React.lazy(() => import("../pages/TablesPage"));
 const SingleEmployee = React.lazy(() => import("./SingleEmployee"));
 const SingleLeave = React.lazy(() => import("./SingleLeave"));
 const SinglePayslip = React.lazy(() => import("./SinglePayslip"));
@@ -343,15 +356,7 @@ export default function DashboardMain() {
                 </React.Suspense>
               }
             />
-            <Route
-              exact
-              path="/clients"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Clients />
-                </React.Suspense>
-              }
-            />
+        
             <Route
               exact
               path="/example"
@@ -411,7 +416,7 @@ export default function DashboardMain() {
             <Route exact path="/designation" element={<Designation />}></Route>
             <Route exact path="/tables" element={<Tables />}></Route>
             <Route exact path="/allowances" element={<Allowances />}></Route>
-            <Route exact path="/clients" element={<Clients />}></Route>
+          
             <Route exact path="/example" element={<Example />}></Route>
             <Route
               exact
@@ -532,7 +537,7 @@ export default function DashboardMain() {
             <Route exact path="/designation" element={<Designation />}></Route>
             <Route exact path="/tables" element={<Tables />}></Route>
             <Route exact path="/allowances" element={<Allowances />}></Route>
-            <Route exact path="/clients" element={<Clients />}></Route>
+        
             <Route exact path="/example" element={<Example />}></Route>
             <Route
               exact
@@ -633,7 +638,7 @@ export default function DashboardMain() {
             <Route exact path="/designation" element={<Designation />}></Route>
             <Route exact path="/tables" element={<Tables />}></Route>
             <Route exact path="/allowances" element={<Allowances />}></Route>
-            <Route exact path="/clients" element={<Clients />}></Route>
+         
             <Route exact path="/example" element={<Example />}></Route>
             <Route
               exact
@@ -710,7 +715,7 @@ export default function DashboardMain() {
             <Route exact path="/designation" element={<Designation />}></Route>
             <Route exact path="/tables" element={<Tables />}></Route>
             <Route exact path="/allowances" element={<Allowances />}></Route>
-            <Route exact path="/clients" element={<Clients />}></Route>
+      
             <Route exact path="/example" element={<Example />}></Route>
             <Route
               exact
