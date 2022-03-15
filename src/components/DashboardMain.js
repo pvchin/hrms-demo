@@ -18,13 +18,13 @@ import { Flex } from "@chakra-ui/react";
 import Appbanner from "./Appbanner";
 import Example from "./Example6";
 import SideDrawer from "./SideDrawer";
-import SingleEmployee from "./SingleEmployee";
-import SingleLeave from "./SingleLeave";
+//import SingleEmployee from "./SingleEmployee";
+//import SingleLeave from "./SingleLeave";
 import SingleExpense from "./SingleExpense";
 import SingleDailyAllowance from "./SingleDailyAllowance";
 import SingleDailyAllowsDetls from "./SingleDailyAllowsDetls";
 import BatchDailyAllowances from "./BatchDailyAllowances";
-import SinglePayslip from "./SinglePayslip";
+//import SinglePayslip from "./SinglePayslip";
 import { loginLevelState } from "./data/atomdata";
 import Login from "./LoginForm";
 import Payrun from "./Payrun";
@@ -34,14 +34,16 @@ import SingleDailyAllowsDetlsStaff from "./SingleDailyAllowsDetlsStaff";
 import ApprovalManager from "./ApprovalManager";
 import UserAccessTable from "./UserAccessTable";
 
+
+
 import {
   Home,
-  AllEmployees,
+  //AllEmployees,
   Leave,
   DailyAllowancesStaff,
   Expenses,
-  Hoc,
-  LeaveStaff,
+  //Hoc,
+  //LeaveStaff,
   Payslip,
   BatchPayslips,
   Payroll,
@@ -57,6 +59,13 @@ import {
   PrivateRoute,
   Error,
 } from "../pages";
+ 
+const AllEmployees = React.lazy(() => import("../pages/AllEmployeesPage"));
+const Hoc = React.lazy(() => import("../pages/HocPage"));
+const LeaveStaff = React.lazy(() => import("../pages/LeaveStaffPage"));
+const SingleEmployee = React.lazy(() => import("./SingleEmployee"));
+const SingleLeave = React.lazy(() => import("./SingleLeave"));
+const SinglePayslip = React.lazy(() => import("./SinglePayslip"));
 
 const drawerWidth = 0;
 
