@@ -14,7 +14,7 @@ import SideDrawer from "./SideDrawer";
 import SingleExpense from "./SingleExpense";
 import SingleDailyAllowance from "./SingleDailyAllowance";
 import SingleDailyAllowsDetls from "./SingleDailyAllowsDetls";
-import BatchDailyAllowances from "./BatchDailyAllowances";
+//import BatchDailyAllowances from "./BatchDailyAllowances";
 //import SinglePayslip from "./SinglePayslip";
 import { loginLevelState } from "./data/atomdata";
 import Login from "./LoginForm";
@@ -26,7 +26,7 @@ import ApprovalManager from "./ApprovalManager";
 import UserAccessTable from "./UserAccessTable";
 
 import {
-  Home,
+  //Home,
   //AllEmployees,
   //Leave,
   //DailyAllowancesStaff,
@@ -48,6 +48,7 @@ import {
   Error,
 } from "../pages";
 
+const Home = React.lazy(() => import("../pages/HomePage"));
 const AllEmployees = React.lazy(() => import("../pages/AllEmployeesPage"));
 const Hoc = React.lazy(() => import("../pages/HocPage"));
 const Leave = React.lazy(() => import("../pages/LeavePage"));
@@ -73,6 +74,7 @@ const SingleEmployee = React.lazy(() => import("./SingleEmployee"));
 const SingleLeave = React.lazy(() => import("./SingleLeave"));
 const SinglePayslip = React.lazy(() => import("./SinglePayslip"));
 const Payrunbatch = React.lazy(() => import("./Payrunbatch"));
+const BatchDailyAllowances = React.lazy(() => import("./BatchDailyAllowances"));
 
 const drawerWidth = 0;
 
@@ -225,6 +227,15 @@ export default function DashboardMain() {
             element={
               <React.Suspense fallback={<>...</>}>
                 <ExpensesStaff />
+              </React.Suspense>
+            }
+          />
+          <Route
+            exact
+            path="/expenses"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <Expenses />
               </React.Suspense>
             }
           />
