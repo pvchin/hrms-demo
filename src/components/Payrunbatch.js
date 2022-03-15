@@ -45,7 +45,7 @@ import {
 } from "@chakra-ui/react";
 import PayForm from "./PayForm";
 import PaySummary from "./PaySummary";
-import PrintPaySummary from "./PrintPaySummary";
+//import PrintPaySummary from "./PrintPaySummary";
 import { useEmployees } from "./employees/useEmployees";
 import { usePayrun } from "./payrun/usePayrun";
 import { useUpdatePayrun } from "./payrun/useUpdatePayrun";
@@ -61,6 +61,8 @@ import {
   payrunStatusState,
 } from "./data/atomdata";
 //import { useRecoilValue } from "recoil";
+
+const PrintPaySummary = React.lazy(() => import("./PrintPaySummary"));
 
 //const drawerWidth = 240;
 const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICEID;

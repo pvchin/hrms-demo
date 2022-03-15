@@ -19,7 +19,7 @@ import BatchDailyAllowances from "./BatchDailyAllowances";
 import { loginLevelState } from "./data/atomdata";
 import Login from "./LoginForm";
 import Payrun from "./Payrun";
-import Payrunbatch from "./Payrunbatch";
+//import Payrunbatch from "./Payrunbatch";
 import SingleEmployeeStaff from "./SingleEmployeeStaff";
 import SingleDailyAllowsDetlsStaff from "./SingleDailyAllowsDetlsStaff";
 import ApprovalManager from "./ApprovalManager";
@@ -72,6 +72,7 @@ const Tables = React.lazy(() => import("../pages/TablesPage"));
 const SingleEmployee = React.lazy(() => import("./SingleEmployee"));
 const SingleLeave = React.lazy(() => import("./SingleLeave"));
 const SinglePayslip = React.lazy(() => import("./SinglePayslip"));
+const Payrunbatch = React.lazy(() => import("./Payrunbatch"));
 
 const drawerWidth = 0;
 

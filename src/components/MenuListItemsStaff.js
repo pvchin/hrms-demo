@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 //import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import { Text } from "@chakra-ui/react"
+import { Text } from "@chakra-ui/react";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -70,7 +70,7 @@ const MenuListItemsStaff = () => {
         </ListItem>
       </Link>
 
-      <Link to="/leave">
+      <Link to="/leavestaff">
         <ListItem button>
           <ListItemIcon className={classes.itemIcon}>
             <FlightIcon />
@@ -82,7 +82,7 @@ const MenuListItemsStaff = () => {
         </ListItem>
       </Link>
 
-      <Link to="/expenses">
+      <Link to="/expensesstaff">
         <ListItem button>
           <ListItemIcon className={classes.itemIcon}>
             <FaFileInvoiceDollar size="20" />
@@ -106,7 +106,7 @@ const MenuListItemsStaff = () => {
         </ListItem>
       </Link>
 
-      <Link to="/trainings">
+      <Link to="/trainingsstaff">
         <ListItem button>
           <ListItemIcon className={classes.itemIcon}>
             <FaPeopleCarry size="20" />
@@ -118,7 +118,7 @@ const MenuListItemsStaff = () => {
         </ListItem>
       </Link>
 
-      <Link to="/dailyallowances">
+      <Link to="/dailyallowancesstaff">
         <ListItem button>
           <ListItemIcon className={classes.itemIcon}>
             <FaCommentsDollar size="20" />
@@ -130,7 +130,7 @@ const MenuListItemsStaff = () => {
         </ListItem>
       </Link>
 
-      <Link to="/payslips">
+      <Link to="/payslipstaff">
         <ListItem button>
           <ListItemIcon className={classes.itemIcon}>
             <MonetizationOnIcon />
