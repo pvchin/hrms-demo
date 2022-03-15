@@ -51,8 +51,10 @@ import PayslipTableViewSummary from "./PayslipTableViewSummary";
 import LeavesTableApproval from "./LeaveTableApproval";
 //import ExportLeave2Excel from "./ExportLeave2Excel";
 //import ExportHoc2Excel from "./ExportHoc2Excel";
-import Export2ExcelDialog from "./Export2ExcelDialog";
+//import Export2ExcelDialog from "./Export2ExcelDialog";
 import { useHoc } from "./hoc/useHoc";
+
+const Export2ExcelDialog = React.lazy(() => import("./Export2ExcelDialog"));
 
 //const drawerWidth = 240;
 

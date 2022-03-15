@@ -2,18 +2,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { Navigate } from "react-router-dom";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Routes,
-  Route,
-  Link,
-} from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { Flex } from "@chakra-ui/react";
-// import Chart from "./Chart";
-// import Deposits from "./Deposits";
-// import Orders from "./Orders";
 
 import Appbanner from "./Appbanner";
 import Example from "./Example6";
@@ -33,8 +24,6 @@ import SingleEmployeeStaff from "./SingleEmployeeStaff";
 import SingleDailyAllowsDetlsStaff from "./SingleDailyAllowsDetlsStaff";
 import ApprovalManager from "./ApprovalManager";
 import UserAccessTable from "./UserAccessTable";
-
-
 
 import {
   Home,
@@ -58,12 +47,14 @@ import {
   PrivateRoute,
   Error,
 } from "../pages";
- 
+
 const AllEmployees = React.lazy(() => import("../pages/AllEmployeesPage"));
 const Hoc = React.lazy(() => import("../pages/HocPage"));
 const Leave = React.lazy(() => import("../pages/LeavePage"));
 const Expenses = React.lazy(() => import("../pages/ExpensesPage"));
-const DailyAllowancesStaff = React.lazy(() => import("../pages/DailyAllowancesStaffPage"));
+const DailyAllowancesStaff = React.lazy(() =>
+  import("../pages/DailyAllowancesStaffPage")
+);
 const LeaveStaff = React.lazy(() => import("../pages/LeaveStaffPage"));
 const Payroll = React.lazy(() => import("../pages/PayrollPage"));
 const Payslip = React.lazy(() => import("../pages/PayslipPage"));
@@ -74,7 +65,9 @@ const ExpensesStaff = React.lazy(() => import("../pages/ExpensesStaffPage"));
 const Departments = React.lazy(() => import("../pages/DepartmentsPage"));
 const Designation = React.lazy(() => import("../pages/DesignationPage"));
 const Allowances = React.lazy(() => import("../pages/AllowancesPage"));
-const DailyAllowances = React.lazy(() => import("../pages/DailyAllowancesPage"));
+const DailyAllowances = React.lazy(() =>
+  import("../pages/DailyAllowancesPage")
+);
 const Tables = React.lazy(() => import("../pages/TablesPage"));
 const SingleEmployee = React.lazy(() => import("./SingleEmployee"));
 const SingleLeave = React.lazy(() => import("./SingleLeave"));
@@ -126,622 +119,307 @@ export default function DashboardMain() {
         open={open}
       />
       <Flex>
-        {select === "Staff" && (
-          // <DashboardStaff
-          //   open={open}
-          //   handleDrawerOpen={handleDrawerOpen}
-          //   handleDrawerClose={handleDrawerClose}
-          // />
-          <Routes>
-            <Route exact path="/" element={<Home />} />
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <Home />
+              </React.Suspense>
+            }
+          />
+          <Route
+            exact
+            path="/payroll"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <Payroll />
+              </React.Suspense>
+            }
+          />
 
-            <Route
-              exact
-              path="/payroll"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Payroll />
-                </React.Suspense>
-              }
-            />
+          <Route
+            exact
+            path="/payslipstaff"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <PayslipStaff />
+              </React.Suspense>
+            }
+          />
 
-            <Route
-              exact
-              path="/payslips"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <PayslipStaff />
-                </React.Suspense>
-              }
-            />
+          <Route
+            exact
+            path="/singlepayslip"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <SinglePayslip />
+              </React.Suspense>
+            }
+          />
 
-            <Route
-              exact
-              path="/singlepayslip"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <SinglePayslip />
-                </React.Suspense>
-              }
-            />
+          <Route
+            exact
+            path="/batchpayslips"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <BatchPayslips />
+              </React.Suspense>
+            }
+          />
 
-            <Route
-              exact
-              path="/batchpayslips"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <BatchPayslips />
-                </React.Suspense>
-              }
-            />
+          <Route
+            exact
+            path="/leavestaff"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <LeaveStaff />
+              </React.Suspense>
+            }
+          />
 
-            <Route
-              exact
-              path="/leave"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <LeaveStaff />
-                </React.Suspense>
-              }
-            />
+          <Route
+            exact
+            path="/hoc"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <Hoc />
+              </React.Suspense>
+            }
+          />
 
-            <Route
-              exact
-              path="/hoc"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Hoc />
-                </React.Suspense>
-              }
-            />
+          <Route
+            exact
+            path="/trainingsstaff"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <TrainingsStaff />
+              </React.Suspense>
+            }
+          />
 
-            <Route
-              exact
-              path="/trainings"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <TrainingsStaff />
-                </React.Suspense>
-              }
-            />
+          <Route
+            exact
+            path="/dailyallowancesstaff"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <DailyAllowancesStaff />
+              </React.Suspense>
+            }
+          />
 
-            <Route
-              exact
-              path="/dailyallowances"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <DailyAllowancesStaff />
-                </React.Suspense>
-              }
-            />
+          <Route
+            exact
+            path="/singledailyallowsdetlsstaff"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <SingleDailyAllowsDetlsStaff />
+              </React.Suspense>
+            }
+          ></Route>
+          <Route
+            exact
+            path="/expensesstaff"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <ExpensesStaff />
+              </React.Suspense>
+            }
+          />
 
-            <Route
-              exact
-              path="/singledailyallowsdetlstable"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <SingleDailyAllowsDetlsStaff />
-                </React.Suspense>
-              }
-            ></Route>
-            <Route
-              exact
-              path="/expenses"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <ExpensesStaff />
-                </React.Suspense>
-              }
-            />
+          <Route
+            exact
+            path="/example"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <Example />
+              </React.Suspense>
+            }
+          />
+          <Route
+            exact
+            path="/singleemployeestaff"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <SingleEmployeeStaff />
+              </React.Suspense>
+            }
+          />
 
-            <Route
-              exact
-              path="/example"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Example />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/singleemployee"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <SingleEmployeeStaff />
-                </React.Suspense>
-              }
-            />
+          <Route
+            exact
+            path="/singleleave"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <SingleLeave />
+              </React.Suspense>
+            }
+          />
+          <Route
+            exact
+            path="/singleexpense"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <SingleExpense />
+              </React.Suspense>
+            }
+          />
+          <Route
+            exact
+            path="/singledailyallowance"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <SingleDailyAllowance />
+              </React.Suspense>
+            }
+          />
+          <Route
+            exact
+            path="/batchdailyallowances"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <BatchDailyAllowances />
+              </React.Suspense>
+            }
+          />
 
-            <Route
-              exact
-              path="/singleleave"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <SingleLeave />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/singleexpense"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <SingleExpense />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/singledailyallowance"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <SingleDailyAllowance />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/batchdailyallowances"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <BatchDailyAllowances />
-                </React.Suspense>
-              }
-            />
-            <Route exact path="/error" element={<Error />} />
+          <Route
+            exact
+            path="/allemployees"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <AllEmployees />
+              </React.Suspense>
+            }
+          ></Route>
 
-            <Route path="*" element={<Error />} />
-          </Routes>
-        )}
-        {select === "Admin" && (
-          // <DashboardAdmin
-          //   open={open}
-          //   handleDrawerOpen={handleDrawerOpen}
-          //   handleDrawerClose={handleDrawerClose}
-          // />
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Home />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/allemployees"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <AllEmployees />
-                </React.Suspense>
-              }
-            ></Route>
+          <Route
+            exact
+            path="/departments"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <Departments />
+              </React.Suspense>
+            }
+          />
+          <Route
+            exact
+            path="/designation"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <Designation />
+              </React.Suspense>
+            }
+          />
+          <Route
+            exact
+            path="/tables"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <Tables />
+              </React.Suspense>
+            }
+          />
+          <Route
+            exact
+            path="/allowances"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <Allowances />
+              </React.Suspense>
+            }
+          />
 
-            <Route
-              exact
-              path="/departments"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Departments />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/designation"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Designation />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/tables"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Tables />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/allowances"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Allowances />
-                </React.Suspense>
-              }
-            />
-        
-            <Route
-              exact
-              path="/example"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Example />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/singleemployee"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <SingleEmployee />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/singleleave"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <SingleLeave />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/singleexpense"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <SingleExpense />
-                </React.Suspense>
-              }
-            ></Route>
-            <Route exact path="/error" element={<Error />}></Route>
-            <Route exact path="/leave" element={<Leave />}></Route>
-            <Route path="*" element={<Error />}></Route>
-          </Routes>
-        )}
-        {select === "OpsSpvr" && (
-          // <DashboardOpsSpvr
-          //   open={open}
-          //   handleDrawerOpen={handleDrawerOpen}
-          //   handleDrawerClose={handleDrawerClose}
-          // />
-          <Routes>
-            <Route exact path="/" element={<Home />}></Route>
-            <Route
-              exact
-              path="/allemployees"
-              element={<AllEmployees />}
-            ></Route>
+          <Route
+            exact
+            path="/singleemployee"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <SingleEmployee />
+              </React.Suspense>
+            }
+          />
 
-            <Route exact path="/departments" element={<Departments />}></Route>
-            <Route exact path="/designation" element={<Designation />}></Route>
-            <Route exact path="/tables" element={<Tables />}></Route>
-            <Route exact path="/allowances" element={<Allowances />}></Route>
-          
-            <Route exact path="/example" element={<Example />}></Route>
-            <Route
-              exact
-              path="/singleemployee"
-              element={<SingleEmployee />}
-            ></Route>
-            <Route exact path="/singleleave" element={<SingleLeave />}></Route>
-            <Route
-              exact
-              path="/singleexpense"
-              element={<SingleExpense />}
-            ></Route>
-            <Route exact path="/error" element={<Error />}></Route>
-            <Route exact path="/leave" element={<Leave />}></Route>
-            <Route path="*" element={<Error />}></Route>
-          </Routes>
-        )}
-        {select === "AdminManager" && (
-          // <DashboardAdminManager
-          //   open={open}
-          //   handleDrawerOpen={handleDrawerOpen}
-          //   handleDrawerClose={handleDrawerClose}
-          // />
-          <Routes>
-            <Route exact path="/" element={<Home />}></Route>
-            <Route
-              exact
-              path="/allemployees"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <AllEmployees />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/payroll"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Payroll />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/payslip"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Payslip />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/singlepayslip"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <SinglePayslip />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/batchpayslips"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <BatchPayslips />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/leave"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Leave />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/payrun"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Payrun />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/payrunbatch"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Payrunbatch />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/dailyallowances"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <DailyAllowances />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/singledailyallowsdetlstable"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <SingleDailyAllowsDetls />
-                </React.Suspense>
-              }
-            />
-            <Route exact path="/expenses" element={<Expenses />}></Route>
-            <Route exact path="/departments" element={<Departments />}></Route>
-            <Route exact path="/designation" element={<Designation />}></Route>
-            <Route exact path="/tables" element={<Tables />}></Route>
-            <Route exact path="/allowances" element={<Allowances />}></Route>
-        
-            <Route exact path="/example" element={<Example />}></Route>
-            <Route
-              exact
-              path="/singleemployee"
-              element={<SingleEmployee />}
-            ></Route>
-            <Route exact path="/singleleave" element={<SingleLeave />}></Route>
-            <Route
-              exact
-              path="/singleexpense"
-              element={<SingleExpense />}
-            ></Route>
-            <Route
-              exact
-              path="/singledailyallowance"
-              element={<SingleDailyAllowance />}
-            ></Route>
-            <Route
-              exact
-              path="/batchdailyallowances"
-              element={<BatchDailyAllowances />}
-            ></Route>
-            <Route exact path="/error" element={<Error />}></Route>
-            <Route path="*" element={<Error />}></Route>
-          </Routes>
-        )}
-        {select === "Manager" && (
-          // <DashboardManager
-          //   open={open}
-          //   handleDrawerOpen={handleDrawerOpen}
-          //   handleDrawerClose={handleDrawerClose}
-          // />
-          <Routes>
-            <Route exact path="/" element={<Home />}></Route>
+          <Route
+            exact
+            path="/payslip"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <Payslip />
+              </React.Suspense>
+            }
+          />
 
-            <Route
-              exact
-              path="/allemployees"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <AllEmployees />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/payroll"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Payroll />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/payslip"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <Payslip />
-                </React.Suspense>
-              }
-            />
-            <Route
-              exact
-              path="/singlepayslip"
-              element={<SinglePayslip />}
-            ></Route>
-            <Route
-              exact
-              path="/batchpayslips"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <BatchPayslips />
-                </React.Suspense>
-              }
-            />
-            <Route exact path="/approval" element={<ApprovalManager />}></Route>
-            <Route exact path="/leave" element={<Leave />}></Route>
-            <Route exact path="/payrun" element={<Payrun />}></Route>
-            <Route exact path="/payrunbatch" element={<Payrunbatch />}></Route>
-            <Route
-              exact
-              path="/dailyallowances"
-              element={<DailyAllowances />}
-            ></Route>
-            <Route
-              exact
-              path="/singledailyallowsdetlstable"
-              element={<SingleDailyAllowsDetls />}
-            ></Route>
-            <Route exact path="/expenses" element={<Expenses />}></Route>
-            <Route exact path="/departments" element={<Departments />}></Route>
-            <Route
-              exact
-              path="/useraccess"
-              element={<UserAccessTable />}
-            ></Route>
-            <Route exact path="/designation" element={<Designation />}></Route>
-            <Route exact path="/tables" element={<Tables />}></Route>
-            <Route exact path="/allowances" element={<Allowances />}></Route>
-         
-            <Route exact path="/example" element={<Example />}></Route>
-            <Route
-              exact
-              path="/singleemployee"
-              element={<SingleEmployee />}
-            ></Route>
-            <Route exact path="/singleleave" element={<SingleLeave />}></Route>
-            <Route
-              exact
-              path="/singleexpense"
-              element={<SingleExpense />}
-            ></Route>
-            <Route
-              exact
-              path="/singledailyallowance"
-              element={<SingleDailyAllowance />}
-            ></Route>
-            <Route
-              exact
-              path="/batchdailyallowances"
-              element={<BatchDailyAllowances />}
-            ></Route>
-            <Route exact path="/error" element={<Error />}></Route>
-            <Route path="*" element={<Error />}></Route>
-          </Routes>
-        )}
-        {select === "Director" && (
-          // <DashboardDirector
-          //   open={open}
-          //   handleDrawerOpen={handleDrawerOpen}
-          //   handleDrawerClose={handleDrawerClose}
-          // />
-          <Routes>
-            <Route exact path="/" element={<Home />}></Route>
+          <Route
+            exact
+            path="/leave"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <Leave />
+              </React.Suspense>
+            }
+          />
+          <Route
+            exact
+            path="/payrun"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <Payrun />
+              </React.Suspense>
+            }
+          />
+          <Route
+            exact
+            path="/payrunbatch"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <Payrunbatch />
+              </React.Suspense>
+            }
+          />
+          <Route
+            exact
+            path="/dailyallowances"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <DailyAllowances />
+              </React.Suspense>
+            }
+          />
+          <Route
+            exact
+            path="/singledailyallowsdetls"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <SingleDailyAllowsDetls />
+              </React.Suspense>
+            }
+          />
 
-            <Route
-              exact
-              path="/allemployees"
-              element={<AllEmployees />}
-            ></Route>
-            <Route exact path="/payroll" element={<Payroll />}></Route>
-            <Route exact path="/payslip" element={<Payslip />}></Route>
-            <Route
-              exact
-              path="/singlepayslip"
-              element={<SinglePayslip />}
-            ></Route>
-            <Route
-              exact
-              path="/batchpayslips"
-              element={<BatchPayslips />}
-            ></Route>
-            <Route exact path="/approval" element={<ApprovalManager />}></Route>
-            <Route exact path="/leave" element={<Leave />}></Route>
-            <Route exact path="/payrun" element={<Payrun />}></Route>
-            <Route exact path="/payrunbatch" element={<Payrunbatch />}></Route>
-            <Route
-              exact
-              path="/dailyallowances"
-              element={<DailyAllowances />}
-            ></Route>
-            <Route
-              exact
-              path="/singledailyallowsdetlstable"
-              element={<SingleDailyAllowsDetls />}
-            ></Route>
-            <Route exact path="/expenses" element={<Expenses />}></Route>
-            <Route exact path="/departments" element={<Departments />}></Route>
-            <Route
-              exact
-              path="/useraccess"
-              element={<UserAccessTable />}
-            ></Route>
-            <Route exact path="/designation" element={<Designation />}></Route>
-            <Route exact path="/tables" element={<Tables />}></Route>
-            <Route exact path="/allowances" element={<Allowances />}></Route>
-      
-            <Route exact path="/example" element={<Example />}></Route>
-            <Route
-              exact
-              path="/singleemployee"
-              element={<SingleEmployee />}
-            ></Route>
-            <Route exact path="/singleleave" element={<SingleLeave />}></Route>
-            <Route
-              exact
-              path="/singleexpense"
-              element={<SingleExpense />}
-            ></Route>
-            <Route
-              exact
-              path="/singledailyallowance"
-              element={<SingleDailyAllowance />}
-            ></Route>
-            <Route
-              exact
-              path="/batchdailyallowances"
-              element={<BatchDailyAllowances />}
-            ></Route>
-            <Route exact path="/error" element={<Error />}></Route>
-            <Route path="*" element={<Error />}></Route>
-          </Routes>
-        )}
+          <Route
+            exact
+            path="/approvalmanager"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <ApprovalManager />
+              </React.Suspense>
+            }
+          ></Route>
+
+          <Route
+            exact
+            path="/useraccesstable"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <UserAccessTable />
+              </React.Suspense>
+            }
+          />
+
+          <Route exact path="/error" element={<Error />}></Route>
+          <Route path="*" element={<Error />}></Route>
+        </Routes>
       </Flex>
       {/* </Router> */}
     </div>
