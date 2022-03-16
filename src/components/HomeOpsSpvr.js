@@ -30,20 +30,41 @@ import { useExpensesContext } from "../context/expenses_context";
 import { usePayslipsContext } from "../context/payslips_context";
 import { useDailyAllowancesContext } from "../context/dailyallowances_context";
 //import LeaveTableViewAdmin from "./LeaveTableViewAdmin";
-import LeaveTableAdmin from "./LeaveTableManager";
+//import LeaveTableAdmin from "./LeaveTableManager";
 //import ExpenseTableView from "./ExpenseTableView";
-import ExpenseTableAdmin from "./ExpenseTableAdmin";
+//import ExpenseTableAdmin from "./ExpenseTableAdmin";
 //import PayslipTableView from "./PayslipTableView";
-import PayslipTableAdmin from "./PayslipTableAdmin";
+//import PayslipTableAdmin from "./PayslipTableAdmin";
 //import DailyAllowancesTableView from "./DailyAllowancesTableView";
-import DailyAllowancesTableAdmin from "./DailyAllowancesTableAdmin";
-import DailyAllowanceTableViewSummary from "./DailyAllowancesTableViewSummary";
+//import DailyAllowancesTableAdmin from "./DailyAllowancesTableAdmin";
+//import DailyAllowanceTableViewSummary from "./DailyAllowancesTableViewSummary";
 //import TrainingsTableViewAdmin from "./TrainingsTableViewAdmin";
 //import WPExpiryViewAdmin from "./WPExpiryViewAdmin";
 //import EmployeeTableLeaveView from "./EmployeeTableLeaveView";
-import LeavesTableViewSummary from "./LeavesTableViewSummary";
-import LeavesTableApproval from "./LeaveTableApproval";
-import DailyAllowancesTableApproval from "./DailyAllowancesTableVeryfy";
+//import LeavesTableViewSummary from "./LeavesTableViewSummary";
+//import LeavesTableApproval from "./LeaveTableApproval";
+//import DailyAllowancesTableApproval from "./DailyAllowancesTableVeryfy";
+
+const LeaveTableAdmin = React.lazy(() => import("./LeaveTableAdmin"));
+const ExpenseTableAdmin = React.lazy(() => import("./ExpenseTableAdmin"));
+// const PayslipTableAdmin = React.lazy(() =>
+//   import("./PayslipTableAdmin")
+// );
+const DailyAllowancesTableAdmin = React.lazy(() =>
+  import("./DailyAllowancesTableAdmin")
+);
+const DailyAllowancesTableViewSummary = React.lazy(() =>
+  import("./DailyAllowancesTableViewSummary")
+);
+const LeavesTableViewSummary = React.lazy(() =>
+  import("./LeavesTableViewSummary")
+);
+const LeaveTableApproval = React.lazy(() => import("./LeaveTableApproval"));
+const DailyAllowancesTableVerify = React.lazy(() => import("./DailyAllowancesTableVerify"));
+
+
+
+
 
 const drawerWidth = 240;
 
@@ -468,7 +489,7 @@ const EmployeeView = () => {
                   <SummaryTableView columns={columns} data={data} />
                 </TabPanel> */}
                             <TabPanel>
-                              <DailyAllowanceTableViewSummary
+                              <DailyAllowancesTableViewSummary
                                 year={
                                   selectsiteallowsyear
                                     ? selectsiteallowsyear
@@ -478,7 +499,7 @@ const EmployeeView = () => {
                               />
                             </TabPanel>
                             <TabPanel>
-                              <DailyAllowanceTableViewSummary
+                              <DailyAllowancesTableViewSummary
                                 year={
                                   selectsiteallowsyear
                                     ? selectsiteallowsyear
@@ -488,7 +509,7 @@ const EmployeeView = () => {
                               />
                             </TabPanel>
                             <TabPanel>
-                              <DailyAllowanceTableViewSummary
+                              <DailyAllowancesTableViewSummary
                                 year={
                                   selectsiteallowsyear
                                     ? selectsiteallowsyear
@@ -498,7 +519,7 @@ const EmployeeView = () => {
                               />
                             </TabPanel>
                             <TabPanel>
-                              <DailyAllowanceTableViewSummary
+                              <DailyAllowancesTableViewSummary
                                 year={
                                   selectsiteallowsyear
                                     ? selectsiteallowsyear
@@ -508,7 +529,7 @@ const EmployeeView = () => {
                               />
                             </TabPanel>
                             <TabPanel>
-                              <DailyAllowanceTableViewSummary
+                              <DailyAllowancesTableViewSummary
                                 year={
                                   selectsiteallowsyear
                                     ? selectsiteallowsyear
@@ -518,13 +539,13 @@ const EmployeeView = () => {
                               />
                             </TabPanel>
                             <TabPanel>
-                              <DailyAllowanceTableViewSummary
+                              <DailyAllowancesTableViewSummary
                                 year={currentyear}
                                 month="06"
                               />
                             </TabPanel>
                             <TabPanel>
-                              <DailyAllowanceTableViewSummary
+                              <DailyAllowancesTableViewSummary
                                 year={
                                   selectsiteallowsyear
                                     ? selectsiteallowsyear
@@ -534,7 +555,7 @@ const EmployeeView = () => {
                               />
                             </TabPanel>
                             <TabPanel>
-                              <DailyAllowanceTableViewSummary
+                              <DailyAllowancesTableViewSummary
                                 year={
                                   selectsiteallowsyear
                                     ? selectsiteallowsyear
@@ -544,7 +565,7 @@ const EmployeeView = () => {
                               />
                             </TabPanel>
                             <TabPanel>
-                              <DailyAllowanceTableViewSummary
+                              <DailyAllowancesTableViewSummary
                                 year={
                                   selectsiteallowsyear
                                     ? selectsiteallowsyear
@@ -554,7 +575,7 @@ const EmployeeView = () => {
                               />
                             </TabPanel>
                             <TabPanel>
-                              <DailyAllowanceTableViewSummary
+                              <DailyAllowancesTableViewSummary
                                 year={
                                   selectsiteallowsyear
                                     ? selectsiteallowsyear
@@ -564,7 +585,7 @@ const EmployeeView = () => {
                               />
                             </TabPanel>
                             <TabPanel>
-                              <DailyAllowanceTableViewSummary
+                              <DailyAllowancesTableViewSummary
                                 year={
                                   selectsiteallowsyear
                                     ? selectsiteallowsyear
@@ -574,7 +595,7 @@ const EmployeeView = () => {
                               />
                             </TabPanel>
                             <TabPanel>
-                              <DailyAllowanceTableViewSummary
+                              <DailyAllowancesTableViewSummary
                                 year={
                                   selectsiteallowsyear
                                     ? selectsiteallowsyear
@@ -601,7 +622,7 @@ const EmployeeView = () => {
                     borderRadius="lg"
                     overflow="scroll"
                   >
-                    <LeavesTableApproval />
+                    <LeaveTableApproval />
                   </Box>
                 </TabPanel>
                 <TabPanel>
@@ -615,7 +636,7 @@ const EmployeeView = () => {
                     borderRadius="lg"
                     overflow="scroll"
                   >
-                    <DailyAllowancesTableApproval />
+                    <DailyAllowancesTableVerify />
                   </Box>
                 </TabPanel>
               </TabPanels>
@@ -654,7 +675,7 @@ const EmployeeView = () => {
             handleDialogClose={handleExpenseDialogClose}
           />
         </CustomDialog>
-        <CustomDialog
+        {/* <CustomDialog
           isOpen={isPayslipDialogOpen}
           handleClose={handlePayslipDialogClose}
           title=""
@@ -667,7 +688,7 @@ const EmployeeView = () => {
             payslipsdata={payslipsdata}
             handleDialogClose={handlePayslipDialogClose}
           />
-        </CustomDialog>
+        </CustomDialog> */}
         <CustomDialog
           isOpen={isDailyAllowancesDialogOpen}
           handleClose={handleDailyAllowancesDialogClose}
