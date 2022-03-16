@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 //import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import { Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react"
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -58,7 +58,7 @@ const MenuListItemsStaff = () => {
         </ListItem>
       </Link>
 
-      <Link to="/singleemployee">
+      <Link to="/singleemployeestaff">
         <ListItem button>
           <ListItemIcon className={classes.itemIcon}>
             <PeopleIcon />

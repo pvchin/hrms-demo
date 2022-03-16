@@ -1,10 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { Redirect, useHistory } from "react-router-dom";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { Container, Flex, Heading } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 // import Chart from "./Chart";
 // import Deposits from "./Deposits";
 // import Orders from "./Orders";
@@ -23,28 +23,31 @@ import { loginLevelState } from "./data/atomdata";
 import Login from "./LoginForm";
 import Payrun from "./Payrun";
 import Payrunbatch from "./Payrunbatch";
-import DashboardStaff from "./DashboardStaff";
-import DashboardAdmin from "./DashboardAdmin";
-import DashboardOpsSpvr from "./DashboardOpsSpvr";
-import DashboardAdminManager from "./DashboardAdminManager";
-import DashboardManager from "./DashboardManager";
-import DashboardDirector from "./DashboardDirector";
+import SingleEmployeeStaff from "./SingleEmployeeStaff";
+import SingleDailyAllowsDetlsStaff from "./SingleDailyAllowsDetlsStaff";
+import ApprovalManager from "./ApprovalManager";
+import UserAccessTable from "./UserAccessTable";
 
 import {
   Home,
   AllEmployees,
   Leave,
+  DailyAllowancesStaff,
   Expenses,
+  Hoc,
+  LeaveStaff,
   Payslip,
   BatchPayslips,
   Payroll,
+  PayslipStaff,
+  TrainingsStaff,
+  ExpensesStaff,
   Departments,
   Designation,
   Tables,
   Clients,
   Allowances,
   DailyAllowances,
-  // PrivateRoute,
   Error,
 } from "../pages";
 
@@ -52,7 +55,7 @@ const drawerWidth = 0;
 
 export default function DashboardMain() {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
   const [open, setOpen] = React.useState(true);
   const [login, setLogin] = React.useState(true);
@@ -69,7 +72,7 @@ export default function DashboardMain() {
   const handleSelect = (title) => {
     setLoginLevel({ ...loginLevel, loginLevel: title });
     setSelect(title);
-    <Redirect to="/" />;
+     <navigate to="/" />;
   };
 
   //  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -80,60 +83,461 @@ export default function DashboardMain() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <Router>
+      
         <Appbanner
           handleDrawerOpen={handleDrawerOpen}
           handleDrawerClose={handleDrawerClose}
           handleSelect={handleSelect}
           open={open}
           setLogin={setLogin}
-          title="HRMS V1.4 - AppSmiths Sutera Sdn Bhd"
+          title="HRMS V1.6 - AppSmiths Sutera Sdn Bhd"
+        />
+        <SideDrawer
+          handleDrawerOpen={handleDrawerOpen}
+          handleDrawerClose={handleDrawerClose}
+          open={open}
         />
         <Flex>
           {select === "Staff" && (
-            <DashboardStaff
-              open={open}
-              handleDrawerOpen={handleDrawerOpen}
-              handleDrawerClose={handleDrawerClose}
-            />
+            // <DashboardStaff
+            //   open={open}
+            //   handleDrawerOpen={handleDrawerOpen}
+            //   handleDrawerClose={handleDrawerClose}
+            // />
+            <Routes>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route exact path="/payroll">
+                <Payroll />
+              </Route>
+              <Route exact path="/payslips">
+                <PayslipStaff />
+              </Route>
+              <Route exact path="/singlepayslip">
+                <SinglePayslip />
+              </Route>
+              <Route exact path="/batchpayslips">
+                <BatchPayslips />
+              </Route>
+              <Route exact path="/leave">
+                <LeaveStaff />
+              </Route>
+              <Route exact path="/hoc">
+                <Hoc />
+              </Route>
+              <Route exact path="/trainings">
+                <TrainingsStaff />
+              </Route>
+
+              <Route exact path="/dailyallowances">
+                <DailyAllowancesStaff />
+              </Route>
+              <Route exact path="/singledailyallowsdetlstable">
+                <SingleDailyAllowsDetlsStaff />
+              </Route>
+              <Route exact path="/expenses">
+                <ExpensesStaff />
+              </Route>
+              <Route exact path="/example">
+                <Example />
+              </Route>
+              <Route exact path="/singleemployee">
+                <SingleEmployeeStaff />
+              </Route>
+              <Route exact path="/singleleave">
+                <SingleLeave />
+              </Route>
+              <Route exact path="/singleexpense">
+                <SingleExpense />
+              </Route>
+              <Route exact path="/singledailyallowance">
+                <SingleDailyAllowance />
+              </Route>
+              <Route exact path="/batchdailyallowances">
+                <BatchDailyAllowances />
+              </Route>
+              <Route exact path="/error">
+                <Error />
+              </Route>
+              <Route path="*">
+                <Error />
+              </Route>
+            </Routes>
           )}
           {select === "Admin" && (
-            <DashboardAdmin
-              open={open}
-              handleDrawerOpen={handleDrawerOpen}
-              handleDrawerClose={handleDrawerClose}
-            />
+            // <DashboardAdmin
+            //   open={open}
+            //   handleDrawerOpen={handleDrawerOpen}
+            //   handleDrawerClose={handleDrawerClose}
+            // />
+            <Routes>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route exact path="/allemployees">
+                <AllEmployees />
+              </Route>
+
+              <Route exact path="/departments">
+                <Departments />
+              </Route>
+              <Route exact path="/designation">
+                <Designation />
+              </Route>
+              <Route exact path="/tables">
+                <Tables />
+              </Route>
+              <Route exact path="/allowances">
+                <Allowances />
+              </Route>
+              <Route exact path="/clients">
+                <Clients />
+              </Route>
+              <Route exact path="/example">
+                <Example />
+              </Route>
+              <Route exact path="/singleemployee">
+                <SingleEmployee />
+              </Route>
+              <Route exact path="/singleleave">
+                <SingleLeave />
+              </Route>
+              <Route exact path="/singleexpense">
+                <SingleExpense />
+              </Route>
+              <Route exact path="/error">
+                <Error />
+              </Route>
+              <Route exact path="/leave">
+                <Leave />
+              </Route>
+              <Route path="*">
+                <Error />
+              </Route>
+            </Routes>
           )}
           {select === "OpsSpvr" && (
-            <DashboardOpsSpvr
-              open={open}
-              handleDrawerOpen={handleDrawerOpen}
-              handleDrawerClose={handleDrawerClose}
-            />
+            // <DashboardOpsSpvr
+            //   open={open}
+            //   handleDrawerOpen={handleDrawerOpen}
+            //   handleDrawerClose={handleDrawerClose}
+            // />
+            <Routes>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route exact path="/allemployees">
+                <AllEmployees />
+              </Route>
+
+              <Route exact path="/departments">
+                <Departments />
+              </Route>
+              <Route exact path="/designation">
+                <Designation />
+              </Route>
+              <Route exact path="/tables">
+                <Tables />
+              </Route>
+              <Route exact path="/allowances">
+                <Allowances />
+              </Route>
+              <Route exact path="/clients">
+                <Clients />
+              </Route>
+              <Route exact path="/example">
+                <Example />
+              </Route>
+              <Route exact path="/singleemployee">
+                <SingleEmployee />
+              </Route>
+              <Route exact path="/singleleave">
+                <SingleLeave />
+              </Route>
+              <Route exact path="/singleexpense">
+                <SingleExpense />
+              </Route>
+              <Route exact path="/error">
+                <Error />
+              </Route>
+              <Route exact path="/leave">
+                <Leave />
+              </Route>
+              <Route path="*">
+                <Error />
+              </Route>
+            </Routes>
           )}
           {select === "AdminManager" && (
-            <DashboardAdminManager
-              open={open}
-              handleDrawerOpen={handleDrawerOpen}
-              handleDrawerClose={handleDrawerClose}
-            />
+            // <DashboardAdminManager
+            //   open={open}
+            //   handleDrawerOpen={handleDrawerOpen}
+            //   handleDrawerClose={handleDrawerClose}
+            // />
+            <Routes>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route exact path="/allemployees">
+                <AllEmployees />
+              </Route>
+              <Route exact path="/payroll">
+                <Payroll />
+              </Route>
+              <Route exact path="/payslip">
+                <Payslip />
+              </Route>
+              <Route exact path="/singlepayslip">
+                <SinglePayslip />
+              </Route>
+              <Route exact path="/batchpayslips">
+                <BatchPayslips />
+              </Route>
+              <Route exact path="/leave">
+                <Leave />
+              </Route>
+              <Route exact path="/payrun">
+                <Payrun />
+              </Route>
+              <Route exact path="/payrunbatch">
+                <Payrunbatch />
+              </Route>
+              <Route exact path="/dailyallowances">
+                <DailyAllowances />
+              </Route>
+              <Route exact path="/singledailyallowsdetlstable">
+                <SingleDailyAllowsDetls />
+              </Route>
+              <Route exact path="/expenses">
+                <Expenses />
+              </Route>
+              <Route exact path="/departments">
+                <Departments />
+              </Route>
+              <Route exact path="/designation">
+                <Designation />
+              </Route>
+              <Route exact path="/tables">
+                <Tables />
+              </Route>
+              <Route exact path="/allowances">
+                <Allowances />
+              </Route>
+              <Route exact path="/clients">
+                <Clients />
+              </Route>
+              <Route exact path="/example">
+                <Example />
+              </Route>
+              <Route exact path="/singleemployee">
+                <SingleEmployee />
+              </Route>
+              <Route exact path="/singleleave">
+                <SingleLeave />
+              </Route>
+              <Route exact path="/singleexpense">
+                <SingleExpense />
+              </Route>
+              <Route exact path="/singledailyallowance">
+                <SingleDailyAllowance />
+              </Route>
+              <Route exact path="/batchdailyallowances">
+                <BatchDailyAllowances />
+              </Route>
+              <Route exact path="/error">
+                <Error />
+              </Route>
+              <Route path="*">
+                <Error />
+              </Route>
+            </Routes>
           )}
           {select === "Manager" && (
-            <DashboardManager
-              open={open}
-              handleDrawerOpen={handleDrawerOpen}
-              handleDrawerClose={handleDrawerClose}
-            />
+            // <DashboardManager
+            //   open={open}
+            //   handleDrawerOpen={handleDrawerOpen}
+            //   handleDrawerClose={handleDrawerClose}
+            // />
+            <Routes>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              {/* <Route exact path="/home">
+              <Home />
+            </Route> */}
+              <Route exact path="/allemployees">
+                <AllEmployees />
+              </Route>
+              <Route exact path="/payroll">
+                <Payroll />
+              </Route>
+              <Route exact path="/payslip">
+                <Payslip />
+              </Route>
+              <Route exact path="/singlepayslip">
+                <SinglePayslip />
+              </Route>
+              <Route exact path="/batchpayslips">
+                <BatchPayslips />
+              </Route>
+              <Route exact path="/approval">
+                <ApprovalManager />
+              </Route>
+              <Route exact path="/leave">
+                <Leave />
+              </Route>
+              <Route exact path="/payrun">
+                <Payrun />
+              </Route>
+              <Route exact path="/payrunbatch">
+                <Payrunbatch />
+              </Route>
+              <Route exact path="/dailyallowances">
+                <DailyAllowances />
+              </Route>
+              <Route exact path="/singledailyallowsdetlstable">
+                <SingleDailyAllowsDetls />
+              </Route>
+              <Route exact path="/expenses">
+                <Expenses />
+              </Route>
+              <Route exact path="/departments">
+                <Departments />
+              </Route>
+              <Route exact path="/useraccess">
+                <UserAccessTable />
+              </Route>
+              <Route exact path="/designation">
+                <Designation />
+              </Route>
+              <Route exact path="/tables">
+                <Tables />
+              </Route>
+              <Route exact path="/allowances">
+                <Allowances />
+              </Route>
+              <Route exact path="/clients">
+                <Clients />
+              </Route>
+              <Route exact path="/example">
+                <Example />
+              </Route>
+              <Route exact path="/singleemployee">
+                <SingleEmployee />
+              </Route>
+              <Route exact path="/singleleave">
+                <SingleLeave />
+              </Route>
+              <Route exact path="/singleexpense">
+                <SingleExpense />
+              </Route>
+              <Route exact path="/singledailyallowance">
+                <SingleDailyAllowance />
+              </Route>
+              <Route exact path="/batchdailyallowances">
+                <BatchDailyAllowances />
+              </Route>
+              <Route exact path="/error">
+                <Error />
+              </Route>
+              <Route path="*">
+                <Error />
+              </Route>
+            </Routes>
           )}
           {select === "Director" && (
-            <DashboardDirector
-              open={open}
-              handleDrawerOpen={handleDrawerOpen}
-              handleDrawerClose={handleDrawerClose}
-            />
+            // <DashboardDirector
+            //   open={open}
+            //   handleDrawerOpen={handleDrawerOpen}
+            //   handleDrawerClose={handleDrawerClose}
+            // />
+            <Routes>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route exact path="/allemployees">
+                <AllEmployees />
+              </Route>
+              <Route exact path="/payroll">
+                <Payroll />
+              </Route>
+              <Route exact path="/payslip">
+                <Payslip />
+              </Route>
+              <Route exact path="/singlepayslip">
+                <SinglePayslip />
+              </Route>
+              <Route exact path="/batchpayslips">
+                <BatchPayslips />
+              </Route>
+              <Route exact path="/approval">
+                <ApprovalManager />
+              </Route>
+              <Route exact path="/leave">
+                <Leave />
+              </Route>
+              <Route exact path="/payrun">
+                <Payrun />
+              </Route>
+              <Route exact path="/payrunbatch">
+                <Payrunbatch />
+              </Route>
+              <Route exact path="/dailyallowances">
+                <DailyAllowances />
+              </Route>
+              <Route exact path="/singledailyallowsdetlstable">
+                <SingleDailyAllowsDetls />
+              </Route>
+              <Route exact path="/expenses">
+                <Expenses />
+              </Route>
+              <Route exact path="/departments">
+                <Departments />
+              </Route>
+              <Route exact path="/useraccess">
+                <UserAccessTable />
+              </Route>
+              <Route exact path="/designation">
+                <Designation />
+              </Route>
+              <Route exact path="/tables">
+                <Tables />
+              </Route>
+              <Route exact path="/allowances">
+                <Allowances />
+              </Route>
+              <Route exact path="/clients">
+                <Clients />
+              </Route>
+              <Route exact path="/example">
+                <Example />
+              </Route>
+              <Route exact path="/singleemployee">
+                <SingleEmployee />
+              </Route>
+              <Route exact path="/singleleave">
+                <SingleLeave />
+              </Route>
+              <Route exact path="/singleexpense">
+                <SingleExpense />
+              </Route>
+              <Route exact path="/singledailyallowance">
+                <SingleDailyAllowance />
+              </Route>
+              <Route exact path="/batchdailyallowances">
+                <BatchDailyAllowances />
+              </Route>
+              <Route exact path="/error">
+                <Error />
+              </Route>
+              <Route path="*">
+                <Error />
+              </Route>
+            </Routes>
           )}
         </Flex>
-      </Router>
+      
     </div>
   );
 }

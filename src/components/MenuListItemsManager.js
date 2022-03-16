@@ -67,7 +67,7 @@ const MenuListItems = () => {
         </ListItem>
       </Link>
 
-      <Link to="/approval">
+      <Link to="/approvalmanager">
         <ListItem button>
           <ListItemIcon className={classes.itemIcon}>
             <MdCheckCircle size="20" />
@@ -140,7 +140,7 @@ const MenuListItems = () => {
         </List>
       </Collapse>
 
-      <Link to="/useraccess">
+      <Link to="/useraccesstable">
         <ListItem button>
           <ListItemIcon className={classes.itemIcon}>
             <AiFillSetting size="20" />

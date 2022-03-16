@@ -51,18 +51,18 @@ export default function PayslipTable() {
   const classes = useStyles();
   const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
   const { employees } = useEmployees();
-  const { payslips, setFilter } = usePayslips();
-
+    const { payslips, setFilter } = usePayslips();
+  
   //const {
-  //deletePayslip,
-  //loadPayslips,
-  //getSinglePayslip,
-  //setEditPayslipID,
-  //setIsPayslipEditingOn,
-  //setIsPayslipEditingOff,
-  //resetSinglePayslip,
-  //payslip_period,
-  //payslip_endmonthdate,
+    //deletePayslip,
+    //loadPayslips,
+    //getSinglePayslip,
+    //setEditPayslipID,
+    //setIsPayslipEditingOn,
+    //setIsPayslipEditingOff,
+    //resetSinglePayslip,
+    //payslip_period,
+    //payslip_endmonthdate,
   //} = usePayslipsContext();
   //console.log("payslipstable", payslips)
   const exportPdfTable = ({ data, emp }) => {

@@ -4,14 +4,6 @@ import { TextField, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useRecoilState } from "recoil";
 import { loginLevelState } from "./data/atomdata";
-//import AddIcon from "@material-ui/icons/Add";
-//import EditIcon from "@material-ui/icons/Edit";
-//import DeleteIcon from "@material-ui/icons/Delete";
-//import CheckIcon from "@material-ui/icons/Check";
-//import SearchIcon from "@material-ui/icons/Search";
-//import LeaveForm from "./LeaveForm";
-//import { CustomDialog } from "../helpers/CustomDialog";
-//import { AlertDialog } from "../helpers/AlertDialogBox";
 import { useLeavesContext } from "../context/leaves_context";
 //import { useEmployeesContext } from "../context/employees_context";
 

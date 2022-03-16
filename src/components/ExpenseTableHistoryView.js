@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { useExpensesStatus } from "./expenses/useExpensesStatus";
 
-//const FILTERSTRING = "Pending";
+const FILTERSTRING = "Pending";
 
 const columns = [
   {

@@ -26,7 +26,7 @@ const Appbanner = ({
   open,
   title,
 }) => {
-  let navigate = useNavigate()
+  let navigate = useNavigate();
   const classes = useStyles();
   const { user, clearUser } = useUser();
   const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);

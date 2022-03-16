@@ -485,7 +485,7 @@ const Payrun = () => {
                     label="Pay Frequency"
                     variant="filled"
                     required
-                    //defaultValue="Monthly"
+                    defaultValue="Monthly"
                     style={{ width: "100%" }}
                     name="payfreq"
                     value={input.payfreq}

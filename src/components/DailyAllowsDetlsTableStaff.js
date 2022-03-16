@@ -277,7 +277,7 @@ export default function DailyAllowsDetlsTableStaff() {
       status: "Submitted",
     });
     handleSentEmail(allowsdata);
-    navigate("/dailyallowances");
+    navigate("/dailyallowancesstaff");
     toast({
       title: "Site Allowances table being submitted!",
       status: "success",
@@ -295,7 +295,7 @@ export default function DailyAllowsDetlsTableStaff() {
     //   totaljobbonus: totals.totalbonus,
     //   totalperdiem: totals.totaldiem,
     // });
-    navigate("/dailyallowances");
+    navigate("/dailyallowancesstaff");
     // toast({
     //   title: "Site Allowances table being submitted!",
     //   status: "success",

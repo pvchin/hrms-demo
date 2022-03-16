@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
-//import AddIcon from "@material-ui/icons/Add";
-//import EditIcon from "@material-ui/icons/Edit";
-//import DeleteIcon from "@material-ui/icons/Delete";
-//import CheckIcon from "@material-ui/icons/Check";
-//import SearchIcon from "@material-ui/icons/Search";
-//import LeaveForm from "./LeaveForm";
-//import { CustomDialog } from "../helpers/CustomDialog";
-//import { AlertDialog } from "../helpers/AlertDialogBox";
 import { useExpenses } from "./expenses/useExpenses";
-//import { useEmployeesContext } from "../context/employees_context";
 
 //const FILTERSTRING = "Pending";
 

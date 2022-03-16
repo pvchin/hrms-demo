@@ -8,6 +8,7 @@ import {
   Grid,
   Divider,
 } from "@material-ui/core";
+//import { Alert, AlertTitle } from "@material-ui/lab";
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -1024,19 +1025,19 @@ const EmployeeForm = () => {
         </Paper>
       </form>
 
-      <Grid item xs={12}>
+      {/* <Grid xs={12}>
         <EmpJobhistory />
-      </Grid>
-      <Grid item xs={12}>
+      </Grid> */}
+      <Grid xs={12}>
         <EmpFamily />
       </Grid>
-      <Grid item xs={12}>
+      <Grid xs={12}>
         <EmpEducations />
       </Grid>
-      <Grid item xs={12}>
+      <Grid xs={12}>
         <EmpExperiences />
       </Grid>
-      <Grid item xs={12}>
+      <Grid xs={12}>
         <EmpTrainings />
       </Grid>
     </div>

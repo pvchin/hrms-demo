@@ -111,6 +111,9 @@ export default function LeaveTableApproval() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isUpdate, setIsUpdate] = useState(true);
+  const leavedata = leavesstatus.filter(
+            (r) => r.reporting_email === loginLevel.loginEmail
+          )
   const {
     // leaves,
     editLeaveID,
@@ -212,7 +215,7 @@ export default function LeaveTableApproval() {
   };
 
   const Approve_Leave = () => {
-    leavesstatus.forEach((rec) => {
+    leavedata.forEach((rec) => {
       if (rec.tableData.checked) {
         const currentrec = rec;
         currentrec.status = "Approved";
@@ -226,13 +229,13 @@ export default function LeaveTableApproval() {
         handleSentEmail(rec, "Approved");
       }
     });
-    leavesstatus.forEach((d) => {
+    leavedata.forEach((d) => {
       if (d.tableData) d.tableData.checked = false;
     });
   };
 
   const Reject_Leave = () => {
-    leavesstatus.forEach((rec) => {
+    leavedata.forEach((rec) => {
       if (rec.tableData.checked) {
         const currentrec = rec;
         currentrec.status = "Rejected";
@@ -246,7 +249,7 @@ export default function LeaveTableApproval() {
         handleSentEmail(rec, "Approved");
       }
     });
-    leavesstatus.forEach((d) => {
+    leavedata.forEach((d) => {
       if (d.tableData) d.tableData.checked = false;
     });
   };
@@ -258,9 +261,10 @@ export default function LeaveTableApproval() {
       <div style={{ maxWidth: "100%", paddingTop: "5px" }}>
         <MaterialTable
           columns={columns}
-          data={leavesstatus.filter(
-            (r) => r.reporting_email === loginLevel.loginEmail
-          )}
+          // data={leavesstatus.filter(
+          //   (r) => r.reporting_email === loginLevel.loginEmail
+          // )}
+          data={leavedata}
           title="Leave Application"
           icons={{
             Add: (props) => <AddIcon />,

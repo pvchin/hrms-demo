@@ -3,8 +3,14 @@ import { useRecoilState } from "recoil";
 //import {  useHistory } from "react-router-dom";
 import LoginForm from "./LoginForm";
 //import DashboardMain from "./DashboardMain";
-import DashboardMain from "./DashboardMain";
+// import DashboardStaff from "./DashboardStaff";
+// import DashboardAdmin from "./DashboardAdmin";
+// import DashboardOpsSpvr from "./DashboardOpsSpvr";
+// import DashboardAdminManager from "./DashboardAdminManager";
+// import DashboardManager from "./DashboardManager";
+// import DashboardDirector from "./DashboardDirector";
 import { loginLevelState } from "./data/atomdata";
+import DashboardMain from "./DashboardMain";
 //import { useAuthContext } from "../context/auth_context";
 //import { useEmployees } from "./employees/useEmployees";
 
@@ -14,7 +20,7 @@ const Main = () => {
   //const { currentUser } = useAuthContext();
   //const [role, setRole] = useState("");
   // const SwitchCase = () => {
-  //   //onsole.log(loginLevel);
+    
   //   switch (loginLevel.loginLevel) {
   //     case "Staff":
   //       return <DashboardStaff />;

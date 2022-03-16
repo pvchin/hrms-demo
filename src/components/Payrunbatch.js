@@ -45,7 +45,7 @@ import {
 } from "@chakra-ui/react";
 import PayForm from "./PayForm";
 import PaySummary from "./PaySummary";
-//import PrintPaySummary from "./PrintPaySummary";
+import PrintPaySummary from "./PrintPaySummary";
 import { useEmployees } from "./employees/useEmployees";
 import { usePayrun } from "./payrun/usePayrun";
 import { useUpdatePayrun } from "./payrun/useUpdatePayrun";
@@ -61,8 +61,6 @@ import {
   payrunStatusState,
 } from "./data/atomdata";
 //import { useRecoilValue } from "recoil";
-
-const PrintPaySummary = React.lazy(() => import("./PrintPaySummary"));
 
 //const drawerWidth = 240;
 const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICEID;
@@ -231,9 +229,9 @@ const Payrunbatch = () => {
   }, [isCalc]);
 
   useEffect(() => {
-    saveIndividualPayslips()
-    setIsUpdPayslip(false)
-  },[isUpdPayslip])
+    saveIndividualPayslips();
+    setIsUpdPayslip(false);
+  }, [isUpdPayslip]);
 
   useEffect(() => {
     if (tabno === 1) {
@@ -242,7 +240,6 @@ const Payrunbatch = () => {
       setIsShow(false);
     }
   }, [tabno]);
-
 
   // useEffect(() => {
   //   handleEmpButtonClick(0);
@@ -309,16 +306,18 @@ const Payrunbatch = () => {
   };
 
   const saveIndividualPayslips = () => {
-    singlebatchpayslip.forEach((rec) => {
-      if (rec.tableData.checked) {
-        const { id, rec_id, tableData, ...fields } = rec;
-        console.log("updatepayslip", rec);
-        updatePayslip({ id, ...fields });
-        //uncheck
-        const data = rec;
-        data.tableData.checked = false;
-      }
-    });
+    if (payrundata.status === "Pending") {
+      singlebatchpayslip.forEach((rec) => {
+        if (rec.tableData.checked) {
+          const { id, rec_id, tableData, ...fields } = rec;
+          console.log("updatepayslip", rec);
+          updatePayslip({ id, ...fields });
+          //uncheck
+          const data = rec;
+          data.tableData.checked = false;
+        }
+      });
+    }
   };
 
   const calcPayrunTotals = () => {
@@ -450,7 +449,7 @@ const Payrunbatch = () => {
     setFormdata((prev) => (prev = { ...initial_formdata, ...paydata }));
     //setFormdata({ ...initial_formdata, ...paydata });
     setLoadFormdata(true);
-    setIsUpdPayslip(true)
+    setIsUpdPayslip(true);
   };
 
   const handleTabChange = (index) => {
@@ -460,8 +459,6 @@ const Payrunbatch = () => {
     }
     setIsShow(false);
   };
-
-  
 
   const SentEmailModal = () => {
     return (
@@ -746,7 +743,6 @@ const Payrunbatch = () => {
                         isStart={isStart}
                         setIsStart={setIsStart}
                         setIsCalc={setIsCalc}
-                       
                       />
                     </GridItem>
                   </Grid>

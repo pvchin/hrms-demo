@@ -154,7 +154,7 @@ const WPExpiryViewAdmin = () => {
                     size="sm"
                     aria-label="Edit"
                     icon={<ViewIcon />}
-                    onClick={()=>handleOnClick(row.id)}
+                    onClick={() => handleOnClick(row.id)}
                   />
                 </Box>
               </GridItem>

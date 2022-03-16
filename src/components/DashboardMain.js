@@ -134,16 +134,6 @@ export default function DashboardMain() {
           />
           <Route
             exact
-            path="/payroll"
-            element={
-              <React.Suspense fallback={<>...</>}>
-                <Payroll />
-              </React.Suspense>
-            }
-          />
-
-          <Route
-            exact
             path="/payslipstaff"
             element={
               <React.Suspense fallback={<>...</>}>
@@ -151,7 +141,6 @@ export default function DashboardMain() {
               </React.Suspense>
             }
           />
-
           <Route
             exact
             path="/singlepayslip"
@@ -161,17 +150,6 @@ export default function DashboardMain() {
               </React.Suspense>
             }
           />
-
-          <Route
-            exact
-            path="/batchpayslips"
-            element={
-              <React.Suspense fallback={<>...</>}>
-                <BatchPayslips />
-              </React.Suspense>
-            }
-          />
-
           <Route
             exact
             path="/leavestaff"
@@ -181,17 +159,6 @@ export default function DashboardMain() {
               </React.Suspense>
             }
           />
-
-          <Route
-            exact
-            path="/hoc"
-            element={
-              <React.Suspense fallback={<>...</>}>
-                <Hoc />
-              </React.Suspense>
-            }
-          />
-
           <Route
             exact
             path="/trainingsstaff"
@@ -201,7 +168,6 @@ export default function DashboardMain() {
               </React.Suspense>
             }
           />
-
           <Route
             exact
             path="/dailyallowancesstaff"
@@ -211,7 +177,6 @@ export default function DashboardMain() {
               </React.Suspense>
             }
           />
-
           <Route
             exact
             path="/singledailyallowsdetlsstaff"
@@ -232,25 +197,6 @@ export default function DashboardMain() {
           />
           <Route
             exact
-            path="/expenses"
-            element={
-              <React.Suspense fallback={<>...</>}>
-                <Expenses />
-              </React.Suspense>
-            }
-          />
-
-          <Route
-            exact
-            path="/example"
-            element={
-              <React.Suspense fallback={<>...</>}>
-                <Example />
-              </React.Suspense>
-            }
-          />
-          <Route
-            exact
             path="/singleemployeestaff"
             element={
               <React.Suspense fallback={<>...</>}>
@@ -258,7 +204,6 @@ export default function DashboardMain() {
               </React.Suspense>
             }
           />
-
           <Route
             exact
             path="/singleleave"
@@ -288,24 +233,13 @@ export default function DashboardMain() {
           />
           <Route
             exact
-            path="/batchdailyallowances"
+            path="/singledailyallowsdetls"
             element={
               <React.Suspense fallback={<>...</>}>
-                <BatchDailyAllowances />
+                <SingleDailyAllowsDetls />
               </React.Suspense>
             }
           />
-
-          <Route
-            exact
-            path="/allemployees"
-            element={
-              <React.Suspense fallback={<>...</>}>
-                <AllEmployees />
-              </React.Suspense>
-            }
-          ></Route>
-
           <Route
             exact
             path="/departments"
@@ -342,23 +276,21 @@ export default function DashboardMain() {
               </React.Suspense>
             }
           />
-
           <Route
             exact
-            path="/singleemployee"
+            path="/hoc"
             element={
               <React.Suspense fallback={<>...</>}>
-                <SingleEmployee />
+                <Hoc />
               </React.Suspense>
             }
           />
-
           <Route
             exact
-            path="/payslip"
+            path="/example"
             element={
               <React.Suspense fallback={<>...</>}>
-                <Payslip />
+                <Example />
               </React.Suspense>
             }
           />
@@ -374,23 +306,98 @@ export default function DashboardMain() {
           />
           <Route
             exact
-            path="/payrun"
+            path="/payroll"
             element={
               <React.Suspense fallback={<>...</>}>
-                <Payrun />
+                <Payroll />
               </React.Suspense>
             }
           />
           <Route
             exact
-            path="/payrunbatch"
+            path="/batchpayslips"
             element={
               <React.Suspense fallback={<>...</>}>
-                <Payrunbatch />
+                <BatchPayslips />
               </React.Suspense>
             }
           />
           <Route
+            exact
+            path="/expenses"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <Expenses />
+              </React.Suspense>
+            }
+          />
+          <Route
+            exact
+            path="/batchdailyallowances"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <BatchDailyAllowances />
+              </React.Suspense>
+            }
+          />
+          {loginLevel.loginRole > 1 && (
+            <Route
+              exact
+              path="/singleemployee"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <SingleEmployee />
+                </React.Suspense>
+              }
+            />
+          )}
+
+          {loginLevel.loginRole > 1 && loginLevel.loginRole !== 3 && (
+            <Route
+              exact
+              path="/allemployees"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <AllEmployees />
+                </React.Suspense>
+              }
+            />
+          )}
+          {loginLevel.loginRole > 2 && (
+            <Route
+              exact
+              path="/payslip"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <Payslip />
+                </React.Suspense>
+              }
+            />
+          )}
+          {loginLevel.loginRole > 2 && (
+            <Route
+              exact
+              path="/payrun"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <Payrun />
+                </React.Suspense>
+              }
+            />
+          )}
+          {loginLevel.loginRole > 2 && (
+            <Route
+              exact
+              path="/payrunbatch"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <Payrunbatch />
+                </React.Suspense>
+              }
+            />
+          )}
+
+          {/* <Route
             exact
             path="/dailyallowances"
             element={
@@ -398,37 +405,29 @@ export default function DashboardMain() {
                 <DailyAllowances />
               </React.Suspense>
             }
-          />
-          <Route
-            exact
-            path="/singledailyallowsdetls"
-            element={
-              <React.Suspense fallback={<>...</>}>
-                <SingleDailyAllowsDetls />
-              </React.Suspense>
-            }
-          />
-
-          <Route
-            exact
-            path="/approvalmanager"
-            element={
-              <React.Suspense fallback={<>...</>}>
-                <ApprovalManager />
-              </React.Suspense>
-            }
-          ></Route>
-
-          <Route
-            exact
-            path="/useraccesstable"
-            element={
-              <React.Suspense fallback={<>...</>}>
-                <UserAccessTable />
-              </React.Suspense>
-            }
-          />
-
+          /> */}
+          {loginLevel.loginRole > 3 && (
+            <Route
+              exact
+              path="/approvalmanager"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <ApprovalManager />
+                </React.Suspense>
+              }
+            />
+          )}
+          {loginLevel.loginRole > 3 && (
+            <Route
+              exact
+              path="/useraccesstable"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <UserAccessTable />
+                </React.Suspense>
+              }
+            />
+          )}
           <Route exact path="/error" element={<Error />}></Route>
           <Route path="*" element={<Error />}></Route>
         </Routes>

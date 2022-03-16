@@ -33,9 +33,9 @@ const queryClient = new QueryClient();
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <RecoilRoot>
-          {/* <ApolloProvider client={client}> */}
+    <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
+        {/* <ApolloProvider client={client}> */}
           <AuthProvider>
             <EmployeesProvider>
               <PayslipsProvider>
@@ -55,10 +55,10 @@ ReactDOM.render(
               </PayslipsProvider>
             </EmployeesProvider>
           </AuthProvider>
-          {/* </ApolloProvider> */}
-        </RecoilRoot>
-        <ReactQueryDevtools />
-      </QueryClientProvider>
+        {/* </ApolloProvider> */}
+      </RecoilRoot>
+      <ReactQueryDevtools />
+    </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>,
   //document.getElementById("root").style.transform = "scale(1)"

@@ -29,21 +29,35 @@ import {
 //import BarChart from "../helpers/BarChart";
 //import BarChartStack from "../helpers/BarChartStack";
 
-import EmployeeTableLeaveView from "./EmployeeTableLeaveView";
-import ExpensesTableViewSummary from "./ExpenseTableViewSummary";
+//import EmployeeTableLeaveView from "./EmployeeTableLeaveView";
+//import ExpensesTableViewSummary from "./ExpenseTableViewSummary";
 //import ExpenseSummaryTableView from "./ExpensesSummaryTableView";
-import LeavesTableViewSummary from "./LeavesTableViewSummary";
-import HocTableViewSummary from "./HocTableViewSummary";
+//import LeavesTableViewSummary from "./LeavesTableViewSummary";
+//import HocTableViewSummary from "./HocTableViewSummary";
 //import SummaryTableView from "../helpers/SummaryTableView";
-import DailyAllowanceTableViewSummary from "./DailyAllowancesTableViewSummary";
-import PayslipTableViewSummary from "./PayslipTableViewSummary";
+//import DailyAllowanceTableViewSummary from "./DailyAllowancesTableViewSummary";
+//import PayslipTableViewSummary from "./PayslipTableViewSummary";
 //import PayslipSummaryTableView from "./PayslipSummaryTableView";
-import LeavesTableApproval from "./LeaveTableApproval";
+//import LeavesTableApproval from "./LeaveTableApproval";
 //import { useExpensesPeriod } from "./expenses/useExpensesPeriod";
-
-// const LeavesTableViewSummary = React.lazy(() =>
-//   import("./LeavesTableViewSummary")
-// );
+const LeaveTableApproval = React.lazy(() => import("./LeaveTableApproval"));
+const EmployeeTableLeaveView = React.lazy(() =>
+  import("./EmployeeTableLeaveView")
+);
+const ExpenseTableViewSummary = React.lazy(() =>
+  import("./ExpenseTableViewSummary")
+);
+const PayslipTableViewSummary = React.lazy(() =>
+  import("./PayslipTableViewSummary")
+);
+const DailyAllowancesTableViewSummary = React.lazy(() =>
+  import("./DailyAllowancesTableViewSummary")
+);
+const HocTableViewSummary = React.lazy(() => import("./HocTableViewSummary"));
+const LeavesTableViewSummary = React.lazy(() =>
+  import("./LeavesTableViewSummary")
+);
+const Export2ExcelDialog = React.lazy(() => import("./Export2ExcelDialog"));
 
 const drawerWidth = 240;
 
@@ -750,7 +764,7 @@ const HomeManager = () => {
                   <ExpenseSummaryTableView year={currentyear} />
                 </TabPanel> */}
                         <TabPanel>
-                          <ExpensesTableViewSummary
+                          <ExpenseTableViewSummary
                             year={
                               selectexpenseyear
                                 ? selectexpenseyear
@@ -760,7 +774,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <ExpensesTableViewSummary
+                          <ExpenseTableViewSummary
                             year={
                               selectexpenseyear
                                 ? selectexpenseyear
@@ -770,7 +784,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <ExpensesTableViewSummary
+                          <ExpenseTableViewSummary
                             year={
                               selectexpenseyear
                                 ? selectexpenseyear
@@ -780,7 +794,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <ExpensesTableViewSummary
+                          <ExpenseTableViewSummary
                             year={
                               selectexpenseyear
                                 ? selectexpenseyear
@@ -790,7 +804,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <ExpensesTableViewSummary
+                          <ExpenseTableViewSummary
                             year={
                               selectexpenseyear
                                 ? selectexpenseyear
@@ -800,7 +814,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <ExpensesTableViewSummary
+                          <ExpenseTableViewSummary
                             year={
                               selectexpenseyear
                                 ? selectexpenseyear
@@ -810,7 +824,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <ExpensesTableViewSummary
+                          <ExpenseTableViewSummary
                             year={
                               selectexpenseyear
                                 ? selectexpenseyear
@@ -820,7 +834,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <ExpensesTableViewSummary
+                          <ExpenseTableViewSummary
                             year={
                               selectexpenseyear
                                 ? selectexpenseyear
@@ -830,7 +844,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <ExpensesTableViewSummary
+                          <ExpenseTableViewSummary
                             year={
                               selectexpenseyear
                                 ? selectexpenseyear
@@ -840,7 +854,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <ExpensesTableViewSummary
+                          <ExpenseTableViewSummary
                             year={
                               selectexpenseyear
                                 ? selectexpenseyear
@@ -850,7 +864,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <ExpensesTableViewSummary
+                          <ExpenseTableViewSummary
                             year={
                               selectexpenseyear
                                 ? selectexpenseyear
@@ -860,7 +874,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <ExpensesTableViewSummary
+                          <ExpenseTableViewSummary
                             year={
                               selectexpenseyear
                                 ? selectexpenseyear
@@ -948,7 +962,7 @@ const HomeManager = () => {
                   <SummaryTableView columns={columns} data={data} />
                 </TabPanel> */}
                         <TabPanel>
-                          <DailyAllowanceTableViewSummary
+                          <DailyAllowancesTableViewSummary
                             year={
                               selectsiteallowsyear
                                 ? selectsiteallowsyear
@@ -958,7 +972,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <DailyAllowanceTableViewSummary
+                          <DailyAllowancesTableViewSummary
                             year={
                               selectsiteallowsyear
                                 ? selectsiteallowsyear
@@ -968,7 +982,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <DailyAllowanceTableViewSummary
+                          <DailyAllowancesTableViewSummary
                             year={
                               selectsiteallowsyear
                                 ? selectsiteallowsyear
@@ -978,7 +992,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <DailyAllowanceTableViewSummary
+                          <DailyAllowancesTableViewSummary
                             year={
                               selectsiteallowsyear
                                 ? selectsiteallowsyear
@@ -988,7 +1002,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <DailyAllowanceTableViewSummary
+                          <DailyAllowancesTableViewSummary
                             year={
                               selectsiteallowsyear
                                 ? selectsiteallowsyear
@@ -998,7 +1012,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <DailyAllowanceTableViewSummary
+                          <DailyAllowancesTableViewSummary
                             year={
                               selectsiteallowsyear
                                 ? selectsiteallowsyear
@@ -1008,7 +1022,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <DailyAllowanceTableViewSummary
+                          <DailyAllowancesTableViewSummary
                             year={
                               selectsiteallowsyear
                                 ? selectsiteallowsyear
@@ -1018,7 +1032,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <DailyAllowanceTableViewSummary
+                          <DailyAllowancesTableViewSummary
                             year={
                               selectsiteallowsyear
                                 ? selectsiteallowsyear
@@ -1028,7 +1042,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <DailyAllowanceTableViewSummary
+                          <DailyAllowancesTableViewSummary
                             year={
                               selectsiteallowsyear
                                 ? selectsiteallowsyear
@@ -1038,7 +1052,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <DailyAllowanceTableViewSummary
+                          <DailyAllowancesTableViewSummary
                             year={
                               selectsiteallowsyear
                                 ? selectsiteallowsyear
@@ -1048,7 +1062,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <DailyAllowanceTableViewSummary
+                          <DailyAllowancesTableViewSummary
                             year={
                               selectsiteallowsyear
                                 ? selectsiteallowsyear
@@ -1058,7 +1072,7 @@ const HomeManager = () => {
                           />
                         </TabPanel>
                         <TabPanel>
-                          <DailyAllowanceTableViewSummary
+                          <DailyAllowancesTableViewSummary
                             year={
                               selectsiteallowsyear
                                 ? selectsiteallowsyear
@@ -1290,7 +1304,7 @@ const HomeManager = () => {
                 borderRadius="lg"
                 overflow="scroll"
               >
-                <LeavesTableApproval />
+                <LeaveTableApproval />
               </Box>
             </TabPanel>
           </TabPanels>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Text} from "@chakra-ui/react"
+import { Text } from "@chakra-ui/react";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -10,12 +10,6 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import FlightIcon from "@material-ui/icons/Flight";
 import PeopleIcon from "@material-ui/icons/People";
 import LayersIcon from "@material-ui/icons/Layers";
-//import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
-//import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-//import MoneyIcon from "@material-ui/icons/Money";
-// import Collapse from "@material-ui/core/Collapse";
-// import ExpandLess from "@material-ui/icons/ExpandLess";
-// import ExpandMore from "@material-ui/icons/ExpandMore";
 
 const MenuListItems = () => {
   const classes = useStyles();

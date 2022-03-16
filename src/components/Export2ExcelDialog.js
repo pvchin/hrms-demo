@@ -43,6 +43,13 @@ import {
 import { useHocPeriod } from "./hoc/useHocPeriod";
 import Export2Excel from "./Export2Excel";
 
+// const initial_state = {
+//   type: "",
+//   month: new Date().getMonth(),
+//   year: new Date().getFullYear(),
+//   filename: "",
+//};
+
 const months = [
   { name: "January", value: 1 },
   { name: "February", value: 2 },
@@ -213,7 +220,6 @@ const Export2ExcelDialog = ({ state, setState, dataset, onClose }) => {
       </div>
       <Divider />
       <Box p={2}>
-       
         <Export2Excel
           filename={state.filename}
           dataset={hocperiod}

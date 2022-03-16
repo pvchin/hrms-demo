@@ -13,25 +13,25 @@ const Main = () => {
   const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
   //const { currentUser } = useAuthContext();
   //const [role, setRole] = useState("");
-  const SwitchCase = () => {
-    //console.log(loginLevel);
-    // switch (loginLevel.loginLevel) {
-    //   case "Staff":
-    //     return <DashboardStaff />;
-    //   case "Admin":
-    //     return <DashboardAdmin />;
-    //   case "OpsSpvr":
-    //     return <DashboardOpsSpvr />;
-    //   case "AdminManager":
-    //     return <DashboardAdminManager />;
-    //   case "Manager":
-    //     return <DashboardManager />;
-    //   case "Director":
-    //     return <DashboardDirector />;
-    //   default:
-    //     return "You are not authorised user!";
-    // }
-  };
+  // const SwitchCase = () => {
+    
+  //   switch (loginLevel.loginLevel) {
+  //     case "Staff":
+  //       return <DashboardStaff />;
+  //     case "Admin":
+  //       return <DashboardAdmin />;
+  //     case "OpsSpvr":
+  //       return <DashboardOpsSpvr />;
+  //     case "AdminManager":
+  //       return <DashboardAdminManager />;
+  //     case "Manager":
+  //       return <DashboardManager />;
+  //     case "Director":
+  //       return <DashboardDirector />;
+  //     default:
+  //       return "You are not authorised user!";
+  //   }
+  // };
 
   if (!loginLevel.login) {
     return <LoginForm />;

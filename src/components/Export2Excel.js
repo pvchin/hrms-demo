@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
+//import ReactExport from "react-export-excel";
 import ReactExport from "react-data-export";
+//import { ExcelFile, ExcelSheet } from "react-export-excel";
 import { Button } from "@chakra-ui/react";
 
 const ExcelFile = ReactExport.ExcelFile;

@@ -26,11 +26,11 @@ import { useAddDailyAllowsDetls } from "./dailyallowsdetls/useAddDailyAllowsDetl
 
 const DailyAllowancesAddPeriod = ({ handleDialogClose }) => {
   let date = new Date();
-  const toast = useCustomToast()
   //let longMonth = date.toLocaleString("en-us", { month: "long" });
   //console.log("date", date, longMonth);
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const toast = useCustomToast();
   const { dailyallows } = useDailyAllows();
   //const { dailyallowsdetls } = useDailyAllowsDetls();
   const addDailyAllows = useAddDailyAllows();
