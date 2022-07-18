@@ -69,6 +69,7 @@ const Allowances = React.lazy(() => import("../pages/AllowancesPage"));
 const DailyAllowances = React.lazy(() =>
   import("../pages/DailyAllowancesPage")
 );
+const ViewImage = React.lazy(() => import("../pages/ViewImagePage"));
 const Tables = React.lazy(() => import("../pages/TablesPage"));
 const SingleEmployee = React.lazy(() => import("./SingleEmployee"));
 const SingleLeave = React.lazy(() => import("./SingleLeave"));
@@ -210,6 +211,15 @@ export default function DashboardMain() {
             element={
               <React.Suspense fallback={<>...</>}>
                 <SingleLeave />
+              </React.Suspense>
+            }
+          />
+          <Route
+            exact
+            path="/viewimage"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <ViewImage />
               </React.Suspense>
             }
           />

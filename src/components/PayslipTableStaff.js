@@ -21,6 +21,10 @@ import { usePayslips } from "./payslips/usePayslips";
 import { useEmployees } from "./employees/useEmployees";
 import PrintPayslip from "./PrintPayslip";
 
+// const PrintPayslip = React.lazy(() =>
+//   import("./PrintPayslip")
+// );
+
 const columns = [
   {
     title: "Name",

@@ -529,7 +529,7 @@ const PrintPayslip = ({ data, emp }) => {
       //font: "Helvetica",
     },
     images: {
-      logo: "https://res.cloudinary.com/dlmzwvakr/image/upload/v1626939253/appsmith/AppSutLogo_rakamz.jpg",
+      logo: "https://res.cloudinary.com/dlmzwvakr/image/upload/v1648790369/appsmiths/AppSutLogo_vuxiry.jpg",
       img1: "./AppSutLogo.jpg",
     },
   };

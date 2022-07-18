@@ -551,20 +551,20 @@ const Payrunbatch = () => {
       <VStack>
         <Grid templateRows="repeat(1,1fr)" templateColumns="repeat(1,1fr)">
           <GridItem rowSpan={1} colSpan={1}>
-            <Grid templateRows="repeat(1,1fr)" templateColumns="repeat(10,1fr)">
+            <Grid templateRows="repeat(1,1fr)" templateColumns="repeat(12,1fr)">
               <GridItem rowSpan={1} colSpan={2}></GridItem>
-              <GridItem rowSpan={1} colSpan={4}>
+              <GridItem rowSpan={1} colSpan={5}>
                 <Box textAlign="center" alignItems="center">
                   <Heading pl="10" pt={2}>
                     Payroll
                   </Heading>
                 </Box>
               </GridItem>
-              <GridItem rowSpan={1} colSpan={4} pt={0}>
+              <GridItem rowSpan={1} colSpan={5} pt={0}>
                 <Box pt="2" pr={5} alignItems="right" align="right">
                   <Stack spacing={4} direction="row" align="center" pl={150}>
                     <Button
-                      width="800px"
+                      width="1800px"
                       colorScheme="blue"
                       isDisabled={
                         payrundata.status === "Verified" ||
@@ -574,22 +574,22 @@ const Payrunbatch = () => {
                           : false
                       }
                       onClick={(e) => handleSavePayslips(e)}
-                      leftIcon={<FiSave color="white" fontSize="1.5em" />}
+                      leftIcon={<FiSave color="white" fontSize="1.2em" />}
                     >
-                      Save/Exit
+                      <Text fontSize="sm">Save/Exit</Text>
                     </Button>
                     <Button
                       isDisabled={!isShow}
-                      width="500px"
+                      width="1000px"
                       colorScheme="blue"
                       onClick={(e) => handlePrintSummary(e)}
-                      leftIcon={<FiSave color="white" fontSize="1.5em" />}
+                      leftIcon={<FiSave color="white" fontSize="1.2em" />}
                     >
-                      Print
+                      <Text fontSize="sm">Print</Text>
                     </Button>
 
                     <Button
-                      width="500px"
+                      width="1000px"
                       colorScheme="blue"
                       isDisabled={
                         payrundata.status === "Verified" ||
@@ -601,21 +601,21 @@ const Payrunbatch = () => {
                       }
                       onClick={(e) => handleVerifyPayslips(e)}
                       leftIcon={
-                        <FiCheckCircle color="white" fontSize="1.5em" />
+                        <FiCheckCircle color="white" fontSize="1.2em" />
                       }
                     >
-                      Verify
+                      <Text fontSize="sm">Verify</Text>
                     </Button>
                     <Button
-                      width="500px"
+                      width="1000px"
                       colorScheme="blue"
                       isDisabled={
                         payrundata.status !== "Approved" ? true : false
                       }
                       onClick={onOpen}
-                      leftIcon={<FiMail color="white" fontSize="1.5em" />}
+                      leftIcon={<FiMail color="white" fontSize="1.2em" />}
                     >
-                      Email
+                      <Text fontSize="sm">EMail</Text>
                     </Button>
                   </Stack>
                 </Box>

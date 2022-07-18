@@ -167,3 +167,11 @@ export const siteallowsTotalsState = atom({
     totaldays: 0,
   },
 });
+
+export const viewImageState = atom({
+  key: "viewimagestate",
+  default: {
+    url: {},
+    name: "",
+  }
+})

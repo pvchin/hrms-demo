@@ -22,9 +22,27 @@ module.exports = async (event) => {
     return formattedReturn(200, formattedDailyAllowances);
   }
 
+  // if (fv) {
+  //   const dailyallowances = await table
+  //     .select({
+  //       view: "sortedview",
+  //       filterByFormula: `period.substring(0,6) = '${fv}'`,
+  //     })
+  //     .firstPage();
+  //   const formattedDailyAllowances = dailyallowances.map((dailyallowance) => ({
+  //     id: dailyallowance.id,
+  //     ...dailyallowance.fields,
+  //   }));
+
+  //   return formattedReturn(200, formattedDailyAllowances);
+  // }
+
   if (fv) {
     const dailyallowances = await table
-      .select({ view: "sortedview", filterByFormula: `period = '${fv}'` })
+      .select({
+        view: "sortedview",
+        filterByFormula: `LEFT(period,7) = '${fv}'`,
+      })
       .firstPage();
     const formattedDailyAllowances = dailyallowances.map((dailyallowance) => ({
       id: dailyallowance.id,
@@ -50,7 +68,7 @@ module.exports = async (event) => {
     const dailyallowances = await table
       .select({
         view: "sortedview",
-        filterByFormula: `status = '${fi}'`
+        filterByFormula: `status = '${fi}'`,
       })
       .firstPage();
     const formattedDailyAllowances = dailyallowances.map((dailyallowance) => ({
@@ -78,21 +96,20 @@ module.exports = async (event) => {
     return formattedReturn(200, formattedDailyAllowances);
   }
 
-if (pr) {
-  const dailyallowances = await table
-    .select({
-      view: "sortedview",
-      filterByFormula: `payrun = '${pr}'`,
-    })
-    .firstPage();
-  const formattedDailyAllowances = dailyallowances.map((dailyallowance) => ({
-    id: dailyallowance.id,
-    ...dailyallowance.fields,
-  }));
+  if (pr) {
+    const dailyallowances = await table
+      .select({
+        view: "sortedview",
+        filterByFormula: `payrun = '${pr}'`,
+      })
+      .firstPage();
+    const formattedDailyAllowances = dailyallowances.map((dailyallowance) => ({
+      id: dailyallowance.id,
+      ...dailyallowance.fields,
+    }));
 
-  return formattedReturn(200, formattedDailyAllowances);
-}
-
+    return formattedReturn(200, formattedDailyAllowances);
+  }
 
   try {
     const dailyallowances = await table.select().firstPage();

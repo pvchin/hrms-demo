@@ -58,17 +58,47 @@ const DailyAllowancesAddPeriod = ({ handleDialogClose }) => {
     });
   }, []);
 
+  // const periodExists = (data) => {
+  //   console.log('add period', data)
+  //   return dailyallows.some(function (el) {
+  //     return el.period === data && el.empid === loginLevel.loginUserId;
+  //   });
+  // };
+
   const periodExists = (data) => {
-    return dailyallows.some(function (el) {
-      return el.period === data && el.empid === loginLevel.loginUserId;
-    });
+    var lExist = false;
+    const startday = parseInt(data.substring(8, 10));
+    const endday = parseInt(data.substring(11, 13));
+    const existdata = dailyallows.filter((rec) =>
+      rec.period.toLowerCase().match(data.substring(0, 8))
+    );
+    if (existdata.length > 0) {
+      existdata.forEach((rec) => {
+        const fromday = parseInt(rec.period.substring(8, 10));
+        const today = parseInt(rec.period.substring(11, 13));
+        if (startday >= fromday && startday <= today) {
+          lExist = true;
+        }
+        if (endday >= fromday && endday <= today) {
+          lExist = true;
+        }
+      });
+    } 
+    return lExist;
   };
 
   const buildSiteAllows = () => {
     const period =
-      input.fromdate.substring(0, 4) + "-" + input.fromdate.substring(5, 7);
+      input.fromdate.substring(0, 4) +
+      "-" +
+      input.fromdate.substring(5, 7) +
+      "-" +
+      input.fromdate.substring(8, 10) +
+      "/" +
+      input.todate.substring(8, 10);
 
     const isExist = periodExists(period);
+    console.log("isexist", isExist);
     if (isExist) {
       toast({
         title: "Site Allowance period is existed!",
@@ -85,7 +115,9 @@ const DailyAllowancesAddPeriod = ({ handleDialogClose }) => {
       new Date(input.fromdate)
     );
 
-    let amount = 0, jobbonus=0, perdiem=0;
+    let amount = 0,
+      jobbonus = 0,
+      perdiem = 0;
     for (let i = 0; i <= diffInDays; i++) {
       jobbonus = jobbonus + Number(input.jobbonus);
       perdiem = perdiem + Number(input.perdiem);
@@ -115,10 +147,12 @@ const DailyAllowancesAddPeriod = ({ handleDialogClose }) => {
       name: loginLevel.loginUser,
       empid: loginLevel.loginUserId,
       status: "Pending",
-      no_of_days: diffInDays+1,
+      no_of_days: diffInDays + 1,
       amount: amount,
       totaljobbonus: jobbonus,
       totalperdiem: perdiem,
+      fromdate: input.fromdate,
+      todate: input.todate,
     });
 
     // dailyallowances.push({

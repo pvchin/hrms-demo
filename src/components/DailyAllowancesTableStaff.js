@@ -33,7 +33,7 @@ import { useDailyAllowsDetlsBatch } from "./dailyallowsdetls/useDailyAllowsDetls
 
 export default function DailyAllowancesTableStaff() {
   let navigate = useNavigate();
-   const toast = useCustomToast();
+  const toast = useCustomToast();
   const classes = useStyles();
   //const toast = useCustomToast();
   const { dailyallows, dailyAllowsId, setDailyAllowsId } = useDailyAllows();
@@ -49,7 +49,7 @@ export default function DailyAllowancesTableStaff() {
   const [allowsdata, setAllowsdata] = useRecoilState(allowsDataState);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   // const [allowsDetlsdata, setAllowsDetlsdata] =
-    useRecoilState(allowsDataDetlsState);
+  useRecoilState(allowsDataDetlsState);
   const [allows_period, setAllows_period] = useRecoilState(allowsPeriodState);
   const [allows_empid, setAllows_empid] = useRecoilState(empidState);
   const [allowsdataId, setAllowsdataId] = useState(allowsDataIdState);
@@ -94,6 +94,9 @@ export default function DailyAllowancesTableStaff() {
       title: "Period",
       field: "period",
       editable: "never",
+      cellStyle: {
+        width: 200,
+      },
     },
     { title: "Location", field: "location", editable: "never" },
     { title: "Manager Name", field: "manager", editable: "never" },
@@ -102,6 +105,9 @@ export default function DailyAllowancesTableStaff() {
       field: "no_of_days",
       type: "numeric",
       editable: "never",
+      cellStyle: {
+        width: 60,
+      },
     },
     {
       title: "Job Bonus",
@@ -149,7 +155,6 @@ export default function DailyAllowancesTableStaff() {
   //};
 
   const update_SiteAllowsDetl = (data) => {
-  
     const {
       id,
       empid,
@@ -314,11 +319,11 @@ export default function DailyAllowancesTableStaff() {
                 <MTableToolbar {...props} />
 
                 <div style={{ padding: "5px 10px" }}>
-                  {error && (
+                  {error &&
                     toast({
                       title: "Period already existed!",
                       status: "warning",
-                    }))}
+                    })}
                 </div>
               </div>
             ),

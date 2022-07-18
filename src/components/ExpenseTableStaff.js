@@ -28,8 +28,13 @@ const initial_form = {
   description: "",
   status: "Pending",
   amount: 0,
+  attachment1_name: "",
+  attachment1_url: "",
+  attachment2_name: "",
+  attachment2_url: "",
+  attachment3_name: "",
+  attachment3_url: "",
 };
-
 const columns = [
   { title: "Name", field: "name", editable: "never" },
   {
@@ -93,7 +98,7 @@ export default function ExpenseTable() {
   } = useExpensesContext();
 
   useEffect(() => {
-    setFilter(loginLevel.loginUserId);
+    setExpenseId(loginLevel.loginUserId);
   }, []);
 
   const add_Expense = async (data) => {
@@ -153,7 +158,9 @@ export default function ExpenseTable() {
       <div style={{ maxWidth: "100%", paddingTop: "5px" }}>
         <MaterialTable
           columns={columns}
-          data={expenses}
+          data={expenses.sort((a, b) =>
+            a.date < b.date ? 1 : b.date < a.date ? -1 : 0
+          )}
           title="Expenses Claims Application"
           icons={{
             Add: (props) => <AddIcon />,

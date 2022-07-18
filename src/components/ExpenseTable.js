@@ -159,13 +159,13 @@ export default function ExpenseTable() {
   //     </div>
   //   );
   // }
-if (!expensesdata) {
-  return (
-    <div>
-      <h2>Loading...Expenses</h2>
-    </div>
-  );
-}
+  if (!expensesdata) {
+    return (
+      <div>
+        <h2>Loading...Expenses</h2>
+      </div>
+    );
+  }
   return (
     <div className={classes.root}>
       {/* <h1>Expenses Claims Application</h1> */}

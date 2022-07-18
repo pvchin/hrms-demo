@@ -7,8 +7,8 @@ import axios from "axios";
 import { queryKeys } from "../react-query/constants";
 
 async function getExpenses(empid) {
-  //const { data } = await axios.get(`${leaves_url}?fv=${empid}`);
-  const { data } = await axios.get(`${expenses_url}`);
+  const { data } = await axios.get(`${expenses_url}?fv=${empid}`);
+  //const { data } = await axios.get(`${expenses_url}`);
   return data;
 }
 
@@ -23,8 +23,8 @@ export function useExpenses(empid) {
 
   const fallback = [];
   const { data: expenses = fallback } = useQuery(
-    //[queryKeys.leaves, { leaveId }],
-    queryKeys.expenses,
+    [queryKeys.expenses, { expenseId }],
+    //queryKeys.expenses,
     () => getExpenses(expenseId),
     {
       select: filter !== "all" ? selectFn : undefined,
