@@ -5,10 +5,12 @@ import { useRecoilState } from "recoil";
 import * as emailjs from "emailjs-com";
 import axios from "axios";
 import currency from "currency.js";
+import pdfMake from "pdfmake/build/pdfmake";
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
 //import { Box, Grid, GridItem, Heading } from "@chakra-ui/react";
 import {
   Box,
+  Container,
   Image,
   IconButton,
   HStack,
@@ -24,6 +26,7 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
+import { PDFViewer } from "@react-pdf/renderer";
 import { FiEye, FiTrash2 } from "react-icons/fi";
 import { viewImageState } from "../components/data/atomdata";
 import { loginLevelState } from "./data/atomdata";
@@ -34,7 +37,8 @@ import { useCustomToast } from "../helpers/useCustomToast";
 import { useAddExpenses } from "./expenses/useAddExpenses";
 import { useDeleteExpenses } from "./expenses/useDeleteExpenses";
 import { useUpdateExpenses } from "./expenses/useUpdateExpenses";
-import ImageUpload from "../helpers/ImageUpload";
+import { useExpensesAttachments } from "./expensesattachments/useExpensesAttachments";
+import AllPagesPDFViewer from "../helpers/AllPagesPDFView";
 
 const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICEID;
 const TEMPLATE_ID = "template_1y8odlq";
@@ -61,17 +65,18 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
   const updateExpenses = useUpdateExpenses();
   const addExpenses = useAddExpenses();
   const delExpenses = useDeleteExpenses();
+  const { expensesattachments, setAttachmentId } = useExpensesAttachments();
   const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
   const { isExpenseEditing, editExpenseID } = useExpensesContext();
   const [files, setFiles] = useState([]);
   const [filename, setFilename] = useState("");
   const [newFile, setNewFile] = useState({});
-   const [image, setImage] = useRecoilState(viewImageState);
-const {
-  isOpen: isViewImageOpen,
-  onOpen: onViewImageOpen,
-  onClose: onViewImageClose,
-} = useDisclosure();
+  const [image, setImage] = useRecoilState(viewImageState);
+  const {
+    isOpen: isViewImageOpen,
+    onOpen: onViewImageOpen,
+    onClose: onViewImageClose,
+  } = useDisclosure();
   const { handleSubmit, control, setValue } = useForm({
     defaultValues: {
       ...formdata,
@@ -219,46 +224,46 @@ const {
     handleDialogClose();
   };
 
-  const handleViewImage = ({ preview, name }) => {
+  const handleViewImage = ({ preview, name, type }) => {
     const newImage = { url: preview, name: name };
     const oldImage = image.url;
     setImage((prev) => newImage);
-
-    onViewImageOpen();
+    console.log("type", preview);
+    if (type !== "pdf") {
+      console.log("image");
+      onViewImageOpen();
+    } else {
+      var win = window.open("", "_blank");
+      console.log("pdf");
+      //pdfMake.createPdf(preview).open({}, win);
+      <Box>
+        <Container>
+          <AllPagesPDFViewer pdf={preview} />;
+        </Container>
+      </Box>;
+    }
   };
 
+  
   useEffect(() => {
     if (isExpenseEditing) {
-      const data = [
-        {
-          name: formdata.attachment1_name,
-          preview: formdata.attachment1_url,
-        },
-        {
-          name: formdata.attachment2_name,
-          preview: formdata.attachment2_url,
-        },
-        {
-          name: formdata.attachment3_name,
-          preview: formdata.attachment3_url,
-        },
-      ];
-      console.log("data", data);
-      const newData = data.filter(
-        (rec) => rec.name !== undefined && rec.name !== null
-      );
+      setAttachmentId(formdata.attachmentid);
+      const newData = expensesattachments
+        .filter((rec) => rec.attachmentid === formdata.attachmentid)
+        .map((rec) => {
+          return {
+            name: rec.name,
+            preview: rec.url,
+          };
+        });
+
+      console.log("data", newData);
+
       setFiles(newData);
     } else {
       setFiles([]);
     }
-  }, []);
-
-  useEffect(() => {
-    console.log("setvalue");
-    setValue("attachment1_name", files.length > 0 ? files[0].name : "");
-    setValue("attachment2_name", files.length > 1 ? files[1].name : "");
-    setValue("attachment3_name", files.length > 2 ? files[2].name : "");
-  }, [files]);
+  }, [expensesattachments]);
 
   return (
     <div>
@@ -583,7 +588,7 @@ const {
                   return (
                     <Box
                       display="inline-flex"
-                      w="100%"
+                      w="50%"
                       h={150}
                       mb={8}
                       mr={8}
@@ -609,6 +614,7 @@ const {
                               handleViewImage({
                                 preview: file.preview,
                                 name: file.name,
+                                type: file.preview.split(".").pop(),
                               })
                             }
                           />

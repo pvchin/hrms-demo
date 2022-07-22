@@ -18,6 +18,7 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
+import pdfMake from "pdfmake/build/pdfmake";
 import { FiEye, FiTrash2 } from "react-icons/fi";
 import { useRecoilState } from "recoil";
 import { viewImageState } from "../components/data/atomdata";
@@ -100,7 +101,7 @@ const ImageUpload = ({ files, setFiles, onDrop }) => {
     isDragAccept,
     isDragReject,
   } = useDropzone({
-    accept: "image/*",
+    accept: "image/*,application/pdf",
     onDrop: onDrop,
   });
 
@@ -123,8 +124,16 @@ const ImageUpload = ({ files, setFiles, onDrop }) => {
     const newImage = { url: preview, name: name };
     const oldImage = image.url;
     setImage((prev) => newImage);
-
+    const type = preview.split(".").pop();
     onViewImageOpen();
+    // if (type !== "pdf") {
+    //   console.log("image");
+    //   onViewImageOpen();
+    // } else {
+    //   var win = window.open("", "_blank");
+    //   console.log("pdf");
+    //   pdfMake.createPfg(preview).open({}, win);
+    // }
   };
 
   // const thumbs = files.map((file) => (
@@ -193,10 +202,7 @@ const ImageUpload = ({ files, setFiles, onDrop }) => {
     <div className="container">
       <div {...getRootProps({ style })}>
         <input {...getInputProps()} />
-        <p>
-          Drag 'n' drop some files here, or click to select files.
-          Maximum 3 files only.
-        </p>
+        <p>Drag 'n' drop some files here, or click to select files.</p>
       </div>
       <aside style={thumbsContainer}>
         {/* {<Thumbs />} */}

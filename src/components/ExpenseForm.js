@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useRecoilState } from "recoil";
 import * as emailjs from "emailjs-com";
 import axios from "axios";
+import { nanoid } from "nanoid";
 import currency from "currency.js";
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
 import { Box, Grid, GridItem, Heading } from "@chakra-ui/react";
@@ -15,6 +16,10 @@ import { useCustomToast } from "../helpers/useCustomToast";
 import { useAddExpenses } from "./expenses/useAddExpenses";
 import { useDeleteExpenses } from "./expenses/useDeleteExpenses";
 import { useUpdateExpenses } from "./expenses/useUpdateExpenses";
+import { useExpensesAttachments } from "./expensesattachments/useExpensesAttachments";
+import { useAddExpensesAttachment } from "./expensesattachments/useAddExpensesAttachment";
+import { useUpdateExpensesAttachment } from "./expensesattachments/useUpdateExpensesAttachment";
+import { useDeleteExpensesAttachment } from "./expensesattachments/useDeleteExpensesAttachment";
 import ImageUpload from "../helpers/ImageUpload";
 
 const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICEID;
@@ -42,11 +47,15 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
   const updateExpenses = useUpdateExpenses();
   const addExpenses = useAddExpenses();
   const delExpenses = useDeleteExpenses();
+  const { expensesattachments } = useExpensesAttachments();
+  const addExpensesAttachment = useAddExpensesAttachment();
+  const delExpensesAttachment = useDeleteExpensesAttachment();
   const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
   const { isExpenseEditing, editExpenseID } = useExpensesContext();
   const [files, setFiles] = useState([]);
   const [filename, setFilename] = useState("");
   const [newFile, setNewFile] = useState({});
+  const [attachmentId, setAttachmentId] = useState("");
 
   const { handleSubmit, control, setValue } = useForm({
     defaultValues: {
@@ -157,27 +166,52 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
     console.log("onSubmit", isExpenseEditing);
     let newData = {
       ...data,
-      attachment1_name: files.length >= 1 ? files[0].name : "",
-      attachment1_url: files.length >= 1 ? files[0].preview : "",
-      attachment2_name: files.length >= 2 ? files[1].name : "",
-      attachment2_url: files.length >= 2 ? files[1].preview : "",
-      attachment3_name: files.length >= 3 ? files[2].name : "",
-      attachment3_url: files.length >= 3 ? files[2].preview : "",
     };
-    console.log("newdata", newData);
-    console.log("isEditing", isExpenseEditing);
+    //console.log("newdata", newData);
+    //console.log("isEditing", isExpenseEditing);
     if (isExpenseEditing) {
       console.log("edit");
       const { rec_id, tableData, ...editData } = newData;
       updateExpenses({ id: editExpenseID, ...editData });
+      //attachments
+      expensesattachments
+        .filter((r) => r.attachmentid === formdata.attachmentid)
+        .forEach((rec) => {
+          const id = rec.id;
+          delExpensesAttachment(id);
+        });
+      files.forEach((rec) => {
+        const newData = {
+          attachmentid: formdata.attachmentid,
+          name: rec.name,
+          url: rec.preview,
+          type: rec.preview.split(".").pop(),
+        };
+        console.log("addattach", newData);
+        addExpensesAttachment(newData);
+      });
     } else {
-      console.log("new");
+      console.log("new", newData);
+      const newid = nanoid();
       addExpenses({
         ...newData,
         empid: loginLevel.loginUserId,
         name: loginLevel.loginUser,
+        attachmentid: newid,
+      });
+
+      files.forEach((rec) => {
+        const newData = {
+          attachmentid: newid,
+          name: rec.name,
+          url: rec.preview,
+          type: rec.preview.split(".").pop(),
+        };
+        console.log("addattach", newData);
+        addExpensesAttachment(newData);
       });
     }
+
     // if (isExpenseEditing) {
     //   const { rec_id, tableData, ...editData } = newData;
     //   console.log("edit", ...editData);
@@ -197,36 +231,30 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
 
   useEffect(() => {
     if (isExpenseEditing) {
-      const data = [
-        {
-          name: formdata.attachment1_name,
-          preview: formdata.attachment1_url,
-        },
-        {
-          name: formdata.attachment2_name,
-          preview: formdata.attachment2_url,
-        },
-        {
-          name: formdata.attachment3_name,
-          preview: formdata.attachment3_url,
-        },
-      ];
-      console.log("data", data);
-      const newData = data.filter(
-        (rec) => rec.name !== undefined && rec.name !== null
-      );
+      setAttachmentId(formdata.attachmentid);
+      const newData = expensesattachments
+        .filter((rec) => rec.attachmentid === formdata.attachmentid)
+        .map((rec) => {
+          return {
+            name: rec.name,
+            preview: rec.url,
+          };
+        });
+
+      console.log("data", newData);
+
       setFiles(newData);
     } else {
       setFiles([]);
     }
-  }, []);
+  }, [expensesattachments]);
 
-  useEffect(() => {
-    console.log("setvalue");
-    setValue("attachment1_name", files.length > 0 ? files[0].name : "");
-    setValue("attachment2_name", files.length > 1 ? files[1].name : "");
-    setValue("attachment3_name", files.length > 2 ? files[2].name : "");
-  }, [files]);
+  // useEffect(() => {
+  //   console.log("setvalue");
+  //   setValue("attachment1_name", files.length > 0 ? files[0].name : "");
+  //   setValue("attachment2_name", files.length > 1 ? files[1].name : "");
+  //   setValue("attachment3_name", files.length > 2 ? files[2].name : "");
+  // }, [files]);
 
   return (
     <div>

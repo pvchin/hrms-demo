@@ -20,6 +20,8 @@ import { useExpenses } from "./expenses/useExpenses";
 //import { useAddExpenses } from "./expenses/useAddExpenses";
 import { useDeleteExpenses } from "./expenses/useDeleteExpenses";
 //import { useUpdateExpenses } from "./expenses/useUpdateExpenses";
+import { useExpensesAttachments } from "./expensesattachments/useExpensesAttachments";
+import { useDeleteExpensesAttachment } from "./expensesattachments/useDeleteExpensesAttachment";
 
 const initial_form = {
   name: "",
@@ -79,11 +81,14 @@ export default function ExpenseTable() {
   //const updateExpenses = useUpdateExpenses();
   //const addExpenses = useAddExpenses();
   const deleteExpenses = useDeleteExpenses();
+  const { expensesattachments, setAttachmentId } = useExpensesAttachments();
+  const deleteExpensesAttachment = useDeleteExpensesAttachment();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   //const [expensesdata, setExpensesdata] = useState([]);
   //const [alertSuccess, setAlertSuccess] = useState(false);
   const [formdata, setFormdata] = useState(initial_form);
+  const [expattachId, setExpattachId] = useState('')
   const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
   //const { editEmployeeID } = useEmployeesContext();
   const {
@@ -122,8 +127,10 @@ export default function ExpenseTable() {
   };
 
   const delete_Expense = (data) => {
-    const { id } = data;
+    const { id, attachmentid } = data;
     setEditExpenseID(id);
+    setAttachmentId(attachmentid);
+    setExpattachId(attachmentid)
     handleAlertOpen();
 
     // deleteExpense(id);
@@ -149,6 +156,12 @@ export default function ExpenseTable() {
   const handleOnDeleteConfirm = () => {
     const id = editExpenseID;
     deleteExpenses(id);
+    expensesattachments
+      .filter((r) => r.attachmentid === expattachId)
+      .forEach((rec) => {
+        const id = rec.id
+        deleteExpensesAttachment(id)
+      })
   };
 
   return (

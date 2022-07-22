@@ -3,6 +3,7 @@ export const wpexpiry_url = "/api/wpexpiryview";
 export const leaves_url = "/api/leaves";
 export const onleaves_url = "/api/onleavesview";
 export const expenses_url = "/api/expenses";
+export const expensesattachments_url = "/api/expensesattachments";
 export const unpaidexpenses_url = "/api/unpaidexpenses";
 export const dailyallowances_url = "/api/dailyallowances";
 export const dailyallowsdetls_url = "/api/dailyallowsdetls";
