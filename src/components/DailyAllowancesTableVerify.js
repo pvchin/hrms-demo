@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, MenuItem } from "@material-ui/core";
@@ -30,45 +30,9 @@ import { useUpdateDailyAllows } from "./dailyallows/useUpdateDailyAllows";
 
 //const FILTERSTRING = "Submitted";
 
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-    editable: "never",
-  },
-  { title: "Period", field: "period", editable: "never" },
-  { title: "Location", field: "location", editable: "never" },
-  { title: "Manager Name", field: "manager", editable: "never" },
-  {
-    title: "No Of Days",
-    field: "no_of_days",
-    type: "numeric",
-    editable: "never",
-  },
-  { title: "Amount", field: "amount", type: "currency", editable: "never" },
-  {
-    title: "Status",
-    field: "status",
-    editComponent: (props) => (
-      <TextField
-        //defaultValue={props.value || null}
-        onChange={(e) => props.onChange(e.target.value)}
-        style={{ width: 100 }}
-        value={props.value}
-        select
-      >
-        <MenuItem value="Pending">Pending</MenuItem>
-        <MenuItem value="Approved">Approved</MenuItem>
-        <MenuItem value="Rejected">Rejected</MenuItem>
-        <MenuItem value="Cancel">Cancel</MenuItem>
-      </TextField>
-    ),
-  },
-];
-
 export default function DailyAllowancesTable() {
   //let history = useHistory();
-  const toast = useCustomToast()
+  const toast = useCustomToast();
   const classes = useStyles();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   //const [tmpallowsdata, setTmpallowsdata] = useState([]);
@@ -79,7 +43,45 @@ export default function DailyAllowancesTable() {
   const updateDailyAllows = useUpdateDailyAllows();
   //const setEmpID = useSetRecoilState(empidState);
   //const title = `Site Allowances (${allows_period})`;
-  
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+        editable: "never",
+      },
+      { title: "Period", field: "period", editable: "never" },
+      { title: "Location", field: "location", editable: "never" },
+      { title: "Manager Name", field: "manager", editable: "never" },
+      {
+        title: "No Of Days",
+        field: "no_of_days",
+        type: "numeric",
+        editable: "never",
+      },
+      { title: "Amount", field: "amount", type: "currency", editable: "never" },
+      {
+        title: "Status",
+        field: "status",
+        editComponent: (props) => (
+          <TextField
+            //defaultValue={props.value || null}
+            onChange={(e) => props.onChange(e.target.value)}
+            style={{ width: 100 }}
+            value={props.value}
+            select
+          >
+            <MenuItem value="Pending">Pending</MenuItem>
+            <MenuItem value="Approved">Approved</MenuItem>
+            <MenuItem value="Rejected">Rejected</MenuItem>
+            <MenuItem value="Cancel">Cancel</MenuItem>
+          </TextField>
+        ),
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
     setDailyAllowsStatusId("Submitted");
@@ -101,10 +103,10 @@ export default function DailyAllowancesTable() {
         const currentrec = rec;
         currentrec.status = "Verified";
         updateDailyAllows({ id: rec.id, status: "Verified" });
-         toast({
-           title: "Site Allows record being updated!",
-           status: "success",
-         });
+        toast({
+          title: "Site Allows record being updated!",
+          status: "success",
+        });
         //update leavesdata
         // if (!update_dailyallowance_error) {
         //   const recdata = dailyallowancesdata.filter((r) => r.id === rec.id);
@@ -123,10 +125,10 @@ export default function DailyAllowancesTable() {
         const currentrec = rec;
         currentrec.status = "Rejected";
         updateDailyAllows({ id: rec.id, status: "Rejected" });
-         toast({
-           title: "Site Allows record being rejected!",
-           status: "warning",
-         });
+        toast({
+          title: "Site Allows record being rejected!",
+          status: "warning",
+        });
         //update leavesdata
         // if (!update_dailyallowance_error) {
         //   const recdata = dailyallowancesdata.filter((r) => r.id === rec.id);

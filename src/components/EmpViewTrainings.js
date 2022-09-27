@@ -1,46 +1,49 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { useEmployeesContext } from "../context/employees_context";
 import { useTrainingsContext } from "../context/trainings_context";
-
-const columns = [
-  {
-    title: "Institute",
-    field: "institute",
-  },
-  {
-    title: "Course",
-    field: "course",
-  },
-  {
-    title: "From Date",
-    field: "from_date",
-    type: "date",
-    filtering: false,
-    dateSetting: { locale: "en-GB" },
-  },
-  {
-    title: "To Date",
-    field: "to_date",
-    type: "date",
-    filtering: false,
-    dateSetting: { locale: "en-GB" },
-  },
-  {
-    title: "Expiry Date",
-    field: "expiry_date",
-    type: "date",
-    filtering: false,
-    dateSetting: { locale: "en-GB" },
-  },
-];
 
 export default function Emp_ViewFamily() {
   const classes = useStyles();
   const { editEmployeeID } = useEmployeesContext();
   const { singlebatch_training, getSingleBatchTraining } =
     useTrainingsContext();
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Institute",
+        field: "institute",
+      },
+      {
+        title: "Course",
+        field: "course",
+      },
+      {
+        title: "From Date",
+        field: "from_date",
+        type: "date",
+        filtering: false,
+        dateSetting: { locale: "en-GB" },
+      },
+      {
+        title: "To Date",
+        field: "to_date",
+        type: "date",
+        filtering: false,
+        dateSetting: { locale: "en-GB" },
+      },
+      {
+        title: "Expiry Date",
+        field: "expiry_date",
+        type: "date",
+        filtering: false,
+        dateSetting: { locale: "en-GB" },
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
     getSingleBatchTraining(editEmployeeID);

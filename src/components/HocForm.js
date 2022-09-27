@@ -290,7 +290,13 @@ const HocForm = ({ formdata, setFormdata, handleDialogClose, isEditId }) => {
                     <MenuItem value="">None</MenuItem>
                     {hocwhatdetails &&
                       hocwhatdetails
-                        //.filter((r) => r.group === "What Details")
+                        .filter((r) => {
+                          if (category === "Positive Act") {
+                            return r.positiveact;
+                          } else {
+                            return r.unsafeact;
+                          }
+                        })
                         .map((rec) => {
                           return (
                             <MenuItem key={rec.id} value={rec.description}>

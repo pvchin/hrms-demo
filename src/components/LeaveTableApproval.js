@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { TextField, MenuItem } from "@material-ui/core";
 import { Button, HStack } from "@chakra-ui/react";
@@ -40,63 +40,6 @@ const initial_form = {
   leave_bal: 0,
 };
 
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-    editable: "never",
-  },
-  {
-    title: "From Date",
-    field: "from_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editable: "never",
-  },
-  {
-    title: "To Date",
-    field: "to_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editable: "never",
-  },
-  {
-    title: "Leave Balance",
-    field: "leave_bal",
-    type: "numeric",
-    editable: "never",
-  },
-  {
-    title: "No of Days",
-    field: "no_of_days",
-    type: "numeric",
-    editable: "never",
-  },
-  {
-    title: "Reason",
-    field: "reason",
-    editable: "never",
-  },
-  {
-    title: "Status",
-    field: "status",
-    editComponent: (props) => (
-      <TextField
-        //defaultValue={props.value || null}
-        onChange={(e) => props.onChange(e.target.value)}
-        style={{ width: 100 }}
-        value={props.value}
-        select
-      >
-        <MenuItem value="Pending">Pending</MenuItem>
-        <MenuItem value="Approve">Approve</MenuItem>
-        <MenuItem value="Reject">Reject</MenuItem>
-        <MenuItem value="Cancel">Cancel</MenuItem>
-      </TextField>
-    ),
-  },
-];
-
 export default function LeaveTableApproval() {
   const classes = useStyles();
   const toast = useCustomToast();
@@ -112,8 +55,8 @@ export default function LeaveTableApproval() {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isUpdate, setIsUpdate] = useState(true);
   const leavedata = leavesstatus.filter(
-            (r) => r.reporting_email === loginLevel.loginEmail
-          )
+    (r) => r.reporting_email === loginLevel.loginEmail
+  );
   const {
     // leaves,
     editLeaveID,
@@ -126,6 +69,66 @@ export default function LeaveTableApproval() {
     //setIsLeaveEditingOff,
     //resetSingleLeave,
   } = useLeavesContext();
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+        editable: "never",
+      },
+      {
+        title: "From Date",
+        field: "from_date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editable: "never",
+      },
+      {
+        title: "To Date",
+        field: "to_date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editable: "never",
+      },
+      {
+        title: "Leave Balance",
+        field: "leave_bal",
+        type: "numeric",
+        editable: "never",
+      },
+      {
+        title: "No of Days",
+        field: "no_of_days",
+        type: "numeric",
+        editable: "never",
+      },
+      {
+        title: "Reason",
+        field: "reason",
+        editable: "never",
+      },
+      {
+        title: "Status",
+        field: "status",
+        editComponent: (props) => (
+          <TextField
+            //defaultValue={props.value || null}
+            onChange={(e) => props.onChange(e.target.value)}
+            style={{ width: 100 }}
+            value={props.value}
+            select
+          >
+            <MenuItem value="Pending">Pending</MenuItem>
+            <MenuItem value="Approve">Approve</MenuItem>
+            <MenuItem value="Reject">Reject</MenuItem>
+            <MenuItem value="Cancel">Cancel</MenuItem>
+          </TextField>
+        ),
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
     setLeaveStatusId("Pending");

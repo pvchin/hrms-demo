@@ -21,6 +21,12 @@ export function useDeleteJobstatus(data) {
         status: "warning",
       });
     },
+    onError: () => {
+      toast({
+        title: "Network Error! Please check your internet connection!",
+        status: "warning",
+      });
+    },
   });
 
   return mutate;

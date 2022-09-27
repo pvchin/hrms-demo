@@ -57,7 +57,7 @@ const TrainingsTableViewStaff = () => {
               differenceInDays(new Date(i.expiry_date), new Date(today)) < 90 &&
               differenceInDays(new Date(today), new Date(i.expiry_date)) < 0
           )
-          .map((row) => {
+          .forEach((row) => {
             return (
               <Grid templateColumns="repeat(9, 1fr)" gap={3} p={1}>
                 <GridItem colSpan={3}>

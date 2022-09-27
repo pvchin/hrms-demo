@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { TextField, MenuItem, Button } from "@material-ui/core";
 import * as emailjs from "emailjs-com";
@@ -23,78 +23,6 @@ const TEMPLATE_ID = "template_1y8odlq";
 const USER_ID = process.env.REACT_APP_EMAILJS_USERID;
 const ADMINMANAGER_EMAIL = process.env.ADMINMANAGER_EMAIL;
 
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-    editable: "never",
-  },
-  {
-    title: "From Date",
-    field: "from_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editable: "never",
-  },
-  {
-    title: "To Date",
-    field: "to_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editable: "never",
-  },
-  {
-    title: "Leave Balance",
-    field: "leave_bal",
-    editable: "never",
-    cellStyle: {
-      width: 10,
-      maxWidth: 10,
-    },
-  },
-  {
-    title: "Days",
-    field: "no_of_days",
-    editable: "never",
-    cellStyle: {
-      width: 10,
-      maxWidth: 10,
-    },
-  },
-  {
-    title: "Reason",
-    field: "reason",
-    editable: "never",
-    cellStyle: {
-      width: 10,
-      maxWidth: 10,
-    },
-  },
-  {
-    title: "Status",
-    field: "status",
-    editable: "never",
-    cellStyle: {
-      width: 50,
-      maxWidth: 50,
-    },
-    editComponent: (props) => (
-      <TextField
-        //defaultValue={props.value || null}
-        onChange={(e) => props.onChange(e.target.value)}
-        style={{ width: 100 }}
-        value={props.value}
-        select
-      >
-        <MenuItem value="Pending">Pending</MenuItem>
-        <MenuItem value="Approve">Approve</MenuItem>
-        <MenuItem value="Reject">Reject</MenuItem>
-        <MenuItem value="Cancel">Cancel</MenuItem>
-      </TextField>
-    ),
-  },
-];
-
 export default function LeaveTable({
   leavesdata,
   //setLeavesdata,
@@ -115,6 +43,81 @@ export default function LeaveTable({
   } = useLeavesContext();
 
   const { updateEmployee } = useEmployeesContext();
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+        editable: "never",
+      },
+      {
+        title: "From Date",
+        field: "from_date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editable: "never",
+      },
+      {
+        title: "To Date",
+        field: "to_date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editable: "never",
+      },
+      {
+        title: "Leave Balance",
+        field: "leave_bal",
+        editable: "never",
+        cellStyle: {
+          width: 10,
+          maxWidth: 10,
+        },
+      },
+      {
+        title: "Days",
+        field: "no_of_days",
+        editable: "never",
+        cellStyle: {
+          width: 10,
+          maxWidth: 10,
+        },
+      },
+      {
+        title: "Reason",
+        field: "reason",
+        editable: "never",
+        cellStyle: {
+          width: 10,
+          maxWidth: 10,
+        },
+      },
+      {
+        title: "Status",
+        field: "status",
+        editable: "never",
+        cellStyle: {
+          width: 50,
+          maxWidth: 50,
+        },
+        editComponent: (props) => (
+          <TextField
+            //defaultValue={props.value || null}
+            onChange={(e) => props.onChange(e.target.value)}
+            style={{ width: 100 }}
+            value={props.value}
+            select
+          >
+            <MenuItem value="Pending">Pending</MenuItem>
+            <MenuItem value="Approve">Approve</MenuItem>
+            <MenuItem value="Reject">Reject</MenuItem>
+            <MenuItem value="Cancel">Cancel</MenuItem>
+          </TextField>
+        ),
+      },
+    ],
+    []
+  );
 
   // useEffect(() => {
   //   loadLeaves();
@@ -252,9 +255,10 @@ export default function LeaveTable({
       <div style={{ maxWidth: "100%", paddingTop: "5px" }}>
         <MaterialTable
           columns={columns}
-          data={leavesdata.filter(
-            (r) => r.reporting_email === loginLevel.loginEmail
-          )}
+          // data={leavesdata.filter(
+          //   (r) => r.reporting_email === loginLevel.loginEmail
+          // )}
+          data={leavesdata}
           title="Leave Application"
           icons={{
             Add: (props) => <AddIcon />,

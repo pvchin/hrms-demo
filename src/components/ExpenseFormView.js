@@ -5,12 +5,10 @@ import { useRecoilState } from "recoil";
 import * as emailjs from "emailjs-com";
 import axios from "axios";
 import currency from "currency.js";
-import pdfMake from "pdfmake/build/pdfmake";
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
 //import { Box, Grid, GridItem, Heading } from "@chakra-ui/react";
 import {
   Box,
-  Container,
   Image,
   IconButton,
   HStack,
@@ -26,7 +24,6 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import { PDFViewer } from "@react-pdf/renderer";
 import { FiEye, FiTrash2 } from "react-icons/fi";
 import { viewImageState } from "../components/data/atomdata";
 import { loginLevelState } from "./data/atomdata";
@@ -38,7 +35,8 @@ import { useAddExpenses } from "./expenses/useAddExpenses";
 import { useDeleteExpenses } from "./expenses/useDeleteExpenses";
 import { useUpdateExpenses } from "./expenses/useUpdateExpenses";
 import { useExpensesAttachments } from "./expensesattachments/useExpensesAttachments";
-import AllPagesPDFViewer from "../helpers/AllPagesPDFView";
+
+const FileViewers = React.lazy(() => import("../helpers/FileViewers"));
 
 const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICEID;
 const TEMPLATE_ID = "template_1y8odlq";
@@ -83,8 +81,8 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
     },
   });
 
-  console.log("formdata", formdata);
-  console.log("files", files);
+  //console.log("formdata", formdata);
+  //console.log("files", files);
 
   const onDrop = (acceptedFiles) => {
     acceptedFiles.forEach((file) => {
@@ -165,7 +163,7 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
 
     emailjs.send(SERVICE_ID, TEMPLATE_ID, emaildata, USER_ID).then(
       function (response) {
-        console.log(response.status, response.text);
+        //console.log(response.status, response.text);
         toast({
           title: `Email has sent successfully to ${emaildata.to_email}!`,
           status: "success",
@@ -183,7 +181,7 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
 
   const onSubmit = (data, e) => {
     e.preventDefault();
-    console.log("onSubmit", isExpenseEditing);
+    //console.log("onSubmit", isExpenseEditing);
     let newData = {
       ...data,
       attachment1_name: files.length >= 1 ? files[0].name : "",
@@ -196,11 +194,11 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
     console.log("newdata", newData);
     console.log("isEditing", isExpenseEditing);
     if (isExpenseEditing) {
-      console.log("edit");
+      //console.log("edit");
       const { rec_id, tableData, ...editData } = newData;
       updateExpenses({ id: editExpenseID, ...editData });
     } else {
-      console.log("new");
+      //console.log("new");
       addExpenses({
         ...newData,
         empid: loginLevel.loginUserId,
@@ -224,27 +222,12 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
     handleDialogClose();
   };
 
-  const handleViewImage = ({ preview, name, type }) => {
+  const handleViewImage = ({ preview, name }) => {
     const newImage = { url: preview, name: name };
-    const oldImage = image.url;
     setImage((prev) => newImage);
-    console.log("type", preview);
-    if (type !== "pdf") {
-      console.log("image");
-      onViewImageOpen();
-    } else {
-      var win = window.open("", "_blank");
-      console.log("pdf");
-      //pdfMake.createPdf(preview).open({}, win);
-      <Box>
-        <Container>
-          <AllPagesPDFViewer pdf={preview} />;
-        </Container>
-      </Box>;
-    }
+    onViewImageOpen();
   };
 
-  
   useEffect(() => {
     if (isExpenseEditing) {
       setAttachmentId(formdata.attachmentid);
@@ -256,9 +239,7 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
             preview: rec.url,
           };
         });
-
-      console.log("data", newData);
-
+      
       setFiles(newData);
     } else {
       setFiles([]);
@@ -279,7 +260,7 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
                 <Controller
                   name="name"
                   control={control}
-                  defaultValue={loginLevel.loginUser}
+                  defaultValue={formdata.name}
                   render={({
                     field: { onChange, value },
                     fieldState: { error },
@@ -289,7 +270,7 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
                         label="Name"
                         id="margin-normal1"
                         name="name"
-                        defaultValue={loginLevel.loginUser}
+                        defaultValue={formdata.name}
                         className={classes.textField}
                         onChange={onChange}
                         error={!!error}
@@ -460,7 +441,7 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
                 <Controller
                   name="status"
                   control={control}
-                  defaultValue="Pending"
+                  defaultValue={formdata.status}
                   render={({
                     field: { onChange, value },
                     fieldState: { error },
@@ -470,7 +451,7 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
                         label="Status"
                         id="margin-normal6"
                         name="status"
-                        defaultValue="Pending"
+                        defaultValue={formdata.status}
                         className={classes.textField}
                         onChange={onChange}
                         error={!!error}
@@ -637,30 +618,24 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
         closeOnOverlayClick={false}
         isOpen={isViewImageOpen}
         onClose={onViewImageClose}
-        size="2xl"
+        size="3xl"
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Your images</ModalHeader>
+          <ModalHeader>{image.name}</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <Box
               display="inline-flex"
               w="100%"
-              h="auto"
+              h="800"
               mb={8}
               mr={8}
               p={4}
               border="1px solid #eaeaea"
               borderRadius={2}
             >
-              <Image
-                src={image.url}
-                alt={image.name}
-                display="block"
-                w="auto"
-                h="100%"
-              />
+              <FileViewers imagefile={image} />
             </Box>
           </ModalBody>
 

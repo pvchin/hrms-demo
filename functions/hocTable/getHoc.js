@@ -22,9 +22,21 @@ module.exports = async (event) => {
     if (fv) {
       // const { id, linkid, ...fields } = JSON.parse(event.body);
       // console.log(linkid);
-      const hoc = await table
-        .select({ filterByFormula: `empid = '${fv}'` })
+      const hoc1 = await table
+        .select({
+          view: "viewbypositiveact",
+          // filterByFormula: `empid = '${fv}'`,
+          filterByFormula: `AND(empid='${fv}',YEAR(raisedon)=${y})`,
+        })
         .firstPage();
+      const hoc2 = await table
+        .select({
+          view: "viewbyunsafe",
+          // filterByFormula: `empid = '${fv}'`,
+          filterByFormula: `AND(empid='${fv}',YEAR(raisedon)=${y})`,
+        })
+        .firstPage();
+      const hoc = [...hoc1, ...hoc2];
       const formattedHoc = hoc.map((e) => ({
         id: e.id,
         ...e.fields,
@@ -38,12 +50,19 @@ module.exports = async (event) => {
   }
 
   if (m) {
-    const hoc = await table
+    const hoc1 = await table
       .select({
-        view: "sortedview",
+        view: "viewbypositiveact",
         filterByFormula: `AND(MONTH(raisedon)=${m},YEAR(raisedon)=${y})`,
       })
       .firstPage();
+    const hoc2 = await table
+      .select({
+        view: "viewbyunsafe",
+        filterByFormula: `AND(MONTH(raisedon)=${m},YEAR(raisedon)=${y})`,
+      })
+      .firstPage();
+    const hoc = [...hoc1, ...hoc2];
     const formattedHoc = hoc.map((rec) => ({
       id: rec.id,
       ...rec.fields,

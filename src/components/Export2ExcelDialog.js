@@ -41,7 +41,7 @@ import {
   //Tabs,
 } from "@chakra-ui/react";
 import { useHocPeriod } from "./hoc/useHocPeriod";
-import Export2Excel from "./Export2Excel";
+//import Export2Excel from "./Export2Excel";
 
 // const initial_state = {
 //   type: "",
@@ -49,6 +49,8 @@ import Export2Excel from "./Export2Excel";
 //   year: new Date().getFullYear(),
 //   filename: "",
 //};
+
+const Export2Excel = React.lazy(()=> import("./Export2Excel"))
 
 const months = [
   { name: "January", value: 1 },

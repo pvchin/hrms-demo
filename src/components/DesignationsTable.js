@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -7,19 +7,19 @@ import { useUpdateDesignations } from "./designations/useUpdateDesignations";
 import { useDeleteDesignations } from "./designations/useDeleteDesignations";
 import { useAddDesignations } from "./designations/useAddDesignations";
 
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-  },
-];
-
 export default function UpdateDesignations() {
   const classes = useStyles();
   const { designations } = useDesignations();
   const updateDesignations = useUpdateDesignations();
   const deleteDesignations = useDeleteDesignations();
   const addDesignations = useAddDesignations();
+
+  const columns = useMemo(() => [
+    {
+      title: "Name",
+      field: "name",
+    },
+  ],[]);
 
   const update_Designation = (data) => {
     const { id, rec_id, ...fields } = data;

@@ -16,10 +16,10 @@ export function useDeleteExpensesAttachment(data) {
   const { mutate } = useMutation((data) => deleteExpensesAttachment(data), {
     onSuccess: () => {
       queryClient.invalidateQueries("expensesattachments");
-      toast({
-        title: "Expense attachment record being deleted!",
-        status: "warning",
-      });
+    //   toast({
+    //     title: "Expense attachment record being deleted!",
+    //     status: "warning",
+    //   });
     },
   });
 

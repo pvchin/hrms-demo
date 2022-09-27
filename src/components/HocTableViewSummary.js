@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo, useEffect } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@chakra-ui/react";
@@ -14,110 +14,113 @@ import { useHocPeriod } from "./hoc/useHocPeriod";
 
 //const FILTERSTRING = "Pending";
 
-const columns = [
-  {
-    title: "Findings",
-    field: "findings",
-    editable: "never",
-    cellStyle: {
-      minWidth: 200,
-      maxWidth: 200,
-    },
-  },
-  {
-    title: "Risks",
-    field: "risks",
-    editable: "never",
-    cellStyle: {
-      minWidth: 150,
-      maxWidth: 150,
-    },
-  },
-  {
-    title: "Type/Category",
-    field: "category",
-    editable: "never",
-  },
-  {
-    title: "What",
-    field: "what",
-    editable: "never",
-  },
-  {
-    title: "What Details",
-    field: "what_details",
-    editable: "never",
-    cellStyle: {
-      minWidth: 150,
-      maxWidth: 150,
-    },
-  },
-  {
-    title: "Why",
-    field: "why",
-    editable: "never",
-  },
-  {
-    title: "Why Details",
-    field: "why_details",
-    editable: "never",
-    cellStyle: {
-      minWidth: 200,
-      maxWidth: 200,
-    },
-  },
-  {
-    title: "Discussion",
-    field: "discussion",
-    editable: "never",
-  },
-  {
-    title: "Action",
-    field: "action",
-    editable: "never",
-  },
-  {
-    title: "Follow-up required?",
-    field: "isfollowup",
-    editable: "never",
-  },
-  {
-    title: "Work Related?",
-    field: "isworkrelated",
-    editable: "never",
-  },
-  {
-    title: "Raised By",
-    field: "raisedby",
-    editable: "never",
-  },
-  {
-    title: "Raised On",
-    field: "raisedon",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editable: "never",
-  },
-  {
-    title: "Company",
-    field: "company",
-    editable: "never",
-  },
-  {
-    title: "Location",
-    field: "location",
-    editable: "never",
-  },
-  // {
-  //   title: "Department",
-  //   field: "department",
-  //   editable: "never",
-  // },
-];
-
 export default function HocTableViewSummary({ year, month }) {
   const classes = useStyles();
   const { hocperiod, setHocPeriodYrId, setHocPeriodMthId } = useHocPeriod();
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Findings",
+        field: "findings",
+        editable: "never",
+        cellStyle: {
+          minWidth: 200,
+          maxWidth: 200,
+        },
+      },
+      {
+        title: "Risks",
+        field: "risks",
+        editable: "never",
+        cellStyle: {
+          minWidth: 150,
+          maxWidth: 150,
+        },
+      },
+      {
+        title: "Type/Category",
+        field: "category",
+        editable: "never",
+      },
+      {
+        title: "What",
+        field: "what",
+        editable: "never",
+      },
+      {
+        title: "What Details",
+        field: "what_details",
+        editable: "never",
+        cellStyle: {
+          minWidth: 150,
+          maxWidth: 150,
+        },
+      },
+      {
+        title: "Why",
+        field: "why",
+        editable: "never",
+      },
+      {
+        title: "Why Details",
+        field: "why_details",
+        editable: "never",
+        cellStyle: {
+          minWidth: 200,
+          maxWidth: 200,
+        },
+      },
+      {
+        title: "Discussion",
+        field: "discussion",
+        editable: "never",
+      },
+      {
+        title: "Action",
+        field: "action",
+        editable: "never",
+      },
+      {
+        title: "Follow-up required?",
+        field: "isfollowup",
+        editable: "never",
+      },
+      {
+        title: "Work Related?",
+        field: "isworkrelated",
+        editable: "never",
+      },
+      {
+        title: "Raised By",
+        field: "raisedby",
+        editable: "never",
+      },
+      {
+        title: "Raised On",
+        field: "raisedon",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editable: "never",
+      },
+      {
+        title: "Company",
+        field: "company",
+        editable: "never",
+      },
+      {
+        title: "Location",
+        field: "location",
+        editable: "never",
+      },
+      // {
+      //   title: "Department",
+      //   field: "department",
+      //   editable: "never",
+      // },
+    ],
+    []
+  );
 
   useEffect(() => {
     setHocPeriodYrId(year);
@@ -132,7 +135,9 @@ export default function HocTableViewSummary({ year, month }) {
       <Box maxW="100%" pt="5px" overflow="scroll">
         <MaterialTable
           columns={columns}
-          data={hocperiod}
+          data={hocperiod.sort((a, b) =>
+            a.raisedon < b.raisedon ? 1 : b.raisedon < a.raisedon ? -1 : 0
+          )}
           title="HOC History"
           options={{
             filtering: false,

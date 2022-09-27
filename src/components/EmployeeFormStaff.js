@@ -28,7 +28,7 @@ import EmpFamily from "./EmpFamily";
 import EmpEducations from "./EmpEducations";
 import EmpExperiences from "./EmpExperiences";
 import EmpTrainings from "./EmpTrainings";
-import EmpJobhistory from "./EmpJobhistory"
+import EmpJobhistory from "./EmpJobhistory";
 import App from "../utils/firebase";
 
 const initial_values = {
@@ -67,7 +67,7 @@ const initial_values = {
 const EmployeeForm = () => {
   const classes = useStyles();
   const toast = useCustomToast();
-  const { employees,setEmployeeId } = useEmployees();
+  const { employees, setEmployeeId } = useEmployees();
   //const { singleemployee, setSingleEmployeeId } = useSingleEmployee();
   const updateEmployees = useUpdateEmployees();
   const [empage, setEmpage] = useState(0);
@@ -964,26 +964,42 @@ const EmployeeForm = () => {
                     fieldState: { error },
                   }) => {
                     return (
+                      // <TextField
+                      //   label="Reporting To"
+                      //   id="standard-reportingto"
+                      //   name="reporting_to"
+                      //   defaultValue={reporting_to}
+                      //   className={classes.textField}
+                      //   onChange={(e) => {
+                      //     onChange(e.target.value);
+                      //     handleReportingTo(e.target.value);
+                      //   }}
+                      //   error={!!error}
+                      //   helperText={error ? error.message : null}
+                      //   select
+                      // >
+                      //   <MenuItem value="">None</MenuItem>
+                      //   {employees &&
+                      //     employees.map((r) => {
+                      //       return <MenuItem value={r.name}>{r.name}</MenuItem>;
+                      //     })}
+                      // </TextField>
                       <TextField
                         label="Reporting To"
                         id="standard-reportingto"
                         name="reporting_to"
                         defaultValue={reporting_to}
                         className={classes.textField}
-                        onChange={(e) => {
-                          onChange(e.target.value);
-                          handleReportingTo(e.target.value);
-                        }}
+                        onChange={onChange}
                         error={!!error}
                         helperText={error ? error.message : null}
-                        select
-                      >
-                        <MenuItem value="">None</MenuItem>
-                        {employees &&
-                          employees.map((r) => {
-                            return <MenuItem value={r.name}>{r.name}</MenuItem>;
-                          })}
-                      </TextField>
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      ></TextField>
                     );
                   }}
                   //rules={{ required: "Email is required" }}
@@ -991,7 +1007,7 @@ const EmployeeForm = () => {
                 <Controller
                   name="reporting_email"
                   control={control}
-                  defaultValue={reportemail}
+                  defaultValue={reporting_email}
                   render={({
                     field: { onChange, value },
                     fieldState: { error },
@@ -1001,7 +1017,7 @@ const EmployeeForm = () => {
                         label="Reporting Email"
                         id="standard-reportingemail"
                         name="reporting_email"
-                        defaultValue={reportemail}
+                        defaultValue={reporting_email}
                         className={classes.textField}
                         onChange={onChange}
                         error={!!error}

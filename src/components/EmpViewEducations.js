@@ -1,30 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { useEmployeesContext } from "../context/employees_context";
 import { useTablesContext } from "../context/tables_context";
-
-const columns = [
-  {
-    title: "Institution",
-    field: "institution",
-  },
-  {
-    title: "Course",
-    field: "course",
-  },
-  {
-    title: "From Date",
-    field: "from_date",
-    type: "date",
-  },
-  {
-    title: "To Date",
-    field: "to_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-  },
-];
 
 export default function Emp_Educations() {
   const classes = useStyles();
@@ -35,6 +13,31 @@ export default function Emp_Educations() {
     singlebatcheducation,
     singlebatch_education_loading,
   } = useTablesContext();
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Institution",
+        field: "institution",
+      },
+      {
+        title: "Course",
+        field: "course",
+      },
+      {
+        title: "From Date",
+        field: "from_date",
+        type: "date",
+      },
+      {
+        title: "To Date",
+        field: "to_date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
     loadSingleBatchEducation(editEmployeeID);

@@ -22,7 +22,7 @@ export function useHoclookup(empid) {
 
   const fallback = [];
   const { data: hoclookup = fallback } = useQuery(
-    [queryKeys.hoclookup, { hoclookupId }],
+    [queryKeys.hoclookup, hoclookupId ],
     () => getHoclookup(hoclookupId),
     {
       select: filter !== "all" ? selectFn : undefined,

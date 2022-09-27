@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable from "material-table";
 import { TextField, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -13,48 +13,6 @@ import { useExpensesContext } from "../context/expenses_context";
 //import { useEmployeesContext } from "../context/employees_context";
 import { CustomDialog } from "../helpers/CustomDialog";
 import { AlertDialogBox } from "../helpers/AlertDialogBox";
-
-const columns = [
-  { title: "Name", field: "name", editable: "never" },
-  {
-    title: "From Date",
-    field: "from_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editable: "never",
-  },
-  {
-    title: "To Date",
-    field: "to_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editable: "never",
-  },
-  {
-    title: "Description",
-    field: "description",
-    editable: "never",
-  },
-  { title: "Amount", field: "amount", type: "currency", editable: "never" },
-  {
-    title: "Status",
-    field: "status",
-    editComponent: (props) => (
-      <TextField
-        //defaultValue={props.value || null}
-        onChange={(e) => props.onChange(e.target.value)}
-        style={{ width: 100 }}
-        value={props.value}
-        select
-      >
-        <MenuItem value="Pending">Pending</MenuItem>
-        <MenuItem value="Approve">Approve</MenuItem>
-        <MenuItem value="Reject">Reject</MenuItem>
-        <MenuItem value="Cancel">Cancel</MenuItem>
-      </TextField>
-    ),
-  },
-];
 
 export default function ExpenseTable() {
   const classes = useStyles();
@@ -76,6 +34,51 @@ export default function ExpenseTable() {
     setIsExpenseEditingOff,
     resetSingleExpense,
   } = useExpensesContext();
+
+  const columns = useMemo(
+    () => [
+      { title: "Name", field: "name", editable: "never" },
+      {
+        title: "From Date",
+        field: "from_date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editable: "never",
+      },
+      {
+        title: "To Date",
+        field: "to_date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editable: "never",
+      },
+      {
+        title: "Description",
+        field: "description",
+        editable: "never",
+      },
+      { title: "Amount", field: "amount", type: "currency", editable: "never" },
+      {
+        title: "Status",
+        field: "status",
+        editComponent: (props) => (
+          <TextField
+            //defaultValue={props.value || null}
+            onChange={(e) => props.onChange(e.target.value)}
+            style={{ width: 100 }}
+            value={props.value}
+            select
+          >
+            <MenuItem value="Pending">Pending</MenuItem>
+            <MenuItem value="Approve">Approve</MenuItem>
+            <MenuItem value="Reject">Reject</MenuItem>
+            <MenuItem value="Cancel">Cancel</MenuItem>
+          </TextField>
+        ),
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
     setExpensesdata(expenses);

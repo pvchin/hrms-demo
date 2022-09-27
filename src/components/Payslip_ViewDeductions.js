@@ -1,8 +1,8 @@
-import React, {  useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
-import {  useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import {
   payPeriodState,
   //payPeriodEndMonthState,
@@ -15,7 +15,7 @@ export default function Payslip_ViewDeductions() {
   const classes = useStyles();
   const payPeriodEmpId = useRecoilValue(payPeriodEmpIdState);
   const payPeriod = useRecoilValue(payPeriodState);
-  
+
   const {
     payslipdeductions,
     //payslip_deduction_amount,
@@ -39,19 +39,21 @@ export default function Payslip_ViewDeductions() {
   //   setPayslipDeductionAmount(sum);
   // };
 
-  const columns = [
-    {
-      title: "Name",
-      field: "description",
-    },
-    { title: "Amount", field: "amount", type: "currency" },
-  ];
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "description",
+      },
+      { title: "Amount", field: "amount", type: "currency" },
+    ],
+    []
+  );
 
   useEffect(() => {
     getSingleBatchPayslipDeductions(payPeriodEmpId, payPeriod);
   }, []);
 
-  
   // const update_Payslip = () => {
   //   const { rec_id, id, total_deductions, ...paydata } = single_payslip;
   //   updatePayslip({
@@ -86,7 +88,6 @@ export default function Payslip_ViewDeductions() {
   //   getSingleBatchPayslipDeductions(single_payslip.empid, payslip_period);
   // };
 
-  
   if (payslipdeductions_loading) {
     return (
       <div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
@@ -27,19 +27,6 @@ import { useDailyAllowancesContext } from "../context/dailyallowances_context";
 import DailyAllowsDetlsTable from "./DailyAllowsDetlsTable";
 import { useDailyAllows } from "./dailyallows/useDailyAllows";
 
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-  },
-  { title: "Period", field: "period" },
-  { title: "Location", field: "location" },
-  { title: "Manager Name", field: "manager_name" },
-  { title: "No Of Days", field: "no_of_days", type: "numeric" },
-  { title: "Amount", field: "amount", type: "currency" },
-  { title: "Status", field: "status" },
-];
-
 export default function DailyAllowancesTable() {
   let navigate = useNavigate();
   const classes = useStyles();
@@ -63,6 +50,22 @@ export default function DailyAllowancesTable() {
     //dailyallowance_period,
     getSingleBatchDailyAllowance,
   } = useDailyAllowancesContext();
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+      },
+      { title: "Period", field: "period" },
+      { title: "Location", field: "location" },
+      { title: "Manager Name", field: "manager_name" },
+      { title: "No Of Days", field: "no_of_days", type: "numeric" },
+      { title: "Amount", field: "amount", type: "currency" },
+      { title: "Status", field: "status" },
+    ],
+    []
+  );
 
   // useEffect(() => {
   //   getSingleBatchDailyAllowance(allows_period);

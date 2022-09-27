@@ -4,9 +4,17 @@ import { makeStyles } from "@material-ui/core/styles";
 //import { useHistory } from "react-router-dom";
 import {
   Box,
+  Button,
   Divider,
   Heading,
   HStack,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  //ModalHeader,
+  //ModalFooter,
+  ModalBody,
+  ModalCloseButton,
   Stack,
   Select,
   SimpleGrid,
@@ -15,6 +23,7 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { Container } from "@material-ui/core";
 //import { useEmployees } from "./employees/useEmployees";
@@ -43,15 +52,25 @@ import WPExpiryViewAdmin from "./WPExpiryViewAdmin";
 import EmployeeTableLeaveView from "./EmployeeTableLeaveView";
 import LeavesTableViewSummary from "./LeavesTableViewSummary";
 import Copyright from "../components/Copyright";
+import { useHoc } from "./hoc/useHoc";
 
 //const Copyright  = React.lazy(()=> import("../components/Copyright"));
 //const CardLayout = React.lazy(() => import("../helpers/CardLayout"));
 //const CardLayout2 = React.lazy(() => import("../helpers/CardLayout2"));
 //const CardLayout3 = React.lazy(() => import("../helpers/CardLayout3"));
+const Export2ExcelDialog = React.lazy(() => import("./Export2ExcelDialog"));
 
 const drawerWidth = 240;
 
 const FILTERSTRING = "Pending";
+
+const initial_exp2excel = {
+  year: "",
+  month: "",
+  type: "",
+  title: "",
+  filename: "",
+};
 
 const EmployeeView = () => {
   //let history = useHistory();
@@ -59,6 +78,7 @@ const EmployeeView = () => {
   //const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   //const { employees } = useEmployees();
   //const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
+  const [exp2excelstate, setExp2excelstate] = useState(initial_exp2excel);
   const [leavesdata, setLeavesdata] = useState([]);
   const [isLeaveDialogOpen, setIsLeaveDialogOpen] = useState(false);
   const [expensesdata, setExpensesdata] = useState([]);
@@ -69,15 +89,20 @@ const EmployeeView = () => {
   const [isDailyAllowancesDialogOpen, setIsDailyAllowancesDialogOpen] =
     useState(false);
 
-  const {  loadPendingLeaves } = useLeavesContext();
-  const {  loadPendingExpenses } = useExpensesContext();
-  const {  loadPendingPayslips } = usePayslipsContext();
-  const {  loadPendingDailyAllowances } =
-    useDailyAllowancesContext();
+  const { loadPendingLeaves } = useLeavesContext();
+  const { loadPendingExpenses } = useExpensesContext();
+  const { loadPendingPayslips } = usePayslipsContext();
+  const { loadPendingDailyAllowances } = useDailyAllowancesContext();
   const [selectleaveyear, setSelectLeaveYear] = useState("");
   const [selecthocyear, setSelectHocYear] = useState("");
   const currentyear = new Date().getFullYear();
   const currentmonth = new Date().getMonth();
+  const { hoc, filter, setFilter, setHocId } = useHoc();
+  const {
+    isOpen: isExport2ExcelOpen,
+    onOpen: onExport2ExcelOpen,
+    onClose: onExport2ExcelClose,
+  } = useDisclosure();
 
   // const handleLeaveDialogOpen = () => {
   //   setLeavesdata([]);
@@ -121,6 +146,20 @@ const EmployeeView = () => {
   const handleDailyAllowancesDialogClose = () => {
     setIsDailyAllowancesDialogOpen(false);
     loadPendingDailyAllowances(FILTERSTRING);
+  };
+
+  const handleExportHoc2Excel = () => {
+    setExp2excelstate(
+      (prev) =>
+        (prev = {
+          year: currentyear,
+          month: currentmonth,
+          type: "HOC",
+          title: "Hoc",
+          filename: "hoc",
+        })
+    );
+    onExport2ExcelOpen();
   };
 
   useEffect(() => {
@@ -431,15 +470,15 @@ const EmployeeView = () => {
                               <option value="2021">2021</option>
                               <option value="2022">2022</option>
                             </Select>
-                            {/* <Box size="xl" py={2}>
-                              <Text fontSize="lg">
-                                <ExportLeave2Excel
-                                  filename="leave"
-                                  dataset={dataset}
-                                  title="Leave"
-                                />
-                              </Text>
-                            </Box> */}
+                            <Box size="xl" py={2}>
+                              <Button
+                                colorScheme="teal"
+                                variant="solid"
+                                onClick={() => handleExportHoc2Excel()}
+                              >
+                                Export To Excel
+                              </Button>
+                            </Box>
                           </HStack>
                         </Box>
                       </HStack>
@@ -639,6 +678,25 @@ const EmployeeView = () => {
             handleDialogClose={handleDailyAllowancesDialogClose}
           />
         </CustomDialog>
+        <Modal
+          closeOnOverlayClick={false}
+          isOpen={isExport2ExcelOpen}
+          onClose={onExport2ExcelClose}
+          size="md"
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalCloseButton />
+            <ModalBody>
+              <Export2ExcelDialog
+                state={exp2excelstate}
+                setState={setExp2excelstate}
+                dataset={hoc}
+                onClose={onExport2ExcelClose}
+              />
+            </ModalBody>
+          </ModalContent>
+        </Modal>
       </Container>
     </div>
   );

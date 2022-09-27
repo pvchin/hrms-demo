@@ -8,7 +8,10 @@ module.exports = async (event) => {
 
   if (id) {
     const expenseattachment = await table.find(id);
-    const formattedExpensesAttachments = { id: expenseattachment.id, ...expenseattachment.fields };
+    const formattedExpensesAttachments = {
+      id: expenseattachment.id,
+      ...expenseattachment.fields,
+    };
     if (expenseattachment.error) {
       return {
         statusCode: 404,
@@ -18,7 +21,7 @@ module.exports = async (event) => {
 
     return formattedReturn(200, formattedExpensesAttachments);
   }
- 
+
   if (fi) {
     const expensesattachments = await table
       .select({ view: "sortedview", filterByFormula: `attachmentid = '${fi}'` })
@@ -30,7 +33,7 @@ module.exports = async (event) => {
 
     return formattedReturn(200, formattedExpenses);
   }
- 
+
   try {
     const expensesattachments = await table.select().firstPage();
     const formattedExpensesAttachments = expensesattachments.map((expense) => ({

@@ -12,7 +12,7 @@ async function addExpensesAttachment(data) {
 export function useAddExpensesAttachment(data) {
   const queryClient = useQueryClient();
   const toast = useCustomToast();
-  console.log("here")
+  console.log("here");
   const { mutate } = useMutation((data) => addExpensesAttachment(data), {
     onSuccess: () => {
       queryClient.invalidateQueries("expensesattachments");

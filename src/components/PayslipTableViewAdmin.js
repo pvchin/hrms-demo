@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useMemo } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 //import { useHistory, Link } from "react-router-dom";
@@ -14,73 +14,6 @@ import { usePayrun } from "./payrun/usePayrun";
 
 //const FILTERSTRING = "Pending";
 
-const columns = [
-  {
-    title: "Batch",
-    field: "payrun",
-    editable: "never",
-  },
-  // { title: "Period", field: "period", editable: "never" },
-  // {
-  //   title: "PayDate",
-  //   field: "pay_date",
-  //   type: "date",
-  //   dateSetting: { locale: "en-GB" },
-  //   editable: "never",
-  // },
-  {
-    title: "Wages",
-    field: "totalwages",
-    type: "currency",
-    editable: "never",
-  },
-  {
-    title: "TAP Amount",
-    field: "totaltap",
-    type: "currency",
-    editable: "never",
-  },
-  {
-    title: "SCP Amount",
-    field: "totalscp",
-    type: "currency",
-    editable: "never",
-  },
-  {
-    title: "Site Allowances",
-    field: "totalsitesallows",
-    type: "currency",
-    editable: "never",
-  },
-  {
-    title: "Expenses Claims",
-    field: "totalexpensesclaims",
-    type: "currency",
-    editable: "never",
-  },
-  {
-    title: "Allowances",
-    field: "totalallows",
-    type: "currency",
-    editable: "never",
-  },
-  {
-    title: "Deductions",
-    field: "totaldeducts",
-    type: "currency",
-    editable: "never",
-  },
-  {
-    title: "Payroll",
-    field: "totalpayroll",
-    type: "currency",
-    editable: "never",
-  },
-  // { title: "Bank Name", field: "bank_name" },
-  // { title: "Bank AC No", field: "bank_accno" },
-  { title: "Status", field: "status", editable: "never" },
-];
-
 export default function PayslipTableVIewAdmin() {
   //let history = useHistory();
   const classes = useStyles();
@@ -89,6 +22,76 @@ export default function PayslipTableVIewAdmin() {
   // const { getPayrun, payrun_loading, loadPendingPayslips } =
   //   usePayslipsContext();
   //const { loadEmployees, employees } = useEmployeesContext();
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Batch",
+        field: "payrun",
+        editable: "never",
+      },
+      // { title: "Period", field: "period", editable: "never" },
+      // {
+      //   title: "PayDate",
+      //   field: "pay_date",
+      //   type: "date",
+      //   dateSetting: { locale: "en-GB" },
+      //   editable: "never",
+      // },
+      {
+        title: "Wages",
+        field: "totalwages",
+        type: "currency",
+        editable: "never",
+      },
+      {
+        title: "TAP Amount",
+        field: "totaltap",
+        type: "currency",
+        editable: "never",
+      },
+      {
+        title: "SCP Amount",
+        field: "totalscp",
+        type: "currency",
+        editable: "never",
+      },
+      {
+        title: "Site Allowances",
+        field: "totalsitesallows",
+        type: "currency",
+        editable: "never",
+      },
+      {
+        title: "Expenses Claims",
+        field: "totalexpensesclaims",
+        type: "currency",
+        editable: "never",
+      },
+      {
+        title: "Allowances",
+        field: "totalallows",
+        type: "currency",
+        editable: "never",
+      },
+      {
+        title: "Deductions",
+        field: "totaldeducts",
+        type: "currency",
+        editable: "never",
+      },
+      {
+        title: "Payroll",
+        field: "totalpayroll",
+        type: "currency",
+        editable: "never",
+      },
+      // { title: "Bank Name", field: "bank_name" },
+      // { title: "Bank AC No", field: "bank_accno" },
+      { title: "Status", field: "status", editable: "never" },
+    ],
+    []
+  );
 
   // useEffect(() => {
   //   getPayrun();

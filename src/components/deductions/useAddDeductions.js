@@ -15,11 +15,17 @@ export function useAddDeductions(data) {
     
   const { mutate } = useMutation((data) => addDeductions(data), {
     onSuccess: () => {
-          queryClient.invalidateQueries("deductions");
-           toast({
-             title: "Deduction item being added!",
-             status: "success",
-           });
+      queryClient.invalidateQueries("deductions");
+      toast({
+        title: "Deduction item being added!",
+        status: "success",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Network Error! Please check your internet connection!",
+        status: "warning",
+      });
     },
   });
 

@@ -1,52 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { Button, Icon, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useEmployeesContext } from "../context/employees_context";
 import { useTablesContext } from "../context/tables_context";
-
-const columns = [
-  {
-    title: "Institution",
-    field: "institution",
-  },
-  {
-    title: "Course",
-    field: "course",
-  },
-  {
-    title: "From Date",
-    field: "from_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editComponent: (props) => (
-      <TextField
-        //defaultValue={props.value || new Date()}
-        onChange={(e) => props.onChange(e.target.value)}
-        type="date"
-      />
-    ),
-  },
-  {
-    title: "To Date",
-    field: "to_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editComponent: (props) => (
-      <TextField onChange={(e) => props.onChange(e.target.value)} type="date" />
-    ),
-  },
-  {
-    title: "Archievement",
-    field: "archievement",
-  },
-
-  { title: "Grade", field: "grade" },
-  {
-    title: "Remark",
-    field: "remark",
-  },
-];
 
 export default function EmpEducationsStaff({
   educationdata,
@@ -65,6 +22,51 @@ export default function EmpEducationsStaff({
   } = useTablesContext();
 
   //useEffect(() => {}, [educationdata]);
+  const columns = useMemo(() => [
+    {
+      title: "Institution",
+      field: "institution",
+    },
+    {
+      title: "Course",
+      field: "course",
+    },
+    {
+      title: "From Date",
+      field: "from_date",
+      type: "date",
+      dateSetting: { locale: "en-GB" },
+      editComponent: (props) => (
+        <TextField
+          //defaultValue={props.value || new Date()}
+          onChange={(e) => props.onChange(e.target.value)}
+          type="date"
+        />
+      ),
+    },
+    {
+      title: "To Date",
+      field: "to_date",
+      type: "date",
+      dateSetting: { locale: "en-GB" },
+      editComponent: (props) => (
+        <TextField
+          onChange={(e) => props.onChange(e.target.value)}
+          type="date"
+        />
+      ),
+    },
+    {
+      title: "Archievement",
+      field: "archievement",
+    },
+
+    { title: "Grade", field: "grade" },
+    {
+      title: "Remark",
+      field: "remark",
+    },
+  ],[]);
 
   const Save_EducationData = () => {
     //console.log(educationdata);

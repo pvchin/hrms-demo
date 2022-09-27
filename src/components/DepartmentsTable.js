@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDepartments } from "./departments/useDepartments";
@@ -6,19 +6,19 @@ import { useUpdateDepartments } from "./departments/useUpdateDepartments";
 import { useDeleteDepartments } from "./departments/useDeleteDepartments";
 import { useAddDepartments } from "./departments/useAddDepartments";
 
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-  },
-];
-
 export default function UpdateDepartments() {
   const classes = useStyles();
   const { departments } = useDepartments();
   const updateDepartments = useUpdateDepartments();
   const deleteDepartments = useDeleteDepartments();
   const addDepartments = useAddDepartments();
+
+  const columns = useMemo(() => [
+    {
+      title: "Name",
+      field: "name",
+    },
+  ],[]);
 
   const update_Department = (data) => {
     const { id, rec_id, ...fields } = data;

@@ -25,6 +25,17 @@ import MenuListItemsManager from "./MenuListItemsManager";
 import MenuListItemsDirector from "./MenuListItemsDirector"
 //import headerlogo from "../assets/headerlogo.png";
 
+//const MenuListItemsStaff = React.lazy(() => import("./MenuListItemsStaff"));
+//const MenuListItemsAdmin = React.lazy(() => import("./MenuListItemsAdmin"));
+//const MenuListItemsOpsSpvr = React.lazy(() => import("./MenuListItemsOpsSpvr"));
+// const MenuListItemsAdminManager = React.lazy(() =>
+//   import("./MenuListItemsAdminManager")
+// );
+//const MenuListItemsManager = React.lazy(() => import("./MenuListItemsManager"));
+// const MenuListItemsDirector = React.lazy(() =>
+//   import("./MenuListItemsDirector")
+// );
+
 const drawerWidth = 240;
 
 const SideDrawer = ({ HandleDrawerOpen, handleDrawerClose, open }) => {
@@ -32,7 +43,6 @@ const SideDrawer = ({ HandleDrawerOpen, handleDrawerClose, open }) => {
   const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
 
   const SwitchCase = () => {
-  
     switch (loginLevel.loginLevel) {
       case "Staff":
         return <MenuListItemsStaff />;

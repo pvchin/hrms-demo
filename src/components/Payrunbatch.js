@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 //import { makeStyles } from "@material-ui/core/styles";
 //import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
@@ -63,6 +63,10 @@ import {
 //import { useRecoilValue } from "recoil";
 
 //const drawerWidth = 240;
+//const PayForm = React.lazy(() => import("./PayForm"));
+//const PaySummary = React.lazy(() => import("./PaySummary"));
+//const module = await import("./PrintPaySummary"));
+
 const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICEID;
 const TEMPLATE_ID = "template_1y8odlq";
 const USER_ID = process.env.REACT_APP_EMAILJS_USERID;
@@ -148,18 +152,6 @@ const months = [
   "December",
 ];
 
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-    editable: "never",
-    cellStyle: {
-      width: 280,
-      maxWidth: 280,
-    },
-  },
-];
-
 const Payrunbatch = () => {
   let navigate = useNavigate();
   //const classes = useStyles();
@@ -202,6 +194,21 @@ const Payrunbatch = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const singlebatchpayslip = payslipsbatch;
 
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+        editable: "never",
+        cellStyle: {
+          width: 280,
+          maxWidth: 280,
+        },
+      },
+    ],
+    []
+  );
+
   useEffect(() => {
     loadPayitems();
     setEmponclick(true);
@@ -220,7 +227,7 @@ const Payrunbatch = () => {
 
   useEffect(() => {
     setPSBPayrunId(payslip_period);
-    //setIsCalc(true);
+    setIsCalc(true);
   }, [psbpayrunId]);
 
   useEffect(() => {
@@ -260,8 +267,10 @@ const Payrunbatch = () => {
     if (payrundata.status === "Verified" || payrundata.status === "Approved") {
       exportPdfTable(singlebatchpayslip);
     } else {
+      //**
       // save individual payslips
-      saveIndividualPayslips();
+      //saveIndividualPayslips();
+
       // save payrun
       updatePayrun({
         id: payrunId,
@@ -293,21 +302,28 @@ const Payrunbatch = () => {
     //     updatePayslip({ id, ...fields });
     //   });
     // }
+
+    //**
     // save individual payslips
     saveIndividualPayslips();
 
     //update payrun
     handleSavePayrun();
-    toast({
-      title: "Changes have been saved!",
-      status: "success",
-    });
+    // toast({
+    //   title: "Changes have been saved!",
+    //   status: "success",
+    // });
     navigate("/payslip");
   };
 
   const saveIndividualPayslips = () => {
     if (payrundata.status === "Pending") {
       singlebatchpayslip.forEach((rec) => {
+        //const { id, rec_id, tableData, ...fields } = rec;
+        // const timer = setTimeout(() => {
+        //   console.log("This will run after 1 second!");
+        //   updatePayslip({ id, ...fields });
+        // }, 300);
         if (rec.tableData.checked) {
           const { id, rec_id, tableData, ...fields } = rec;
           console.log("updatepayslip", rec);
@@ -422,8 +438,11 @@ const Payrunbatch = () => {
     e.preventDefault();
     setPayrundata((prev) => (prev = { ...payrundata, status: "Verified" }));
     setPayrunStatus("Verified");
+    console.log("Verify", payrundata);
+    //**
     // save individual payslips
-    saveIndividualPayslips();
+    //saveIndividualPayslips();
+
     // save payrun
     updatePayrun({
       id: payrunId,
@@ -449,6 +468,7 @@ const Payrunbatch = () => {
     setFormdata((prev) => (prev = { ...initial_formdata, ...paydata }));
     //setFormdata({ ...initial_formdata, ...paydata });
     setLoadFormdata(true);
+    //**
     setIsUpdPayslip(true);
   };
 
@@ -456,6 +476,7 @@ const Payrunbatch = () => {
     setTabno(index);
     if (index === 1) {
       calcPayrunTotals();
+      setIsUpdPayslip(true);
     }
     setIsShow(false);
   };
@@ -551,20 +572,20 @@ const Payrunbatch = () => {
       <VStack>
         <Grid templateRows="repeat(1,1fr)" templateColumns="repeat(1,1fr)">
           <GridItem rowSpan={1} colSpan={1}>
-            <Grid templateRows="repeat(1,1fr)" templateColumns="repeat(12,1fr)">
+            <Grid templateRows="repeat(1,1fr)" templateColumns="repeat(10,1fr)">
               <GridItem rowSpan={1} colSpan={2}></GridItem>
-              <GridItem rowSpan={1} colSpan={5}>
+              <GridItem rowSpan={1} colSpan={4}>
                 <Box textAlign="center" alignItems="center">
                   <Heading pl="10" pt={2}>
                     Payroll
                   </Heading>
                 </Box>
               </GridItem>
-              <GridItem rowSpan={1} colSpan={5} pt={0}>
+              <GridItem rowSpan={1} colSpan={4} pt={0}>
                 <Box pt="2" pr={5} alignItems="right" align="right">
                   <Stack spacing={4} direction="row" align="center" pl={150}>
                     <Button
-                      width="1800px"
+                      width="800px"
                       colorScheme="blue"
                       isDisabled={
                         payrundata.status === "Verified" ||
@@ -574,22 +595,22 @@ const Payrunbatch = () => {
                           : false
                       }
                       onClick={(e) => handleSavePayslips(e)}
-                      leftIcon={<FiSave color="white" fontSize="1.2em" />}
+                      leftIcon={<FiSave color="white" fontSize="1.5em" />}
                     >
-                      <Text fontSize="sm">Save/Exit</Text>
+                      Save/Exit
                     </Button>
                     <Button
                       isDisabled={!isShow}
-                      width="1000px"
+                      width="500px"
                       colorScheme="blue"
                       onClick={(e) => handlePrintSummary(e)}
-                      leftIcon={<FiSave color="white" fontSize="1.2em" />}
+                      leftIcon={<FiSave color="white" fontSize="1.5em" />}
                     >
-                      <Text fontSize="sm">Print</Text>
+                      Print
                     </Button>
 
                     <Button
-                      width="1000px"
+                      width="500px"
                       colorScheme="blue"
                       isDisabled={
                         payrundata.status === "Verified" ||
@@ -601,21 +622,21 @@ const Payrunbatch = () => {
                       }
                       onClick={(e) => handleVerifyPayslips(e)}
                       leftIcon={
-                        <FiCheckCircle color="white" fontSize="1.2em" />
+                        <FiCheckCircle color="white" fontSize="1.5em" />
                       }
                     >
-                      <Text fontSize="sm">Verify</Text>
+                      Verify
                     </Button>
                     <Button
-                      width="1000px"
+                      width="500px"
                       colorScheme="blue"
                       isDisabled={
                         payrundata.status !== "Approved" ? true : false
                       }
                       onClick={onOpen}
-                      leftIcon={<FiMail color="white" fontSize="1.2em" />}
+                      leftIcon={<FiMail color="white" fontSize="1.5em" />}
                     >
-                      <Text fontSize="sm">EMail</Text>
+                      Email
                     </Button>
                   </Stack>
                 </Box>

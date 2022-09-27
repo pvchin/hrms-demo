@@ -50,7 +50,7 @@ module.exports = async (event) => {
   if (m) {
     const leaves = await table
       .select({
-        view: "sortedview",
+        view: "leavesview",
         filterByFormula: `AND(MONTH(from_date)=${m},YEAR(from_date)=${y})`,
       })
       .firstPage();

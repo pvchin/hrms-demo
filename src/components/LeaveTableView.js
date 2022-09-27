@@ -1,53 +1,10 @@
-import React, {  useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import MaterialTable from "material-table";
 import { TextField, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useLeavesContext } from "../context/leaves_context";
 
-const FILTERSTRING = "Pending"
-
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-    editable: "never",
-  },
-  {
-    title: "From",
-    field: "from_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editable: "never",
-  },
-  {
-    title: "To",
-    field: "to_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editable: "never",
-  },
-  { title: "Days", field: "no_of_days", editable: "never" },
-  {
-    title: "Status",
-    field: "status",
-    editComponent: (props) => (
-      <TextField
-        //defaultValue={props.value || null}
-        onChange={(e) => props.onChange(e.target.value)}
-        style={{ width: 100 }}
-        value={props.value}
-        select
-      >
-        <MenuItem value="Pending">Pending</MenuItem>
-        <MenuItem value="Approve">Approve</MenuItem>
-        <MenuItem value="Reject">Reject</MenuItem>
-        <MenuItem value="Cancel">Cancel</MenuItem>
-      </TextField>
-    ),
-  },
-];
-
-
+const FILTERSTRING = "Pending";
 
 export default function LeaveTableView() {
   const classes = useStyles();
@@ -68,10 +25,54 @@ export default function LeaveTableView() {
     //resetSingleLeave,
   } = useLeavesContext();
 
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+        editable: "never",
+      },
+      {
+        title: "From",
+        field: "from_date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editable: "never",
+      },
+      {
+        title: "To",
+        field: "to_date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editable: "never",
+      },
+      { title: "Days", field: "no_of_days", editable: "never" },
+      {
+        title: "Status",
+        field: "status",
+        editComponent: (props) => (
+          <TextField
+            //defaultValue={props.value || null}
+            onChange={(e) => props.onChange(e.target.value)}
+            style={{ width: 100 }}
+            value={props.value}
+            select
+          >
+            <MenuItem value="Pending">Pending</MenuItem>
+            <MenuItem value="Approve">Approve</MenuItem>
+            <MenuItem value="Reject">Reject</MenuItem>
+            <MenuItem value="Cancel">Cancel</MenuItem>
+          </TextField>
+        ),
+      },
+    ],
+    []
+  );
+
   useEffect(() => {
     loadPendingLeaves(FILTERSTRING);
   }, []);
- 
+
   // const handleDialogOpen = () => {
   //   setIsDialogOpen(true);
   // };
@@ -95,7 +96,6 @@ export default function LeaveTableView() {
   //   loadPendingLeaves(FILTERSTRING);
   // };
 
-  
   return (
     <div className={classes.root}>
       {/* <h1>Expenses Claims Application</h1> */}

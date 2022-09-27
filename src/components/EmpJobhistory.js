@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
@@ -65,7 +65,7 @@ export default function Emp_Jobhistory({
     onClose: onAlertDeleteClose,
   } = useDisclosure();
 
-  const columns = [
+  const columns = useMemo(() => [
     {
       title: "Designation",
       field: "designation",
@@ -95,7 +95,7 @@ export default function Emp_Jobhistory({
       title: "Remark",
       field: "remark",
     },
-  ];
+  ],[]);
 
   useEffect(() => {
     setJobId(editEmployeeID);

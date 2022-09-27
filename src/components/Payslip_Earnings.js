@@ -1,4 +1,4 @@
-import React, {  useEffect } from "react";
+import React, {  useEffect, useMemo } from "react";
 
 import MaterialTable, { MTableToolbar } from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
@@ -45,7 +45,7 @@ export default function Payslip_Earnings({
   //const { name, amount } = payslipearnings;
   const { allowances } = useTablesContext();
 
-  const columns = [
+  const columns = useMemo(()=>[
     {
       title: "Description",
       field: "description",
@@ -64,7 +64,7 @@ export default function Payslip_Earnings({
       ),
     },
     { title: "Amount", field: "amount", type: "currency" },
-  ];
+  ],[]);
 
   useEffect(() => {
     getSingleBatchPayslipEarnings(single_payslip.empid, payslip_period);

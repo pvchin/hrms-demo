@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@chakra-ui/react";
@@ -21,23 +21,6 @@ import ExpenseFormView from "./ExpenseFormView";
 
 //const FILTERSTRING = "Pending";
 
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-  },
-  {
-    title: "Date",
-    field: "date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-  },
-
-  { title: "Description", field: "description" },
-  { title: "Amount", field: "amount", type: "currency" },
-  { title: "Status", field: "status" },
-];
-
 const initial_form = {
   name: "",
   date: "",
@@ -59,23 +42,43 @@ export default function ExpenseTableView({ year, month }) {
   //const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [totals, setTotals] = useState(0);
   const [isCalc, setIsCalc] = useState(false);
-   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   //const { loadEmployees } = useEmployeesContext();
   //const { expensesstatus, setExpStatusId } = useExpensesStatus();
-   const [formdata, setFormdata] = useState(initial_form);
+  const [formdata, setFormdata] = useState(initial_form);
   const { expensesperiod, setExpPeriodYrId, setExpPeriodMthId } =
     useExpensesPeriod();
-const {
-  //expenses,
-  editExpenseID,
-  //updateExpense,
-  //addExpense,
-  //deleteExpense,
-  setEditExpenseID,
-  setIsExpenseEditingOn,
-  setIsExpenseEditingOff,
+  const {
+    //expenses,
+    editExpenseID,
+    //updateExpense,
+    //addExpense,
+    //deleteExpense,
+    setEditExpenseID,
+    setIsExpenseEditingOn,
+    setIsExpenseEditingOff,
   } = useExpensesContext();
-  
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+      },
+      {
+        title: "Date",
+        field: "date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+      },
+
+      { title: "Description", field: "description" },
+      { title: "Amount", field: "amount", type: "currency" },
+      { title: "Status", field: "status" },
+    ],
+    []
+  );
+
   useEffect(() => {
     setExpPeriodYrId(year);
     setExpPeriodMthId(month);
@@ -109,13 +112,13 @@ const {
   };
 
   const View_Expenses = (data) => {
-     const { id } = data;
-     setFormdata({ ...data });
-     setFormdata({ ...data });
-     setEditExpenseID(id);
-     setIsExpenseEditingOn();
-     handleDialogOpen();
-  }
+    const { id } = data;
+    setFormdata({ ...data });
+    setFormdata({ ...data });
+    setEditExpenseID(id);
+    setIsExpenseEditingOn();
+    handleDialogOpen();
+  };
 
   return (
     <div className={classes.root}>

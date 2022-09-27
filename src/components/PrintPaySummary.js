@@ -2,8 +2,7 @@ import pdfMake from "pdfmake/build/pdfmake";
 import vfsFonts from "pdfmake/build/vfs_fonts";
 import { formatPriceZero } from "../helpers/Utils";
 
-
-const PrintPDFTest = ({ singlebatchpayslip }) => {
+const PrintPaySummary = ({ singlebatchpayslip }) => {
   const period = singlebatchpayslip[0].period;
   const subtitle = `Payroll Summary for the period  ${period}`;
   // const items = singlebatchpayslip.map((r) => {
@@ -283,4 +282,4 @@ const PrintPDFTest = ({ singlebatchpayslip }) => {
   pdfMake.createPdf(documentDefinition).open();
 };
 
-export default PrintPDFTest;
+export default PrintPaySummary;

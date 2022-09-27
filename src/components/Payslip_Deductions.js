@@ -1,9 +1,9 @@
-import React, {  useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 
 import MaterialTable, { MTableToolbar } from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Icon, TextField, MenuItem } from "@material-ui/core";
-import {  useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import {
   payPeriodState,
   //payPeriodEndMonthState,
@@ -47,26 +47,29 @@ export default function Payslip_Deductions({
   //   setPayslipDeductionAmount(sum);
   // };
 
-  const columns = [
-    {
-      title: "Description",
-      field: "description",
-      editComponent: (props) => (
-        <TextField
-          //defaultValue={props.value || null}
-          onChange={(e) => props.onChange(e.target.value)}
-          style={{ width: 200 }}
-          value={props.value}
-          select
-        >
-          {deductions.map((r) => {
-            return <MenuItem value={r.name}>{r.name}</MenuItem>;
-          })}
-        </TextField>
-      ),
-    },
-    { title: "Amount", field: "amount", type: "currency" },
-  ];
+  const columns = useMemo(
+    () => [
+      {
+        title: "Description",
+        field: "description",
+        editComponent: (props) => (
+          <TextField
+            //defaultValue={props.value || null}
+            onChange={(e) => props.onChange(e.target.value)}
+            style={{ width: 200 }}
+            value={props.value}
+            select
+          >
+            {deductions.map((r) => {
+              return <MenuItem value={r.name}>{r.name}</MenuItem>;
+            })}
+          </TextField>
+        ),
+      },
+      { title: "Amount", field: "amount", type: "currency" },
+    ],
+    []
+  );
 
   useEffect(() => {
     getSingleBatchPayslipDeductions(single_payslip.empid, payslip_period);

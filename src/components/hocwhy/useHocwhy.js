@@ -22,7 +22,7 @@ export function useHocwhy(empid) {
 
   const fallback = [];
   const { data: hocwhy = fallback } = useQuery(
-    [queryKeys.hocwhy, { hocwhyId }],
+    [queryKeys.hocwhy,  hocwhyId ],
     () => getHocwhy(hocwhyId),
     {
       select: filter !== "all" ? selectFn : undefined,

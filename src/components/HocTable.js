@@ -1,8 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable, { MTableToolbar } from "material-table";
-import { format } from "date-fns";
+import { format, getYear, getMonth } from "date-fns";
+import * as moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
 import { useRecoilState } from "recoil";
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  //Grid,
+  Heading,
+  HStack,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  //ModalHeader,
+  //ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Select,
+  SimpleGrid,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  //Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { loginLevelState } from "./data/atomdata";
 import AddIcon from "@material-ui/icons/Add";
 //import EditIcon from "@material-ui/icons/Edit";
@@ -20,107 +46,6 @@ import { useHoc } from "./hoc/useHoc";
 //import { useAddHoc } from "./hoc/useAddHoc";
 import { useDeleteHoc } from "./hoc/useDeleteHoc";
 //import { useUpdateHoc } from "./hoc/useUpdateHoc";
-
-const columns = [
-  {
-    title: "Findings",
-    field: "findings",
-    editable: "never",
-    cellStyle: {
-      minWidth: 200,
-      maxWidth: 200,
-    },
-  },
-  {
-    title: "Risks",
-    field: "risks",
-    editable: "never",
-    cellStyle: {
-      minWidth: 150,
-      maxWidth: 150,
-    },
-  },
-  {
-    title: "Type/Category",
-    field: "category",
-    editable: "never",
-  },
-  {
-    title: "What",
-    field: "what",
-    editable: "never",
-  },
-  {
-    title: "What Details",
-    field: "what_details",
-    editable: "never",
-    cellStyle: {
-      minWidth: 150,
-      maxWidth: 150,
-    },
-  },
-  {
-    title: "Why",
-    field: "why",
-    editable: "never",
-  },
-  {
-    title: "Why Details",
-    field: "why_details",
-    editable: "never",
-  },
-  {
-    title: "Discussion",
-    field: "discussion",
-    editable: "never",
-  },
-  {
-    title: "Action",
-    field: "action",
-    editable: "never",
-    cellStyle: {
-      minWidth: 200,
-      maxWidth: 200,
-    },
-  },
-  {
-    title: "Follow-up required?",
-    field: "isfollowup",
-    editable: "never",
-  },
-  {
-    title: "Work Related?",
-    field: "isworkrelated",
-    editable: "never",
-  },
-  {
-    title: "Raised By",
-    field: "raisedby",
-    editable: "never",
-  },
-  {
-    title: "Raised On",
-    field: "raisedon",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editable: "never",
-  },
-  {
-    title: "Company",
-    field: "company",
-    editable: "never",
-  },
-  {
-    title: "Location",
-    field: "location",
-    editable: "never",
-  },
-  // {
-  //   title: "Department",
-  //   field: "department",
-  //   editable: "never",
-  // },
-];
 
 const initial_form = {
   findings: "",
@@ -141,11 +66,11 @@ const initial_form = {
   department: "",
 };
 
-export default function HocTable() {
+export default function HocTable({ year, month }) {
   const classes = useStyles();
   //const toast = useCustomToast();
   //const [isLoad, setIsLoad] = useState(false);
-  const { hoc, setHocId } = useHoc();
+  const { hoc, setHocId, setYearId } = useHoc();
   //const updateHoc = useUpdateHoc();
   //const addHoc = useAddHoc();
   const deleteHoc = useDeleteHoc();
@@ -157,9 +82,116 @@ export default function HocTable() {
   const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
   const [isEditId, setIsEditId] = useState("");
 
+  //console.log("hoctable", year, month);
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Findings",
+        field: "findings",
+        editable: "never",
+        cellStyle: {
+          minWidth: 200,
+          maxWidth: 200,
+        },
+      },
+      {
+        title: "Risks",
+        field: "risks",
+        editable: "never",
+        cellStyle: {
+          minWidth: 150,
+          maxWidth: 150,
+        },
+      },
+      {
+        title: "Type/Category",
+        field: "category",
+        editable: "never",
+      },
+      {
+        title: "What",
+        field: "what",
+        editable: "never",
+      },
+      {
+        title: "What Details",
+        field: "what_details",
+        editable: "never",
+        cellStyle: {
+          minWidth: 150,
+          maxWidth: 150,
+        },
+      },
+      {
+        title: "Why",
+        field: "why",
+        editable: "never",
+      },
+      {
+        title: "Why Details",
+        field: "why_details",
+        editable: "never",
+      },
+      {
+        title: "Discussion",
+        field: "discussion",
+        editable: "never",
+      },
+      {
+        title: "Action",
+        field: "action",
+        editable: "never",
+        cellStyle: {
+          minWidth: 200,
+          maxWidth: 200,
+        },
+      },
+      {
+        title: "Follow-up required?",
+        field: "isfollowup",
+        editable: "never",
+      },
+      {
+        title: "Work Related?",
+        field: "isworkrelated",
+        editable: "never",
+      },
+      {
+        title: "Raised By",
+        field: "raisedby",
+        editable: "never",
+      },
+      {
+        title: "Raised On",
+        field: "raisedon",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editable: "never",
+      },
+      {
+        title: "Company",
+        field: "company",
+        editable: "never",
+      },
+      {
+        title: "Location",
+        field: "location",
+        editable: "never",
+      },
+      // {
+      //   title: "Department",
+      //   field: "department",
+      //   editable: "never",
+      // },
+    ],
+    []
+  );
+
   useEffect(() => {
     //console.log("loginid", loginLevel.loginUserId)
     setHocId(loginLevel.loginUserId);
+    setYearId(year);
   }, []);
 
   const add_Hoc = async (data) => {
@@ -229,12 +261,18 @@ export default function HocTable() {
 
   return (
     <div className={classes.root}>
-      {/* <h1>Expenses Claims Application</h1> */}
-
       <div style={{ maxWidth: "100%", paddingTop: "5px" }}>
         <MaterialTable
           columns={columns}
-          data={hoc}
+          data={hoc
+            .filter(
+              (r) =>
+                // getYear(new Date(r.raisedon)) === year &&
+                getMonth(new Date(r.raisedon)) === month
+            )
+            .sort((a, b) =>
+              a.raisedon < b.raisedon ? 1 : b.raisedon < a.raisedon ? -1 : 0
+            )}
           title="HOC Tables"
           icons={{
             Add: (props) => <AddIcon />,
@@ -285,6 +323,7 @@ export default function HocTable() {
           ]}
           options={{
             filtering: true,
+            pageSize: 10,
             headerStyle: {
               backgroundColor: "orange",
               color: "#FFF",

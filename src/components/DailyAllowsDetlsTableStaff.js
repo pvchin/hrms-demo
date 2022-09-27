@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import * as emailjs from "emailjs-com";
 import MaterialTable, { MTableToolbar } from "material-table";
@@ -40,67 +40,13 @@ const initial_totals = [
   },
 ];
 
-const columns = [
-  {
-    title: "Date",
-    field: "date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    // editable: "never",
-    cellStyle: {
-      width: 120,
-      maxWidth: 120,
-    },
-    editComponent: (props) => (
-      <TextField
-        defaultValue={props.value || null}
-        onChange={(e) => props.onChange(e.target.value)}
-        type="date"
-      />
-    ),
-  },
-  // { title: "District", field: "district" },
-  { title: "Operation Type", field: "typeoperation" },
-  { title: "Client", field: "client" },
-  { title: "Location/Rig", field: "location" },
-  { title: "Ticket No/Job No", field: "jobno" },
-  { title: "Operation Role", field: "crewoperation" },
-  {
-    title: "Job Bonus",
-    field: "jobbonus",
-    type: "currency",
-    cellStyle: {
-      width: 8,
-      maxWidth: 8,
-    },
-    headerStyle: {
-      width: 8,
-      maxWidth: 8,
-    },
-  },
-  {
-    title: "Per Diem",
-    field: "perdiem",
-    type: "currency",
-    cellStyle: {
-      width: 8,
-      maxWidth: 8,
-    },
-    headerStyle: {
-      width: 8,
-      maxWidth: 8,
-    },
-  },
-  // { title: "Delete", field: "isdelete", type: "boolean" },
-];
-
 export default function DailyAllowsDetlsTableStaff() {
   let navigate = useNavigate();
   const toast = useCustomToast();
   const classes = useStyles();
   //const isFetching = useIsFetching();
   //const { dailyallowsdetls } = useDailyAllowsDetls()
-  const { dailyallows,  setDailyAllowsId } = useDailyAllows();
+  const { dailyallows, setDailyAllowsId } = useDailyAllows();
   const {
     dailyallowsdetls,
     setDailyAllowsDetlsId,
@@ -146,6 +92,60 @@ export default function DailyAllowsDetlsTableStaff() {
   //   dailyallowsdetl_loading,
   //   dailyallowsdetl_error,
   // } = useDailyAllowancesContext();
+
+  const columns = useMemo(() => [
+    {
+      title: "Date",
+      field: "date",
+      type: "date",
+      dateSetting: { locale: "en-GB" },
+      // editable: "never",
+      cellStyle: {
+        width: 120,
+        maxWidth: 120,
+      },
+      editComponent: (props) => (
+        <TextField
+          defaultValue={props.value || null}
+          onChange={(e) => props.onChange(e.target.value)}
+          type="date"
+        />
+      ),
+    },
+    // { title: "District", field: "district" },
+    { title: "Operation Type", field: "typeoperation" },
+    { title: "Client", field: "client" },
+    { title: "Location/Rig", field: "location" },
+    { title: "Ticket No/Job No", field: "jobno" },
+    { title: "Operation Role", field: "crewoperation" },
+    {
+      title: "Job Bonus",
+      field: "jobbonus",
+      type: "currency",
+      cellStyle: {
+        width: 8,
+        maxWidth: 8,
+      },
+      headerStyle: {
+        width: 8,
+        maxWidth: 8,
+      },
+    },
+    {
+      title: "Per Diem",
+      field: "perdiem",
+      type: "currency",
+      cellStyle: {
+        width: 8,
+        maxWidth: 8,
+      },
+      headerStyle: {
+        width: 8,
+        maxWidth: 8,
+      },
+    },
+    // { title: "Delete", field: "isdelete", type: "boolean" },
+  ],[]);
 
   useEffect(() => {
     setDailyAllowsId(allows_empid);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import currency from "currency.js";
 //import PrintPaySummary from "./PrintPaySummary";
 import {
@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 //import { TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import MaterialTable from "material-table";
-import {  Grid, TextField } from "@material-ui/core";
+import { Grid, TextField } from "@material-ui/core";
 //import { makeStyles } from "@material-ui/core/styles";
 import { useRecoilState } from "recoil";
 //import { formatPriceZero } from "../helpers/Utils";
@@ -44,61 +44,64 @@ const PaySummary = ({ singlebatchpayslip }) => {
   const [isCalc, setIsCalc] = useState(true);
   //const { payrun, updatePayrun, payslip_period } = usePayslipsContext();
 
-  const columns = [
-    {
-      title: "Name",
-      field: "name",
-      editable: "never",
-    },
-    {
-      title: "Wages",
-      field: "wages_bnd",
-      editable: "never",
-      type: "currency",
-    },
-    {
-      title: "TAP Amount",
-      field: "tap_amount_bnd",
-      editable: "never",
-      type: "currency",
-    },
-    {
-      title: "SCP Amount",
-      field: "scp_amount_bnd",
-      editable: "never",
-      type: "currency",
-    },
-    {
-      title: "Site Allows",
-      field: "site_allows_bnd",
-      editable: "never",
-      type: "currency",
-    },
-    {
-      title: "Exps Claims",
-      field: "expenses_claims_bnd",
-      editable: "never",
-      type: "currency",
-    },
-    {
-      title: "Allowances",
-      field: "total_allowances_bnd",
-      editable: "never",
-      type: "currency",
-    },
-    {
-      title: "Deductions",
-      field: "total_deductions_bnd",
-      editable: "never",
-      type: "currency",
-    },
-    {
-      title: "Nett Pay",
-      field: "nett_pay_bnd",
-      editable: "never",
-      type: "currency",
-    },
-  ];
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+        editable: "never",
+      },
+      {
+        title: "Wages",
+        field: "wages_bnd",
+        editable: "never",
+        type: "currency",
+      },
+      {
+        title: "TAP Amount",
+        field: "tap_amount_bnd",
+        editable: "never",
+        type: "currency",
+      },
+      {
+        title: "SCP Amount",
+        field: "scp_amount_bnd",
+        editable: "never",
+        type: "currency",
+      },
+      {
+        title: "Site Allows",
+        field: "site_allows_bnd",
+        editable: "never",
+        type: "currency",
+      },
+      {
+        title: "Exps Claims",
+        field: "expenses_claims_bnd",
+        editable: "never",
+        type: "currency",
+      },
+      {
+        title: "Allowances",
+        field: "total_allowances_bnd",
+        editable: "never",
+        type: "currency",
+      },
+      {
+        title: "Deductions",
+        field: "total_deductions_bnd",
+        editable: "never",
+        type: "currency",
+      },
+      {
+        title: "Nett Pay",
+        field: "nett_pay_bnd",
+        editable: "never",
+        type: "currency",
+      },
+    ],
+    []
+  );
 
   // const columns1 = [
   //   {

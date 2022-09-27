@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 //import clsx from "clsx";
 //import { useHistory } from "react-router-dom";
 import { Box, Stack } from "@chakra-ui/react";
-import {  Container } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 //import CardLayout from "../helpers/CardLayout";
 import CardLayout2 from "../helpers/CardLayout2";
 //import CardLayout3 from "../helpers/CardLayout3";
@@ -30,11 +30,10 @@ import DailyAllowancesTableAdmin from "./DailyAllowancesTableAdmin";
 import WPExpiryViewStaff from "./WPExpiryViewStaff";
 //import { useEmployees } from "./employees/useEmployees";
 //import { useSingleEmployee } from "./employees/useSingleEmployee";
-
-
+import { useLeavesPeriod } from "./leaves/useLeavesPeriod";
 
 const drawerWidth = 240;
-
+const YEAR = new Date().getFullYear();
 const FILTERSTRING = "Pending";
 
 const HomeStaff = () => {
@@ -45,6 +44,7 @@ const HomeStaff = () => {
   //const { employees, setFilter, setEmployeeId } = useEmployees();
   //const { singleemployee, setSingleEmployeeId } = useSingleEmployee();
   const [leavesdata, setLeavesdata] = useState([]);
+  const { leavesperiod, setLeavePeriodYrId } = useLeavesPeriod();
   const [isLeaveDialogOpen, setIsLeaveDialogOpen] = useState(false);
   const [expensesdata, setExpensesdata] = useState([]);
   const [isExpenseDialogOpen, setIsExpenseDialogOpen] = useState(false);
@@ -57,10 +57,8 @@ const HomeStaff = () => {
   //const { leaves } = useLeavesContext();
   //const { expenses } = useExpensesContext();
   //const { payslips } = usePayslipsContext();
-  const {  loadPendingDailyAllowances } =
-    useDailyAllowancesContext();
-  const {  setEditEmployeeID, setIsEditingOn } =
-    useEmployeesContext();
+  const { loadPendingDailyAllowances } = useDailyAllowancesContext();
+  const { setEditEmployeeID, setIsEditingOn } = useEmployeesContext();
 
   // const handleLeaveDialogOpen = () => {
   //   setLeavesdata([]);
@@ -109,7 +107,8 @@ const HomeStaff = () => {
   useEffect(() => {
     setEditEmployeeID(loginLevel.loginUserId);
     setIsEditingOn();
-  },[]);
+    setLeavePeriodYrId(YEAR);
+  }, []);
 
   return (
     <div>
@@ -141,7 +140,6 @@ const HomeStaff = () => {
               <WPExpiryViewStaff />
             </CardLayout2>
           </Box>
-       
         </Stack>
         <Box pt={4}>
           <Copyright />

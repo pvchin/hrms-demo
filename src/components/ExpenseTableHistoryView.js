@@ -1,26 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { useExpensesStatus } from "./expenses/useExpensesStatus";
 
 const FILTERSTRING = "Pending";
-
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-  },
-  {
-    title: "Date",
-    field: "date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-  },
-
-  { title: "Description", field: "description" },
-  { title: "Amount", field: "amount", type: "currency" },
-  { title: "Status", field: "status" },
-];
 
 export default function ExpenseTableHistoryView() {
   const classes = useStyles();
@@ -30,7 +13,26 @@ export default function ExpenseTableHistoryView() {
   const { expensesstatus, setExpStatusId } = useExpensesStatus();
   //const { expensesperiod, setExpPeriodId } = useExpensesPeriod();
 
-  
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+      },
+      {
+        title: "Date",
+        field: "date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+      },
+
+      { title: "Description", field: "description" },
+      { title: "Amount", field: "amount", type: "currency" },
+      { title: "Status", field: "status" },
+    ],
+    []
+  );
+
   return (
     <div className={classes.root}>
       {/* <h1>Expenses Claims Application</h1> */}

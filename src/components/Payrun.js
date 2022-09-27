@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import MaterialTable from "material-table";
 import clsx from "clsx";
@@ -47,19 +47,6 @@ import UpdateCurrency from "./CurrencyTable";
 //import { usePayslipsBatch } from "./payslips/usePayslipsBatch";
 
 //const drawerWidth = 240;
-
-const columns = [
-  {
-    title: "NAME",
-    field: "name",
-    editable: "never",
-    cellStyle: {
-      width: 280,
-      maxWidth: 280,
-    },
-  },
-];
-
 // const selectmonths = [
 //   { mth: "January" },
 //   { mth: "February" },
@@ -89,7 +76,7 @@ const Payrun = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [loadPaybatch, setLoadPaybatch] = useState(false);
   const { loadEmployees, employees } = useEmployeesContext();
-  const { loadUnpaidExpenses,  unpaidexpenses, updateExpense } =
+  const { loadUnpaidExpenses, unpaidexpenses, updateExpense } =
     useExpensesContext();
   const { unpaiddailyallows, loadUnpaidDailyAllows, updateDailyAllowance } =
     useDailyAllowancesContext();
@@ -112,7 +99,22 @@ const Payrun = () => {
   const [isSubmit, setIsSubmit] = useState(false);
 
   //filter regisned employees
-  const allemployees = employees.filter((r) => !r.hasresigned && !r.nonpayroll)
+  const allemployees = employees.filter((r) => !r.hasresigned && !r.nonpayroll);
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "NAME",
+        field: "name",
+        editable: "never",
+        cellStyle: {
+          width: 280,
+          maxWidth: 280,
+        },
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
     if (!payrun_loading) {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable from "material-table";
 import { useNavigate } from "react-router-dom";
-import moment from "moment";
+import getYear from "date-fns/getYear";
 import { makeStyles } from "@material-ui/core/styles";
 import { GrFormView } from "react-icons/gr";
 //import AddIcon from "@material-ui/icons/Add";
@@ -15,88 +15,18 @@ import { GrFormView } from "react-icons/gr";
 //import { useExpensesPeriod } from "./expenses/useExpensesPeriod";
 import { useEmployeesContext } from "../context/employees_context";
 import { useEmployees } from "./employees/useEmployees";
-import { useLeaves } from "./leaves/useLeaves";
+import { useLeavesPeriod } from "./leaves/useLeavesPeriod";
 
 const YEAR = new Date().getFullYear();
 
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-    cellStyle: {
-      width: 250,
-      maxWidth: 250,
-    },
-  },
-  // { title: "IC No", field: "ic_no" },
-  // { title: "Gender", field: "gender" },
-  { title: "Emp No", field: "empno" },
-  { title: "Designation", field: "designation" },
-  { title: "Department", field: "department" },
-
-  {
-    title: "Leave Entitled",
-    field: "leave_entitled",
-    type: "numeric",
-    cellStyle: {
-      width: 60,
-    },
-  },
-  {
-    title: "Leave C/F",
-    field: "leave_bf",
-    type: "numeric",
-    cellStyle: {
-      width: 60,
-    },
-  },
-  {
-    title: "Total Leave",
-    field: "leave_total",
-    type: "numeric",
-    cellStyle: {
-      width: 60,
-    },
-  },
-  {
-    title: "Leave Taken",
-    field: "leave_taken",
-    type: "numeric",
-    cellStyle: {
-      width: 60,
-    },
-  },
-  // {
-  //   title: "Leave Pending",
-  //   field: "leave_pending",
-  //   type: "numeric",
-  //   cellStyle: {
-  //     width: 60,
-  //   },
-  // },
-  {
-    title: "Leave Balance",
-    field: "leave_bal",
-    type: "numeric",
-    cellStyle: {
-      width: 60,
-    },
-  },
-  // { title: "Email", field: "email" },
-];
-
-export default function EmployeeTableLeaveView({ year }) {
+export default function EmployeeTableLeaveView() {
   const classes = useStyles();
   const navigate = useNavigate();
   const { employees, setEmployeeId } = useEmployees();
-  const { leaves } = useLeaves();
+  const { leavesperiod, setLeavePeriodYrId } = useLeavesPeriod();
   const [empdata, setEmpData] = useState([]);
-  //const currentyear = new Date().getFullYear();
-  // const { expensesperiod, setExpPeriodYrId, setExpPeriodMthId } =
-  //   useExpensesPeriod();
-  const emp = employees.map((rec) => {
-    return { ...rec, leave_total: 0, leave_taken: 0, leave_pending: 0 };
-  });
+  const [toBuild, setToBuild] = useState(true);
+ 
 
   const {
     //editEmployeeID,
@@ -110,6 +40,72 @@ export default function EmployeeTableLeaveView({ year }) {
     resetEmployees,
     //getSingleEmployee,
   } = useEmployeesContext();
+
+  const columns = useMemo(() => [
+    {
+      title: "Name",
+      field: "name",
+      cellStyle: {
+        width: 250,
+        maxWidth: 250,
+      },
+    },
+    // { title: "IC No", field: "ic_no" },
+    // { title: "Gender", field: "gender" },
+    { title: "Emp No", field: "empno" },
+    { title: "Designation", field: "designation" },
+    { title: "Department", field: "department" },
+
+    {
+      title: "Leave Entitled",
+      field: "leave_entitled",
+      type: "numeric",
+      cellStyle: {
+        width: 60,
+      },
+    },
+    {
+      title: "Leave C/F",
+      field: "leave_bf",
+      type: "numeric",
+      cellStyle: {
+        width: 60,
+      },
+    },
+    {
+      title: "Total Leave",
+      field: "leave_total",
+      type: "numeric",
+      cellStyle: {
+        width: 60,
+      },
+    },
+    {
+      title: "Leave Taken",
+      field: "leave_taken",
+      type: "numeric",
+      cellStyle: {
+        width: 60,
+      },
+    },
+    // {
+    //   title: "Leave Pending",
+    //   field: "leave_pending",
+    //   type: "numeric",
+    //   cellStyle: {
+    //     width: 60,
+    //   },
+    // },
+    {
+      title: "Leave Balance",
+      field: "leave_bal",
+      type: "numeric",
+      cellStyle: {
+        width: 60,
+      },
+    },
+    // { title: "Email", field: "email" },
+  ],[]);
 
   const update_Employee = (data) => {
     const { id } = data;
@@ -125,6 +121,9 @@ export default function EmployeeTableLeaveView({ year }) {
   const Build_EmpData = (YEAR) => {
     // eslint-disable-next-line no-lone-blocks
     {
+      const emp = employees.map((rec) => {
+        return { ...rec, leave_total: 0, leave_taken: 0, leave_pending: 0 };
+      });
       emp &&
         emp.forEach((rec, index) => {
           const {
@@ -139,23 +138,20 @@ export default function EmployeeTableLeaveView({ year }) {
             //leave_cd,
           } = rec;
           // calculate leaves
-          const leavedata = leaves
-            .filter(
-              (r) =>
-                r.empid === id && moment(r.from_date).format("YYYY") === YEAR
-            )
-            .map((rec) => {
-              return { ...rec };
-            });
-          //console.log("leavedata", leavedata);
-          const leaveTaken = leavedata.reduce((acc, item) => {
+
+          const leavesdata = leavesperiod.filter(
+            (r) => r.empid === id && getYear(new Date(r.from_date)) === YEAR
+          );
+
+          console.log("leavedata", YEAR, leavesdata);
+          const leaveTaken = leavesdata.reduce((acc, item) => {
             if (item.status === "Approved") {
               return acc + item.no_of_days;
             } else {
               return acc;
             }
           }, 0);
-          const leavePending = leavedata.reduce((acc, item) => {
+          const leavePending = leavesdata.reduce((acc, item) => {
             if (item.status === "Pending") {
               return acc + item.no_of_days;
             } else {
@@ -179,8 +175,24 @@ export default function EmployeeTableLeaveView({ year }) {
   };
 
   useEffect(() => {
+    setLeavePeriodYrId(YEAR);
+  }, []);
+
+  useEffect(() => {
+    console.log("leaveperiod", leavesperiod);
     Build_EmpData(YEAR);
   }, []);
+
+  // useEffect(() => {
+  //   setLeavePeriodYrId(YEAR);
+  //   console.log("leaveperiod", leavesperiod)
+  //   if (leavesperiod.length > 0) {
+  //     Build_EmpData(YEAR);
+  //     setToBuild(false);
+  //   } else {
+  //     setToBuild(true);
+  //   }
+  // }, [toBuild]);
 
   return (
     <div className={classes.root}>

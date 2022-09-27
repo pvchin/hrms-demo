@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { TextField, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -30,48 +30,7 @@ const initial_form = {
   description: "",
   status: "Pending",
   amount: 0,
-  attachment1_name: "",
-  attachment1_url: "",
-  attachment2_name: "",
-  attachment2_url: "",
-  attachment3_name: "",
-  attachment3_url: "",
 };
-const columns = [
-  { title: "Name", field: "name", editable: "never" },
-  {
-    title: "Date",
-    field: "date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editable: "never",
-  },
-
-  {
-    title: "Description",
-    field: "description",
-    editable: "never",
-  },
-  { title: "Amount", field: "amount", type: "currency", editable: "never" },
-  {
-    title: "Status",
-    field: "status",
-    editComponent: (props) => (
-      <TextField
-        //defaultValue={props.value || null}
-        onChange={(e) => props.onChange(e.target.value)}
-        style={{ width: 100 }}
-        value={props.value}
-        select
-      >
-        <MenuItem value="Pending">Pending</MenuItem>
-        <MenuItem value="Approve">Approve</MenuItem>
-        <MenuItem value="Reject">Reject</MenuItem>
-        <MenuItem value="Cancel">Cancel</MenuItem>
-      </TextField>
-    ),
-  },
-];
 
 export default function ExpenseTable() {
   const classes = useStyles();
@@ -88,7 +47,7 @@ export default function ExpenseTable() {
   //const [expensesdata, setExpensesdata] = useState([]);
   //const [alertSuccess, setAlertSuccess] = useState(false);
   const [formdata, setFormdata] = useState(initial_form);
-  const [expattachId, setExpattachId] = useState('')
+  const [expattachId, setExpattachId] = useState("");
   const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
   //const { editEmployeeID } = useEmployeesContext();
   const {
@@ -101,6 +60,42 @@ export default function ExpenseTable() {
     setIsExpenseEditingOn,
     setIsExpenseEditingOff,
   } = useExpensesContext();
+
+  const columns = useMemo(() => [
+    { title: "Name", field: "name", editable: "never" },
+    {
+      title: "Date",
+      field: "date",
+      type: "date",
+      dateSetting: { locale: "en-GB" },
+      editable: "never",
+    },
+
+    {
+      title: "Description",
+      field: "description",
+      editable: "never",
+    },
+    { title: "Amount", field: "amount", type: "currency", editable: "never" },
+    {
+      title: "Status",
+      field: "status",
+      editComponent: (props) => (
+        <TextField
+          //defaultValue={props.value || null}
+          onChange={(e) => props.onChange(e.target.value)}
+          style={{ width: 100 }}
+          value={props.value}
+          select
+        >
+          <MenuItem value="Pending">Pending</MenuItem>
+          <MenuItem value="Approve">Approve</MenuItem>
+          <MenuItem value="Reject">Reject</MenuItem>
+          <MenuItem value="Cancel">Cancel</MenuItem>
+        </TextField>
+      ),
+    },
+  ],[]);
 
   useEffect(() => {
     setExpenseId(loginLevel.loginUserId);
@@ -130,7 +125,7 @@ export default function ExpenseTable() {
     const { id, attachmentid } = data;
     setEditExpenseID(id);
     setAttachmentId(attachmentid);
-    setExpattachId(attachmentid)
+    setExpattachId(attachmentid);
     handleAlertOpen();
 
     // deleteExpense(id);
@@ -159,9 +154,9 @@ export default function ExpenseTable() {
     expensesattachments
       .filter((r) => r.attachmentid === expattachId)
       .forEach((rec) => {
-        const id = rec.id
-        deleteExpensesAttachment(id)
-      })
+        const id = rec.id;
+        deleteExpensesAttachment(id);
+      });
   };
 
   return (
@@ -200,7 +195,7 @@ export default function ExpenseTable() {
           // }}
           actions={[
             (rowData) => ({
-              disabled: rowData.status !== "Pending",
+              //disabled: rowData.status !== "Pending",
               icon: "edit",
               tooltip: "Edit Record",
               onClick: (event, rowData) => {

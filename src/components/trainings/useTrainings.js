@@ -22,7 +22,7 @@ export function useTrainings(empid) {
 
   const fallback = [];
   const { data: trainings = fallback } = useQuery(
-    [queryKeys.trainings, { trainingId }],
+    [queryKeys.trainings, trainingId ],
     () => getTrainings(trainingId),
     {
       select: filter !== "all" ? selectFn : undefined,

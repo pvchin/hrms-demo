@@ -1287,7 +1287,7 @@ const PayForm = ({
             />
           </div> */}
               <div>
-                <Button
+                {/* <Button
                   type="submit"
                   variant="contained"
                   color="primary"
@@ -1296,7 +1296,7 @@ const PayForm = ({
                   onClick={handleCalc}
                 >
                   Calc <Icon className={classes.rightIcon}>send</Icon>
-                </Button>
+                </Button> */}
               </div>
             </Grid>
 

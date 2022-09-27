@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, MenuItem } from "@material-ui/core";
@@ -12,14 +12,13 @@ import { useUpdateTrainings } from "./trainings/useUpdateTrainings";
 import { useAddTrainings } from "./trainings/useAddTrainings";
 import { useDeleteTrainings } from "./trainings/useDeleteTrainings";
 
-
 export default function Emp_Training({
   trainingdata,
   setTrainingdata,
   handleDialogClose,
 }) {
   const classes = useStyles();
-  const { trainings,  setTrainingId } = useTrainings();
+  const { trainings, setTrainingId } = useTrainings();
   const { institutes } = useInstitutes();
   const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
   const updateTrainings = useUpdateTrainings();
@@ -35,70 +34,73 @@ export default function Emp_Training({
   //   //singlebatch_training_loading,
   // } = useTrainingsContext();
 
-const columns = [
-  {
-    title: "Institute",
-    field: "institute",
-    editComponent: (props) => (
-      <TextField
-        //defaultValue={props.value || null}
-        onChange={(e) => props.onChange(e.target.value)}
-        style={{ width: 100 }}
-        value={props.value}
-        select
-      >
-        <MenuItem value="">None</MenuItem>
-        {institutes &&
-          institutes.map((r) => {
-            return <MenuItem value={r.name}>{r.name}</MenuItem>;
-          })}
-      </TextField>
-    ),
-  },
-  {
-    title: "Course",
-    field: "course",
-  },
-  {
-    title: "From Date",
-    field: "from_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editComponent: (props) => (
-      <TextField
-        defaultValue={props.value || new Date()}
-        onChange={(e) => props.onChange(e.target.value)}
-        type="date"
-      />
-    ),
-  },
-  {
-    title: "To Date",
-    field: "to_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editComponent: (props) => (
-      <TextField
-        defaultValue={props.value || new Date()}
-        onChange={(e) => props.onChange(e.target.value)}
-        type="date"
-      />
-    ),
-  },
-  {
-    title: "Expiry Date",
-    field: "expiry_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editComponent: (props) => (
-      <TextField
-        defaultValue={props.value || new Date()}
-        onChange={(e) => props.onChange(e.target.value)}
-        type="date"
-      />
-    ),
-  },
-];
+  const columns = useMemo(
+    () => [
+      {
+        title: "Institute",
+        field: "institute",
+        editComponent: (props) => (
+          <TextField
+            //defaultValue={props.value || null}
+            onChange={(e) => props.onChange(e.target.value)}
+            style={{ width: 100 }}
+            value={props.value}
+            select
+          >
+            <MenuItem value="">None</MenuItem>
+            {institutes.length > 0 &&
+              institutes.map((r) => {
+                return <MenuItem value={r.name}>{r.name}</MenuItem>;
+              })}
+          </TextField>
+        ),
+      },
+      {
+        title: "Course",
+        field: "course",
+      },
+      {
+        title: "From Date",
+        field: "from_date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editComponent: (props) => (
+          <TextField
+            defaultValue={props.value || new Date()}
+            onChange={(e) => props.onChange(e.target.value)}
+            type="date"
+          />
+        ),
+      },
+      {
+        title: "To Date",
+        field: "to_date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editComponent: (props) => (
+          <TextField
+            defaultValue={props.value || new Date()}
+            onChange={(e) => props.onChange(e.target.value)}
+            type="date"
+          />
+        ),
+      },
+      {
+        title: "Expiry Date",
+        field: "expiry_date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editComponent: (props) => (
+          <TextField
+            defaultValue={props.value || new Date()}
+            onChange={(e) => props.onChange(e.target.value)}
+            type="date"
+          />
+        ),
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
     setTrainingId(editEmployeeID);

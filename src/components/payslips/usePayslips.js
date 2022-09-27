@@ -23,8 +23,8 @@ export function usePayslips(empid) {
 
   const fallback = [];
   const { data: payslips = fallback } = useQuery(
-    //[queryKeys.payslips, { payslipId }],
-    queryKeys.payslips,
+    [queryKeys.payslips,  payslipId ],
+    //queryKeys.payslips,
     () => getPayslips(payslipId),
     {
       select: filter !== "all" ? selectFn : undefined,

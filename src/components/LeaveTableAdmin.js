@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import MaterialTable from "material-table";
 import { TextField, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -28,63 +28,6 @@ const initial_form = {
   leave_bal: 0,
 };
 
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-    editable: "never",
-  },
-  {
-    title: "From Date",
-    field: "from_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editable: "never",
-  },
-  {
-    title: "To Date",
-    field: "to_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editable: "never",
-  },
-  {
-    title: "Leave Balance",
-    field: "leave_bal",
-    type: "numeric",
-    editable: "never",
-  },
-  {
-    title: "No of Days",
-    field: "no_of_days",
-    type: "numeric",
-    editable: "never",
-  },
-  {
-    title: "Reason",
-    field: "reason",
-    editable: "never",
-  },
-  {
-    title: "Status",
-    field: "status",
-    editComponent: (props) => (
-      <TextField
-        //defaultValue={props.value || null}
-        onChange={(e) => props.onChange(e.target.value)}
-        style={{ width: 100 }}
-        value={props.value}
-        select
-      >
-        <MenuItem value="Pending">Pending</MenuItem>
-        <MenuItem value="Approve">Approve</MenuItem>
-        <MenuItem value="Reject">Reject</MenuItem>
-        <MenuItem value="Cancel">Cancel</MenuItem>
-      </TextField>
-    ),
-  },
-];
-
 export default function LeaveTable() {
   const classes = useStyles();
   const { leaves, setLeaveId } = useLeaves();
@@ -107,6 +50,66 @@ export default function LeaveTable() {
     setIsLeaveEditingOff,
     resetSingleLeave,
   } = useLeavesContext();
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+        editable: "never",
+      },
+      {
+        title: "From Date",
+        field: "from_date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editable: "never",
+      },
+      {
+        title: "To Date",
+        field: "to_date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editable: "never",
+      },
+      {
+        title: "Leave Balance",
+        field: "leave_bal",
+        type: "numeric",
+        editable: "never",
+      },
+      {
+        title: "No of Days",
+        field: "no_of_days",
+        type: "numeric",
+        editable: "never",
+      },
+      {
+        title: "Reason",
+        field: "reason",
+        editable: "never",
+      },
+      {
+        title: "Status",
+        field: "status",
+        editComponent: (props) => (
+          <TextField
+            //defaultValue={props.value || null}
+            onChange={(e) => props.onChange(e.target.value)}
+            style={{ width: 100 }}
+            value={props.value}
+            select
+          >
+            <MenuItem value="Pending">Pending</MenuItem>
+            <MenuItem value="Approve">Approve</MenuItem>
+            <MenuItem value="Reject">Reject</MenuItem>
+            <MenuItem value="Cancel">Cancel</MenuItem>
+          </TextField>
+        ),
+      },
+    ],
+    []
+  );
 
   // useEffect(() => {
   //   setLeaveId(editLeaveID);

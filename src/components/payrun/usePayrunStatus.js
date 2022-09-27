@@ -23,7 +23,7 @@ export function usePayrunStatus(empid) {
 
   const fallback = [];
   const { data: payrunstatus = fallback } = useQuery(
-    [queryKeys.payrunstatus, { payrunstatusId }],
+    [queryKeys.payrunstatus,  payrunstatusId ],
     //queryKeys.payrun,
     () => getPayrunStatus(payrunstatusId),
     {

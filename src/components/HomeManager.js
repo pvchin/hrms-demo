@@ -50,6 +50,7 @@ import {
 //import { useExpensesPeriod } from "./expenses/useExpensesPeriod";
 import { useHoc } from "./hoc/useHoc";
 
+
 const EmployeeTableLeaveView = React.lazy(() =>
   import("./EmployeeTableLeaveView")
 );
@@ -71,8 +72,6 @@ const Export2ExcelDialog = React.lazy(() => import("./Export2ExcelDialog"));
 const drawerWidth = 240;
 
 //const FILTERSTRING = "Pending";
-
-
 
 const initial_expdata = [
   {
@@ -104,21 +103,22 @@ const HomeManager = () => {
   //const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   //const { expensesperiod, setExpPeriodId } = useExpensesPeriod();
   //const [expdata, setExpData] = useState(initial_expdata);
-   const [selectleaveyear, setSelectLeaveYear] = useState("");
-   const [selectexpenseyear, setSelectExpenseYear] = useState("");
-   const [selectsiteallowsyear, setSelectSiteAllowsYear] = useState("");
-   const [selectpayrollyear, setSelectPayrollYear] = useState("");
+  const [selectleaveyear, setSelectLeaveYear] = useState("");
+  const [selectexpenseyear, setSelectExpenseYear] = useState("");
+  const [selectsiteallowsyear, setSelectSiteAllowsYear] = useState("");
+  const [selectpayrollyear, setSelectPayrollYear] = useState("");
   const [selecthocyear, setSelectHocYear] = useState("");
   const [exp2excelstate, setExp2excelstate] = useState(initial_exp2excel);
   const currentyear = new Date().getFullYear();
   const currentmonth = new Date().getMonth();
-   const { hoc, filter, setFilter, setHocId } = useHoc();
-const {
-  isOpen: isExport2ExcelOpen,
-  onOpen: onExport2ExcelOpen,
-  onClose: onExport2ExcelClose,
+  const { hoc, filter, setFilter, setHocId } = useHoc();
+ 
+  const {
+    isOpen: isExport2ExcelOpen,
+    onOpen: onExport2ExcelOpen,
+    onClose: onExport2ExcelClose,
   } = useDisclosure();
-  
+
   const handleExportHoc2Excel = () => {
     setExp2excelstate(
       (prev) =>
@@ -133,14 +133,15 @@ const {
     onExport2ExcelOpen();
   };
 
-   useEffect(() => {
-     setSelectLeaveYear(currentyear);
-     setSelectExpenseYear(currentyear);
-     setSelectSiteAllowsYear(currentyear);
-     setSelectPayrollYear(currentyear);
-     setSelectHocYear(currentyear);
-   }, []);
-  
+  useEffect(() => {
+    setSelectLeaveYear(currentyear);
+    setSelectExpenseYear(currentyear);
+    setSelectSiteAllowsYear(currentyear);
+    setSelectPayrollYear(currentyear);
+    setSelectHocYear(currentyear);
+   
+  }, []);
+
   return (
     // <div>
     //   <div className={classes.appBarSpacer} />

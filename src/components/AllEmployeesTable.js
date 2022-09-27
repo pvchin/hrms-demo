@@ -58,6 +58,7 @@ export default function AllEmployeesTable() {
     onOpen: onAddEmpFormOpen,
     onClose: onAddEmpFormClose,
   } = useDisclosure();
+  
   const columns = useMemo(() => [
     {
       title: "Name",
@@ -72,7 +73,7 @@ export default function AllEmployeesTable() {
       dateSetting: { locale: "en-GB" },
     },
     { title: "Email", field: "email" },
-  ]);
+  ],[]);
 
   const {
     editEmployeeID,

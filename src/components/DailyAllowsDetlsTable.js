@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Icon, Button } from "@material-ui/core";
@@ -19,58 +19,6 @@ import {
 import { useDailyAllowancesContext } from "../context/dailyallowances_context";
 import { useDailyAllowsDetlsBatch } from "./dailyallowsdetls/useDailyAllowsDetlsBatch";
 import { useDailyAllows } from "./dailyallows/useDailyAllows";
-
-const columns = [
-  {
-    title: "Date",
-    field: "date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    cellStyle: {
-      width: 120,
-      maxWidth: 120,
-    },
-    editComponent: (props) => (
-      <TextField
-        defaultValue={props.value || null}
-        onChange={(e) => props.onChange(e.target.value)}
-        type="date"
-      />
-    ),
-  },
-  { title: "District", field: "district" },
-  { title: "Operation Type", field: "typeoperation" },
-  { title: "Client", field: "client" },
-  { title: "Location/Rig", field: "location" },
-  { title: "Ticket No/Job No", field: "jobno" },
-  { title: "Crew Operation", field: "crewoperation" },
-  {
-    title: "Job Bonus",
-    field: "jobbonus",
-    type: "currency",
-    cellStyle: {
-      width: 8,
-      maxWidth: 8,
-    },
-    headerStyle: {
-      width: 8,
-      maxWidth: 8,
-    },
-  },
-  {
-    title: "Per Diem",
-    field: "perdiem",
-    type: "currency",
-    cellStyle: {
-      width: 8,
-      maxWidth: 8,
-    },
-    headerStyle: {
-      width: 8,
-      maxWidth: 8,
-    },
-  },
-];
 
 export default function DailyAllowsDetlsTable() {
   //let history = useHistory();
@@ -102,9 +50,57 @@ export default function DailyAllowsDetlsTable() {
     //editDailyAllowanceID,
   } = useDailyAllowancesContext();
 
-  // useEffect(() => {
-  //   getSingleBatchDailyAllowsDetl(allows_empid, allows_period);
-  // }, []);
+  const columns = useMemo(() => [
+    {
+      title: "Date",
+      field: "date",
+      type: "date",
+      dateSetting: { locale: "en-GB" },
+      cellStyle: {
+        width: 120,
+        maxWidth: 120,
+      },
+      editComponent: (props) => (
+        <TextField
+          defaultValue={props.value || null}
+          onChange={(e) => props.onChange(e.target.value)}
+          type="date"
+        />
+      ),
+    },
+    { title: "District", field: "district" },
+    { title: "Operation Type", field: "typeoperation" },
+    { title: "Client", field: "client" },
+    { title: "Location/Rig", field: "location" },
+    { title: "Ticket No/Job No", field: "jobno" },
+    { title: "Crew Operation", field: "crewoperation" },
+    {
+      title: "Job Bonus",
+      field: "jobbonus",
+      type: "currency",
+      cellStyle: {
+        width: 8,
+        maxWidth: 8,
+      },
+      headerStyle: {
+        width: 8,
+        maxWidth: 8,
+      },
+    },
+    {
+      title: "Per Diem",
+      field: "perdiem",
+      type: "currency",
+      cellStyle: {
+        width: 8,
+        maxWidth: 8,
+      },
+      headerStyle: {
+        width: 8,
+        maxWidth: 8,
+      },
+    },
+  ],[]);
 
   useEffect(() => {
     setDailyAllowsId(allows_empid);
@@ -134,7 +130,6 @@ export default function DailyAllowsDetlsTable() {
   //   );
   // };
 
-  
   return (
     <div className={classes.root}>
       {/* <h1>Expenses Claims Application</h1> */}

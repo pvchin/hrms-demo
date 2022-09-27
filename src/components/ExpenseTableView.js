@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { CustomDialog } from "../helpers/CustomDialog";
@@ -7,25 +7,7 @@ import { GrFormView } from "react-icons/gr";
 import { useExpensesContext } from "../context/expenses_context";
 import ExpenseFormView from "./ExpenseFormView";
 
-
 //const FILTERSTRING = "Pending";
-
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-  },
-  {
-    title: "Date",
-    field: "date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-  },
-
-  { title: "Description", field: "description" },
-  { title: "Amount", field: "amount", type: "currency" },
-  { title: "Status", field: "status" },
-];
 
 const initial_form = {
   name: "",
@@ -73,6 +55,26 @@ export default function ExpenseTableView() {
   //   setIsExpenseEditingOff,
   //   resetSingleExpense,
   // } = useExpensesContext();
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+      },
+      {
+        title: "Date",
+        field: "date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+      },
+
+      { title: "Description", field: "description" },
+      { title: "Amount", field: "amount", type: "currency" },
+      { title: "Status", field: "status" },
+    ],
+    []
+  );
 
   // useEffect(() => {
   //   loadPendingExpenses(FILTERSTRING);

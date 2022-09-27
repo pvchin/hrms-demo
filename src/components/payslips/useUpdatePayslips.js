@@ -23,6 +23,12 @@ export function useUpdatePayslips(data) {
       //   status: "success",
       // });
     },
+    onErrot: () => {
+      toast({
+        title: "Internet connection error! Record not updated!",
+        status: "warning",
+      });
+    },
   });
 
   return mutate;

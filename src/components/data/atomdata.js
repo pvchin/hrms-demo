@@ -173,5 +173,5 @@ export const viewImageState = atom({
   default: {
     url: {},
     name: "",
-  }
-})
+  },
+});

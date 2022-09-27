@@ -16,10 +16,16 @@ export function useAddDepartments(data) {
   const { mutate } = useMutation((data) => addDepartments(data), {
     onSuccess: () => {
       queryClient.invalidateQueries("departments");
-       toast({
-         title: "Department item being added!",
-         status: "success",
-       });
+      toast({
+        title: "Department item being added!",
+        status: "success",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Network Error! Please check your internet connection!",
+        status: "warning",
+      });
     },
   });
 

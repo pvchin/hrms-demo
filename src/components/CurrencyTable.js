@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { useCurrency } from "./currency/useCurrency";
@@ -6,23 +6,26 @@ import { useUpdateCurrency } from "./currency/useUpdateCurrency";
 import { useDeleteCurrency } from "./currency/useDeleteCurrency";
 import { useAddCurrency } from "./currency/useAddCurrency";
 
-const columns = [
-  {
-    title: "Currency",
-    field: "currency",
-  },
-  {
-    title: "Rate",
-    field: "rate",
-  },
-];
-
 export default function UpdateCurrency() {
   const classes = useStyles();
   const { currency } = useCurrency();
   const updateCurrency = useUpdateCurrency();
   const deleteCurrency = useDeleteCurrency();
   const addCurrency = useAddCurrency();
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Currency",
+        field: "currency",
+      },
+      {
+        title: "Rate",
+        field: "rate",
+      },
+    ],
+    []
+  );
 
   const update_Currency = (data) => {
     const { id, rec_id, rate, ...fields } = data;

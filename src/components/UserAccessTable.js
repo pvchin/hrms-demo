@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import clsx from "clsx";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,42 +8,45 @@ import { useUpdateEmployees } from "./employees/useUpdateEmployees";
 
 const drawerWidth = 240;
 
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-    editable: "never",
-  },
-  {
-    title: "Department",
-    field: "department",
-    editable: "never",
-  },
-  {
-    title: "Designation",
-    field: "designation",
-    editable: "never",
-  },
-  {
-    title: "Role",
-    field: "role",
-    lookup: {
-      1: "Staff",
-      2: "Admin",
-      3: "Ops Supervisor",
-      4: "AdminManager",
-      5: "Manager",
-      6: "Director",
-    },
-  },
-];
-
 export default function UserAccessTable() {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const { employees } = useEmployees();
   const updateEmployees = useUpdateEmployees();
-  
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+        editable: "never",
+      },
+      {
+        title: "Department",
+        field: "department",
+        editable: "never",
+      },
+      {
+        title: "Designation",
+        field: "designation",
+        editable: "never",
+      },
+      {
+        title: "Role",
+        field: "role",
+        lookup: {
+          1: "Staff",
+          2: "Admin",
+          3: "Ops Supervisor",
+          4: "AdminManager",
+          5: "Manager",
+          6: "Director",
+        },
+      },
+    ],
+    []
+  );
+
   const update_rec = (data) => {
     const { id, rec_id, role, ...fields } = data;
     updateEmployees({ id, role: parseInt(role, 10), ...fields });

@@ -22,23 +22,9 @@ module.exports = async (event) => {
     return formattedReturn(200, formattedDailyAllowances);
   }
 
-  // if (fv) {
-  //   const dailyallowances = await table
-  //     .select({
-  //       view: "sortedview",
-  //       filterByFormula: `period.substring(0,6) = '${fv}'`,
-  //     })
-  //     .firstPage();
-  //   const formattedDailyAllowances = dailyallowances.map((dailyallowance) => ({
-  //     id: dailyallowance.id,
-  //     ...dailyallowance.fields,
-  //   }));
-
-  //   return formattedReturn(200, formattedDailyAllowances);
-  // }
-
   if (fv) {
     const dailyallowances = await table
+      // .select({ view: "sortedview", filterByFormula: `period = '${fv}'` })
       .select({
         view: "sortedview",
         filterByFormula: `LEFT(period,7) = '${fv}'`,

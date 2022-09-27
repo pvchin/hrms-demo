@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable from "material-table";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
-import {  Tab, Tabs, TabList, TabPanels, TabPanel} from "@chakra-ui/react"
+import { Tab, Tabs, TabList, TabPanels, TabPanel } from "@chakra-ui/react";
 import { makeStyles } from "@material-ui/core/styles";
 import { GrFormView } from "react-icons/gr";
 //import AddIcon from "@material-ui/icons/Add";
@@ -18,86 +18,21 @@ import { useEmployeesContext } from "../context/employees_context";
 import { useEmployees } from "./employees/useEmployees";
 import { useLeaves } from "./leaves/useLeaves";
 
-const YEAR = new Date().getFullYear();
-
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-    cellStyle: {
-      width: 250,
-      maxWidth: 250,
-    },
-  },
-  // { title: "IC No", field: "ic_no" },
-  // { title: "Gender", field: "gender" },
-  { title: "Emp No", field: "empno" },
-  { title: "Designation", field: "designation" },
-  { title: "Department", field: "department" },
-
-  {
-    title: "Leave Entitled",
-    field: "leave_entitled",
-    type: "numeric",
-    cellStyle: {
-      width: 60,
-    },
-  },
-  {
-    title: "Leave C/F",
-    field: "leave_bf",
-    type: "numeric",
-    cellStyle: {
-      width: 60,
-    },
-  }, 
-  {
-    title: "Total Leave",
-    field: "leave_total",
-    type: "numeric",
-    cellStyle: {
-      width: 60,
-    },
-  },
-  {
-    title: "Leave Taken",
-    field: "leave_taken",
-    type: "numeric",
-    cellStyle: {
-      width: 60,
-    },
-  },
-  // {
-  //   title: "Leave Pending",
-  //   field: "leave_pending",
-  //   type: "numeric",
-  //   cellStyle: {
-  //     width: 60,
-  //   },
-  // },
-  {
-    title: "Leave Balance",
-    field: "leave_bal",
-    type: "numeric",
-    cellStyle: {
-      width: 60,
-    },
-  },
-  // { title: "Email", field: "email" },
-];
+//const YEAR = new Date().getFullYear();
 
 export default function EmployeeTableLeaveView({ year }) {
   const classes = useStyles();
   const navigate = useNavigate();
   const { employees, setEmployeeId } = useEmployees();
-  const { leaves } = useLeaves();
+  const { leaves, setLeaveId } = useLeaves();
   const [empdata, setEmpData] = useState([]);
   //const currentyear = new Date().getFullYear();
   // const { expensesperiod, setExpPeriodYrId, setExpPeriodMthId } =
   //   useExpensesPeriod();
-  const emp = employees.map((rec) => {
-    return { ...rec, leave_total: 0, leave_taken: 0, leave_pending: 0 };
-  });
+  console.log("year", year);
+  // const emp = employees.forEach((rec) => {
+  //   return { ...rec, leave_total: 0, leave_taken: 0, leave_pending: 0 };
+  // });
 
   const {
     //editEmployeeID,
@@ -112,6 +47,75 @@ export default function EmployeeTableLeaveView({ year }) {
     //getSingleEmployee,
   } = useEmployeesContext();
 
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+        cellStyle: {
+          width: 250,
+          maxWidth: 250,
+        },
+      },
+      // { title: "IC No", field: "ic_no" },
+      // { title: "Gender", field: "gender" },
+      { title: "Emp No", field: "empno" },
+      { title: "Designation", field: "designation" },
+      { title: "Department", field: "department" },
+
+      {
+        title: "Leave Entitled",
+        field: "leave_entitled",
+        type: "numeric",
+        cellStyle: {
+          width: 60,
+        },
+      },
+      {
+        title: "Leave C/F",
+        field: "leave_bf",
+        type: "numeric",
+        cellStyle: {
+          width: 60,
+        },
+      },
+      {
+        title: "Total Leave",
+        field: "leave_total",
+        type: "numeric",
+        cellStyle: {
+          width: 60,
+        },
+      },
+      {
+        title: "Leave Taken",
+        field: "leave_taken",
+        type: "numeric",
+        cellStyle: {
+          width: 60,
+        },
+      },
+      // {
+      //   title: "Leave Pending",
+      //   field: "leave_pending",
+      //   type: "numeric",
+      //   cellStyle: {
+      //     width: 60,
+      //   },
+      // },
+      {
+        title: "Leave Balance",
+        field: "leave_bal",
+        type: "numeric",
+        cellStyle: {
+          width: 60,
+        },
+      },
+      // { title: "Email", field: "email" },
+    ],
+    []
+  );
+
   const update_Employee = (data) => {
     const { id } = data;
     resetSingleEmployee();
@@ -123,9 +127,12 @@ export default function EmployeeTableLeaveView({ year }) {
     navigate("/singleemployee");
   };
 
-  const Build_EmpData = (YEAR) => {
+  const Build_EmpData = (year) => {
     // eslint-disable-next-line no-lone-blocks
     {
+      const emp = employees.forEach((rec) => {
+        return { ...rec, leave_total: 0, leave_taken: 0, leave_pending: 0 };
+      });
       emp &&
         emp.forEach((rec, index) => {
           const {
@@ -143,7 +150,7 @@ export default function EmployeeTableLeaveView({ year }) {
           const leavedata = leaves
             .filter(
               (r) =>
-                r.empid === id && moment(r.from_date).format("YYYY") === YEAR
+                r.empid === id && moment(r.from_date).format("YYYY") === year
             )
             .map((rec) => {
               return { ...rec };
@@ -180,7 +187,8 @@ export default function EmployeeTableLeaveView({ year }) {
   };
 
   useEffect(() => {
-    Build_EmpData(YEAR);
+    setLeaveId(year);
+    Build_EmpData(year);
   }, []);
 
   return (

@@ -23,7 +23,7 @@ export function useExpenses(empid) {
 
   const fallback = [];
   const { data: expenses = fallback } = useQuery(
-    [queryKeys.expenses, { expenseId }],
+    [queryKeys.expenses,  expenseId ],
     //queryKeys.expenses,
     () => getExpenses(expenseId),
     {

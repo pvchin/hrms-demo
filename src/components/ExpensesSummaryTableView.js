@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 //import AddIcon from "@material-ui/icons/Add";
@@ -11,57 +11,6 @@ import { makeStyles } from "@material-ui/core/styles";
 //import { AlertDialog } from "../helpers/AlertDialogBox";
 //import { useExpensesPeriod } from "./expenses/useExpensesPeriod";
 //import { useEmployeesContext } from "../context/employees_context";
-
-const columns = [
-  {
-    title: "January",
-    field: "jan",
-  },
-  {
-    title: "February",
-    field: "feb",
-  },
-  {
-    title: "March",
-    field: "mar",
-  },
-  {
-    title: "April",
-    field: "apr",
-  },
-  {
-    title: "May",
-    field: "may",
-  },
-  {
-    title: "June",
-    field: "jun",
-  },
-  {
-    title: "July",
-    field: "jul",
-  },
-  {
-    title: "August",
-    field: "aug",
-  },
-  {
-    title: "September",
-    field: "sep",
-  },
-  {
-    title: "October",
-    field: "oct",
-  },
-  {
-    title: "November",
-    field: "nov",
-  },
-  {
-    title: "December",
-    field: "dec",
-  },
-];
 
 const data = [
   {
@@ -85,6 +34,60 @@ export default function ExpenseSummaryTableView({ year }) {
   //const [expdata, setExpData] = useState([]);
   // const { expensesperiod, setExpPeriodYrId, setExpPeriodMthId } =
   //   useExpensesPeriod();
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "January",
+        field: "jan",
+      },
+      {
+        title: "February",
+        field: "feb",
+      },
+      {
+        title: "March",
+        field: "mar",
+      },
+      {
+        title: "April",
+        field: "apr",
+      },
+      {
+        title: "May",
+        field: "may",
+      },
+      {
+        title: "June",
+        field: "jun",
+      },
+      {
+        title: "July",
+        field: "jul",
+      },
+      {
+        title: "August",
+        field: "aug",
+      },
+      {
+        title: "September",
+        field: "sep",
+      },
+      {
+        title: "October",
+        field: "oct",
+      },
+      {
+        title: "November",
+        field: "nov",
+      },
+      {
+        title: "December",
+        field: "dec",
+      },
+    ],
+    []
+  );
 
   // useEffect(() => {
   //   setExpPeriodYrId(year);

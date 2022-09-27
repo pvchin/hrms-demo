@@ -22,7 +22,7 @@ export function useExperiences(empid) {
 
   const fallback = [];
   const { data: experiences = fallback } = useQuery(
-    [queryKeys.experiences, { experienceId }],
+    [queryKeys.experiences, experienceId ],
     () => getExperiences(experienceId),
     {
       select: filter !== "all" ? selectFn : undefined,

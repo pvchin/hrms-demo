@@ -23,7 +23,7 @@ export function usePayItems(empid) {
 
   const fallback = [];
   const { data: payitems = fallback } = useQuery(
-    [queryKeys.payitems, { payitemId }],
+    [queryKeys.payitems, payitemId ],
     //queryKeys.payitems,
     () => getPayItems(payitemId),
     {

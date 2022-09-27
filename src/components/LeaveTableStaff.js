@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { TextField, MenuItem } from "@material-ui/core";
 import {
@@ -39,63 +39,6 @@ const initial_form = {
   no_of_days: 0,
   leave_bal: 0,
 };
-
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-    editable: "never",
-  },
-  {
-    title: "From Date",
-    field: "from_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editable: "never",
-  },
-  {
-    title: "To Date",
-    field: "to_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editable: "never",
-  },
-  {
-    title: "Leave Balance",
-    field: "leave_bal",
-    type: "numeric",
-    editable: "never",
-  },
-  {
-    title: "No of Days",
-    field: "no_of_days",
-    type: "numeric",
-    editable: "never",
-  },
-  {
-    title: "Reason",
-    field: "reason",
-    editable: "never",
-  },
-  {
-    title: "Status",
-    field: "status",
-    editComponent: (props) => (
-      <TextField
-        //defaultValue={props.value || null}
-        onChange={(e) => props.onChange(e.target.value)}
-        style={{ width: 100 }}
-        value={props.value}
-        select
-      >
-        <MenuItem value="Pending">Pending</MenuItem>
-        <MenuItem value="Approved">Approved</MenuItem>
-        <MenuItem value="Rejected">Rejected</MenuItem>
-        <MenuItem value="Cancel">Cancel</MenuItem>
-      </TextField>
-    ),
-  },
-];
 
 // const AlertBox = ({ isOpen, onClose, cancelRef, heading, children }) => {
 //   return (
@@ -154,6 +97,66 @@ export default function LeaveTableStaff() {
   const [selectleaveyear, setSelectLeaveYear] = useState("");
   const currentyear = new Date().getFullYear();
   //const YEAR = new Date().getFullYear();
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+        editable: "never",
+      },
+      {
+        title: "From Date",
+        field: "from_date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editable: "never",
+      },
+      {
+        title: "To Date",
+        field: "to_date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editable: "never",
+      },
+      {
+        title: "Leave Balance",
+        field: "leave_bal",
+        type: "numeric",
+        editable: "never",
+      },
+      {
+        title: "No of Days",
+        field: "no_of_days",
+        type: "numeric",
+        editable: "never",
+      },
+      {
+        title: "Reason",
+        field: "reason",
+        editable: "never",
+      },
+      {
+        title: "Status",
+        field: "status",
+        editComponent: (props) => (
+          <TextField
+            //defaultValue={props.value || null}
+            onChange={(e) => props.onChange(e.target.value)}
+            style={{ width: 100 }}
+            value={props.value}
+            select
+          >
+            <MenuItem value="Pending">Pending</MenuItem>
+            <MenuItem value="Approved">Approved</MenuItem>
+            <MenuItem value="Rejected">Rejected</MenuItem>
+            <MenuItem value="Cancel">Cancel</MenuItem>
+          </TextField>
+        ),
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
     setSelectLeaveYear(currentyear);

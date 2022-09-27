@@ -10,6 +10,7 @@ import Paper from "@material-ui/core/Paper";
 //import { headExpenseTableCells } from "../utils/constants";
 //import { useExpensesContext } from "../context/expenses_context";
 import HocTable from "../components/HocTable";
+import HocTableStaffView from "../components/HocTableStaffView";
 
 const drawerWidth = 240;
 
@@ -28,7 +29,8 @@ const HocPage = () => {
             <Grid item xs={12}>
               <Paper className={fixedHeightPaper}>
                 <div>
-                  <HocTable title="HOC Table" />
+                  {/* <HocTable title="HOC Table" /> */}
+                  <HocTableStaffView />
                 </div>
               </Paper>
             </Grid>

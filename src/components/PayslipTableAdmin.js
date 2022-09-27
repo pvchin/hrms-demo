@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Button, MenuItem, Icon } from "@material-ui/core";
@@ -14,95 +14,6 @@ import BuildOutlinedIcon from "@material-ui/icons/BuildOutlined";
 import { usePayslipsContext } from "../context/payslips_context";
 //import { useEmployeesContext } from "../context/employees_context";
 
-const columns = [
-  {
-    title: "Batch",
-    field: "payrun",
-    editable: "never",
-  },
-  { title: "Period", field: "period", editable: "never" },
-  {
-    title: "Pay Date",
-    field: "pay_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editable: "never",
-  },
-  {
-    title: "Wages",
-    field: "totalwages",
-    type: "currency",
-    editable: "never",
-  },
-  {
-    title: "TAP Amount",
-    field: "totaltap",
-    type: "currency",
-    editable: "never",
-  },
-  {
-    title: "SCP Amount",
-    field: "totalscp",
-    type: "currency",
-    editable: "never",
-  },
-  {
-    title: "Site Allowances",
-    field: "totalsitesallows",
-    type: "currency",
-    editable: "never",
-  },
-  {
-    title: "Expenses Claims",
-    field: "totalexpensesclaims",
-    type: "currency",
-    editable: "never",
-  },
-  {
-    title: "Allowances",
-    field: "totalallows",
-    type: "currency",
-    editable: "never",
-  },
-  {
-    title: "Deductions",
-    field: "totaldeducts",
-    type: "currency",
-    editable: "never",
-  },
-  {
-    title: "Total Payroll",
-    field: "totalpayroll",
-    type: "currency",
-    editable: "never",
-  },
-  // { title: "Bank Name", field: "bank_name" },
-  // { title: "Bank AC No", field: "bank_accno" },
-  {
-    title: "Status",
-    field: "status",
-    editable: "never",
-    cellStyle: {
-      width: 50,
-      maxWidth: 50,
-    },
-    editComponent: (props) => (
-      <TextField
-        //defaultValue={props.value || null}
-        onChange={(e) => props.onChange(e.target.value)}
-        style={{ width: 100 }}
-        value={props.value}
-        select
-      >
-        <MenuItem value="Pending">Pending</MenuItem>
-        <MenuItem value="Approve">Approve</MenuItem>
-        <MenuItem value="Reject">Reject</MenuItem>
-        <MenuItem value="Cancel">Cancel</MenuItem>
-      </TextField>
-    ),
-  },
-];
-
 export default function PayslipTableAdmin({
   payslipsdata,
   //setPayslipsdata,
@@ -111,7 +22,100 @@ export default function PayslipTableAdmin({
   //let history = useHistory();
   const classes = useStyles();
   //const setPayPeriodEmpId = useSetRecoilState(payPeriodEmpIdState);
-  const { updatePayrun, batchpayrun, update_payrun_error } = usePayslipsContext();
+  const { updatePayrun, batchpayrun, update_payrun_error } =
+    usePayslipsContext();
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Batch",
+        field: "payrun",
+        editable: "never",
+      },
+      { title: "Period", field: "period", editable: "never" },
+      {
+        title: "Pay Date",
+        field: "pay_date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editable: "never",
+      },
+      {
+        title: "Wages",
+        field: "totalwages",
+        type: "currency",
+        editable: "never",
+      },
+      {
+        title: "TAP Amount",
+        field: "totaltap",
+        type: "currency",
+        editable: "never",
+      },
+      {
+        title: "SCP Amount",
+        field: "totalscp",
+        type: "currency",
+        editable: "never",
+      },
+      {
+        title: "Site Allowances",
+        field: "totalsitesallows",
+        type: "currency",
+        editable: "never",
+      },
+      {
+        title: "Expenses Claims",
+        field: "totalexpensesclaims",
+        type: "currency",
+        editable: "never",
+      },
+      {
+        title: "Allowances",
+        field: "totalallows",
+        type: "currency",
+        editable: "never",
+      },
+      {
+        title: "Deductions",
+        field: "totaldeducts",
+        type: "currency",
+        editable: "never",
+      },
+      {
+        title: "Total Payroll",
+        field: "totalpayroll",
+        type: "currency",
+        editable: "never",
+      },
+      // { title: "Bank Name", field: "bank_name" },
+      // { title: "Bank AC No", field: "bank_accno" },
+      {
+        title: "Status",
+        field: "status",
+        editable: "never",
+        cellStyle: {
+          width: 50,
+          maxWidth: 50,
+        },
+        editComponent: (props) => (
+          <TextField
+            //defaultValue={props.value || null}
+            onChange={(e) => props.onChange(e.target.value)}
+            style={{ width: 100 }}
+            value={props.value}
+            select
+          >
+            <MenuItem value="Pending">Pending</MenuItem>
+            <MenuItem value="Approve">Approve</MenuItem>
+            <MenuItem value="Reject">Reject</MenuItem>
+            <MenuItem value="Cancel">Cancel</MenuItem>
+          </TextField>
+        ),
+      },
+    ],
+    []
+  );
 
   // const Save_PayslipData = () => {
   //   payslipsdata.forEach((data) => {

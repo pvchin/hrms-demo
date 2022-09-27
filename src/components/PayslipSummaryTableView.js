@@ -1,75 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { usePayrunStatus } from "./payrun/usePayrunStatus";
-
-const columns = [
-  {
-    title: "January",
-    field: "jan",
-  },
-  {
-    title: "February",
-    field: "feb",
-  },
-  {
-    title: "March",
-    field: "mar",
-  },
-  {
-    title: "April",
-    field: "apr",
-  },
-  {
-    title: "May",
-    field: "may",
-  },
-  {
-    title: "June",
-    field: "jun",
-  },
-  {
-    title: "July",
-    field: "jul",
-  },
-  {
-    title: "August",
-    field: "aug",
-  },
-  {
-    title: "September",
-    field: "sep",
-  },
-  {
-    title: "October",
-    field: "oct",
-  },
-  {
-    title: "November",
-    field: "nov",
-  },
-  {
-    title: "December",
-    field: "dec",
-  },
-];
-
-const data = [
-  {
-    jan: 80,
-    feb: 90,
-    mar: 78,
-    apr: 63,
-    may: 55,
-    jun: 60,
-    jul: 55,
-    aug: 65,
-    sep: 70,
-    oct: 58,
-    nov: 60,
-    dec: 62,
-  },
-];
 
 export default function PayslipSummaryTableView({ year, status }) {
   const classes = useStyles();
@@ -77,18 +9,91 @@ export default function PayslipSummaryTableView({ year, status }) {
   const [isCalc, setIsCalc] = useState(false);
   const { payrunstatus, setPayrunStatusId } = usePayrunStatus();
 
+  const columns = useMemo(
+    () => [
+      {
+        title: "January",
+        field: "jan",
+      },
+      {
+        title: "February",
+        field: "feb",
+      },
+      {
+        title: "March",
+        field: "mar",
+      },
+      {
+        title: "April",
+        field: "apr",
+      },
+      {
+        title: "May",
+        field: "may",
+      },
+      {
+        title: "June",
+        field: "jun",
+      },
+      {
+        title: "July",
+        field: "jul",
+      },
+      {
+        title: "August",
+        field: "aug",
+      },
+      {
+        title: "September",
+        field: "sep",
+      },
+      {
+        title: "October",
+        field: "oct",
+      },
+      {
+        title: "November",
+        field: "nov",
+      },
+      {
+        title: "December",
+        field: "dec",
+      },
+    ],
+    []
+  );
+
+  const data = useMemo(
+    () => [
+      {
+        jan: 80,
+        feb: 90,
+        mar: 78,
+        apr: 63,
+        may: 55,
+        jun: 60,
+        jul: 55,
+        aug: 65,
+        sep: 70,
+        oct: 58,
+        nov: 60,
+        dec: 62,
+      },
+    ],
+    []
+  );
+
   useEffect(() => {
     setPayrunStatusId(status);
-    setIsCalc(true)
+    setIsCalc(true);
   }, []);
 
   useEffect(() => {
     if (payrunstatus) {
-      Build_data()
-      setIsCalc(false)
+      Build_data();
+      setIsCalc(false);
     }
-  },[isCalc])
-
+  }, [isCalc]);
 
   const Build_data = () => {
     payrunstatus.forEach((rec) => {
@@ -105,19 +110,17 @@ export default function PayslipSummaryTableView({ year, status }) {
       if (payrun === "2021-08") {
         setPayData({ ...paydata, aug: totalpayroll });
       }
-      
-    })
-    console.log("build", paydata)
+    });
+    console.log("build", paydata);
   };
 
-    // payrunstatus.map((rec) => {
-    //   const { payrun, totalpayroll } = rec
-    //   return {
-    //     if(payrun === "2021-01") {
-    //       setPayData({...paydata, jan: totalpayroll})
-    //     }
-    //   }
-  
+  // payrunstatus.map((rec) => {
+  //   const { payrun, totalpayroll } = rec
+  //   return {
+  //     if(payrun === "2021-01") {
+  //       setPayData({...paydata, jan: totalpayroll})
+  //     }
+  //   }
 
   return (
     <div className={classes.root}>

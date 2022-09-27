@@ -23,6 +23,7 @@ export function useUpdateJobhistory(data) {
       //   status: "success",
       // });
     },
+    
   });
 
   return mutate;

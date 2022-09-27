@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 import { leaves_url } from "../../utils/constants";
-//import { useCustomToast } from "../../helpers/useCustomToast";
+import { useCustomToast } from "../../helpers/useCustomToast";
 
 async function updateLeaves(data) {
   const { id, ...fields } = data;
@@ -13,7 +13,7 @@ async function updateLeaves(data) {
 
 export function useUpdateLeaves(data) {
   const queryClient = useQueryClient();
-  //const toast = useCustomToast();
+  const toast = useCustomToast();
 
   const { mutate } = useMutation((data) => updateLeaves(data), {
     onSuccess: () => {
@@ -22,6 +22,12 @@ export function useUpdateLeaves(data) {
       //   title: "Leave record being updated!",
       //   status: "success",
       // });
+    },
+    onError: () => {
+      toast({
+        title: "Network Error! Please check your internet connection!",
+        status: "warning",
+      });
     },
   });
 

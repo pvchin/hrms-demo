@@ -63,8 +63,8 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
     },
   });
 
-  console.log("formdata", formdata);
-  console.log("files", files);
+  //console.log("formdata", formdata);
+  //console.log("files", files);
 
   const onDrop = (acceptedFiles) => {
     acceptedFiles.forEach((file) => {
@@ -89,7 +89,10 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
               (prev = [
                 ...files,
                 ...[
-                  { name: res.data.original_filename, preview: res.data.url },
+                  {
+                    name: res.data.original_filename,
+                    preview: res.data.secure_url,
+                  },
                 ],
               ])
           );
@@ -126,7 +129,7 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
       })
         .then((res) => {
           setFilename((prev) => (prev = res.data.public_id));
-          console.log(res.data.public_id);
+          //console.log(res.data.public_id);
           //console.log("filename", filename);
         })
         .catch((err) => console.log(err));
@@ -145,7 +148,7 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
 
     emailjs.send(SERVICE_ID, TEMPLATE_ID, emaildata, USER_ID).then(
       function (response) {
-        console.log(response.status, response.text);
+        //console.log(response.status, response.text);
         toast({
           title: `Email has sent successfully to ${emaildata.to_email}!`,
           status: "success",
@@ -163,14 +166,14 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
 
   const onSubmit = (data, e) => {
     e.preventDefault();
-    console.log("onSubmit", isExpenseEditing);
+    //console.log("onSubmit", isExpenseEditing);
     let newData = {
       ...data,
     };
     //console.log("newdata", newData);
     //console.log("isEditing", isExpenseEditing);
     if (isExpenseEditing) {
-      console.log("edit");
+      //console.log("edit");
       const { rec_id, tableData, ...editData } = newData;
       updateExpenses({ id: editExpenseID, ...editData });
       //attachments
@@ -187,11 +190,11 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
           url: rec.preview,
           type: rec.preview.split(".").pop(),
         };
-        console.log("addattach", newData);
+        //console.log("addattach", newData);
         addExpensesAttachment(newData);
       });
     } else {
-      console.log("new", newData);
+      //console.log("new", newData);
       const newid = nanoid();
       addExpenses({
         ...newData,
@@ -207,8 +210,7 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
           url: rec.preview,
           type: rec.preview.split(".").pop(),
         };
-        console.log("addattach", newData);
-        addExpensesAttachment(newData);
+         addExpensesAttachment(newData);
       });
     }
 
@@ -451,7 +453,9 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
                 <Controller
                   name="status"
                   control={control}
-                  defaultValue="Pending"
+                  defaultValue={
+                    formdata.status === "Pending" ? "Pending" : formdata.status
+                  }
                   render={({
                     field: { onChange, value },
                     fieldState: { error },
@@ -461,7 +465,11 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
                         label="Status"
                         id="margin-normal6"
                         name="status"
-                        defaultValue="Pending"
+                        defaultValue={
+                          formdata.status === "Pending"
+                            ? "Pending"
+                            : formdata.status
+                        }
                         className={classes.textField}
                         onChange={onChange}
                         error={!!error}
@@ -559,17 +567,19 @@ const ExpenseForm = ({ formdata, setFormdata, handleDialogClose }) => {
                 />
               </div> */}
 
-              <div>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  //onClick={() => handleSubmit(onSubmit)()}
-                >
-                  Save <Icon className={classes.rightIcon}>send</Icon>
-                </Button>
-              </div>
+              {formdata.status === "Pending" && (
+                <div>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    //onClick={() => handleSubmit(onSubmit)()}
+                  >
+                    Save <Icon className={classes.rightIcon}>send</Icon>
+                  </Button>
+                </div>
+              )}
             </GridItem>
             <GridItem colSpan={2}>
               <ImageUpload files={files} setFiles={setFiles} onDrop={onDrop} />

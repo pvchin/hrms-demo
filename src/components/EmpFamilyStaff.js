@@ -1,56 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Icon, TextField, MenuItem } from "@material-ui/core";
 import { useEmployeesContext } from "../context/employees_context";
 import { useTablesContext } from "../context/tables_context";
-
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-  },
-  {
-    title: "Relationship",
-    field: "relationship",
-    editComponent: (props) => (
-      <TextField
-        //defaultValue={props.value || null}
-        onChange={(e) => props.onChange(e.target.value)}
-        style={{ width: 100 }}
-        value={props.value}
-        select
-      >
-        <MenuItem value="Father">Father</MenuItem>
-        <MenuItem value="Mother">Mother</MenuItem>
-        <MenuItem value="Daughter">Daughter</MenuItem>
-        <MenuItem value="Son">Son</MenuItem>
-        <MenuItem value="Son-in-law">Son-in-law</MenuItem>
-        <MenuItem value="Daughter-in-law">Daughter-in-law</MenuItem>
-      </TextField>
-    ),
-  },
-  {
-    title: "BIrth Date",
-    field: "birth_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editComponent: (props) => (
-      <TextField
-        defaultValue={props.value || null}
-        onChange={(e) => props.onChange(e.target.value)}
-        type="date"
-      />
-    ),
-  },
-  {
-    title: "Phone",
-    field: "phone",
-  },
-  { title: "Age", field: "age", type: "numeric" },
-];
-
-
 
 export default function Emp_Family({
   familydata,
@@ -67,6 +20,51 @@ export default function Emp_Family({
     updateFamily,
     singlebatch_family_loading,
   } = useTablesContext();
+
+  const columns = useMemo(() => [
+    {
+      title: "Name",
+      field: "name",
+    },
+    {
+      title: "Relationship",
+      field: "relationship",
+      editComponent: (props) => (
+        <TextField
+          //defaultValue={props.value || null}
+          onChange={(e) => props.onChange(e.target.value)}
+          style={{ width: 100 }}
+          value={props.value}
+          select
+        >
+          <MenuItem value="Father">Father</MenuItem>
+          <MenuItem value="Mother">Mother</MenuItem>
+          <MenuItem value="Daughter">Daughter</MenuItem>
+          <MenuItem value="Son">Son</MenuItem>
+          <MenuItem value="Son-in-law">Son-in-law</MenuItem>
+          <MenuItem value="Daughter-in-law">Daughter-in-law</MenuItem>
+        </TextField>
+      ),
+    },
+    {
+      title: "BIrth Date",
+      field: "birth_date",
+      type: "date",
+      dateSetting: { locale: "en-GB" },
+      editComponent: (props) => (
+        <TextField
+          defaultValue={props.value || null}
+          onChange={(e) => props.onChange(e.target.value)}
+          type="date"
+        />
+      ),
+    },
+    {
+      title: "Phone",
+      field: "phone",
+    },
+    { title: "Age", field: "age", type: "numeric" },
+  ],[]);
 
   useEffect(() => {}, [familydata]);
 

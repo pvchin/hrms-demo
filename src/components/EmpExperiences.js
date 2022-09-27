@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
@@ -8,46 +8,6 @@ import { useExperiences } from "./experiences/useExperiences";
 import { useUpdateExperiences } from "./experiences/useUpdateExperiences";
 import { useAddExperiences } from "./experiences/useAddExperiences";
 import { useDeleteExperiences } from "./experiences/useDeleteExperiences";
-
-const columns = [
-  {
-    title: "Company",
-    field: "company",
-  },
-  {
-    title: "Location",
-    field: "location",
-  },
-  {
-    title: "Position",
-    field: "position",
-  },
-  {
-    title: "From Date",
-    field: "from_date",
-    type: "date",
-    editComponent: (props) => (
-      <TextField
-        defaultValue={props.value || new Date()}
-        onChange={(e) => props.onChange(e.target.value)}
-        type="date"
-      />
-    ),
-  },
-  {
-    title: "To Date",
-    field: "to_date",
-    type: "date",
-    editComponent: (props) => (
-      <TextField
-        defaultValue={props.value || new Date()}
-        onChange={(e) => props.onChange(e.target.value)}
-        type="date"
-      />
-    ),
-  },
-  { title: "Remark", field: "remark" },
-];
 
 export default function Emp_Experiences({
   experiencedata,
@@ -60,6 +20,46 @@ export default function Emp_Experiences({
   const addExperiences = useAddExperiences();
   const deleteExperiences = useDeleteExperiences();
   const { editEmployeeID } = useEmployeesContext();
+
+  const columns = useMemo(() => [
+    {
+      title: "Company",
+      field: "company",
+    },
+    {
+      title: "Location",
+      field: "location",
+    },
+    {
+      title: "Position",
+      field: "position",
+    },
+    {
+      title: "From Date",
+      field: "from_date",
+      type: "date",
+      editComponent: (props) => (
+        <TextField
+          defaultValue={props.value || new Date()}
+          onChange={(e) => props.onChange(e.target.value)}
+          type="date"
+        />
+      ),
+    },
+    {
+      title: "To Date",
+      field: "to_date",
+      type: "date",
+      editComponent: (props) => (
+        <TextField
+          defaultValue={props.value || new Date()}
+          onChange={(e) => props.onChange(e.target.value)}
+          type="date"
+        />
+      ),
+    },
+    { title: "Remark", field: "remark" },
+  ],[]);
 
   useEffect(() => {
     setExperienceId(editEmployeeID);

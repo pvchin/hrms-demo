@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { usePayItems } from "./payitems/usePayItems";
@@ -6,19 +6,22 @@ import { useUpdatePayItems } from "./payitems/useUpdatePayItems";
 import { useDeletePayItems } from "./payitems/useDeletePayItems";
 import { useAddPayItems } from "./payitems/useAddPayItems";
 
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-  },
-];
-
 export default function UpdateAllowances() {
   const classes = useStyles();
   const { payitems, setPayItemId } = usePayItems();
   const updatePayItems = useUpdatePayItems();
   const deletePayItems = useDeletePayItems();
   const addPayItems = useAddPayItems();
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+      },
+    ],
+    []
+  );
 
   const update_Allowance = (data) => {
     const { id, rec_id, ...fields } = data;
@@ -36,7 +39,7 @@ export default function UpdateAllowances() {
   };
 
   useEffect(() => {
-   setPayItemId("Allowances");
+    setPayItemId("Allowances");
   }, []);
 
   return (

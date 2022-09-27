@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
@@ -84,64 +84,61 @@ export default function DailyAllowancesTableStaff() {
   //   descending: (a, b) => b.period.length - a.period.length,
   // };
 
-  const columns = [
-    {
-      title: "Name",
-      field: "name",
-      editable: "never",
-    },
-    {
-      title: "Period",
-      field: "period",
-      editable: "never",
-      cellStyle: {
-        width: 200,
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+        editable: "never",
       },
-    },
-    { title: "Location", field: "location", editable: "never" },
-    { title: "Manager Name", field: "manager", editable: "never" },
-    {
-      title: "No Of Days",
-      field: "no_of_days",
-      type: "numeric",
-      editable: "never",
-      cellStyle: {
-        width: 60,
+      {
+        title: "Period",
+        field: "period",
+        editable: "never",
       },
-    },
-    {
-      title: "Job Bonus",
-      field: "totaljobbonus",
-      type: "currency",
-      editable: "never",
-    },
-    {
-      title: "Per Diem",
-      field: "totalperdiem",
-      type: "currency",
-      editable: "never",
-    },
-    { title: "Amount", field: "amount", type: "currency", editable: "never" },
-    { title: "Status", field: "status", editable: "never" },
-    // {
-    //   title: "Status",
-    //   field: "status",
-    //   editComponent: (props) => (
-    //     <TextField
-    //       //defaultValue={props.value || null}
-    //       onChange={(e) => props.onChange(e.target.value)}
-    //       style={{ width: 100 }}
-    //       value={props.value}
-    //       select
-    //     >
-    //       <MenuItem value="Pending">Pending</MenuItem>
-    //       {/* <MenuItem value="Approve">Approve</MenuItem>
-    //     <MenuItem value="Reject">Reject</MenuItem>
-    //     <MenuItem value="Cancel">Cancel</MenuItem> */}
-    //     </TextField>
-    //   ),
-    // },
-  ];
+      { title: "Location", field: "location", editable: "never" },
+      { title: "Manager Name", field: "manager", editable: "never" },
+      {
+        title: "No Of Days",
+        field: "no_of_days",
+        type: "numeric",
+        editable: "never",
+      },
+      {
+        title: "Job Bonus",
+        field: "totaljobbonus",
+        type: "currency",
+        editable: "never",
+      },
+      {
+        title: "Per Diem",
+        field: "totalperdiem",
+        type: "currency",
+        editable: "never",
+      },
+      { title: "Amount", field: "amount", type: "currency", editable: "never" },
+      { title: "Status", field: "status", editable: "never" },
+      // {
+      //   title: "Status",
+      //   field: "status",
+      //   editComponent: (props) => (
+      //     <TextField
+      //       //defaultValue={props.value || null}
+      //       onChange={(e) => props.onChange(e.target.value)}
+      //       style={{ width: 100 }}
+      //       value={props.value}
+      //       select
+      //     >
+      //       <MenuItem value="Pending">Pending</MenuItem>
+      //       {/* <MenuItem value="Approve">Approve</MenuItem>
+      //     <MenuItem value="Reject">Reject</MenuItem>
+      //     <MenuItem value="Cancel">Cancel</MenuItem> */}
+      //     </TextField>
+      //   ),
+      // },
+    ],
+    []
+  );
 
   // const Save_DailyAllowancesData = () => {
   //   dailyallows.forEach((data) => {

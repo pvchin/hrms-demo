@@ -1,5 +1,5 @@
-import React, {  useEffect } from "react";
-import MaterialTable  from "material-table";
+import React, { useEffect, useMemo } from "react";
+import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Button, HStack, Text } from "@chakra-ui/react";
 //import AddIcon from "@material-ui/icons/Add";
@@ -10,51 +10,51 @@ import { Box, Button, HStack, Text } from "@chakra-ui/react";
 //import LeaveForm from "./LeaveForm";
 //import { CustomDialog } from "../helpers/CustomDialog";
 //import { AlertDialog } from "../helpers/AlertDialogBox";
-import { useLeavesPeriod } from "./leaves/useLeavesPeriod";
+import { useLeavesPeriodbyMth } from "./leaves/useLeavesPeriodbyMth";
 
 //const FILTERSTRING = "Pending";
 
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-  },
-
-  {
-    title: "From Date",
-    field: "from_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editable: "never",
-  },
-  {
-    title: "To Date",
-    field: "to_date",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-    editable: "never",
-  },
-  {
-    title: "No of Days",
-    field: "no_of_days",
-    type: "numeric",
-    editable: "never",
-  },
-  {
-    title: "Reason",
-    field: "reason",
-    editable: "never",
-  },
-  { title: "Status", field: "status" },
-];
-
-
-
-
 export default function LeaveTableViewSummary({ year, month }) {
   const classes = useStyles();
-  const { leavesperiod, setLeavePeriodYrId, setLeavePeriodMthId } =
-    useLeavesPeriod();
+  const { leavesperiodbymth, setLeavePeriodMthId, setLeavePeriodYrId } =
+    useLeavesPeriodbyMth();
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+      },
+
+      {
+        title: "From Date",
+        field: "from_date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editable: "never",
+      },
+      {
+        title: "To Date",
+        field: "to_date",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+        editable: "never",
+      },
+      {
+        title: "No of Days",
+        field: "no_of_days",
+        type: "numeric",
+        editable: "never",
+      },
+      {
+        title: "Reason",
+        field: "reason",
+        editable: "never",
+      },
+      { title: "Status", field: "status" },
+    ],
+    []
+  );
 
   useEffect(() => {
     setLeavePeriodYrId(year);
@@ -66,11 +66,11 @@ export default function LeaveTableViewSummary({ year, month }) {
       {/* <h1>Expenses Claims Application</h1> */}
 
       {/* <div style={{ maxWidth: "100%", paddingTop: "5px" }}> */}
-      
+
       <Box maxW="100%" pt="5px" overflow="scroll">
         <MaterialTable
           columns={columns}
-          data={leavesperiod}
+          data={leavesperiodbymth}
           title="Leave Application"
           options={{
             filtering: false,

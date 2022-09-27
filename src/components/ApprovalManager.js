@@ -13,17 +13,26 @@ import { useLeavesContext } from "../context/leaves_context";
 import { useExpensesContext } from "../context/expenses_context";
 import { usePayslipsContext } from "../context/payslips_context";
 import { useDailyAllowancesContext } from "../context/dailyallowances_context";
-import LeaveTableViewManager from "./LeaveTableViewManager";
-import LeaveTableManager from "./LeaveTableManager";
-import ExpenseTableView from "./ExpenseTableView";
-import ExpenseTableManager from "./ExpenseTableManager";
-import PayslipTableViewManager from "./PayslipTableViewManager";
-import PayslipTableAdmin from "./PayslipTableAdmin";
-import DailyAllowancesTableView from "./DailyAllowancesTableView";
-import DailyAllowancesTableAdmin from "./DailyAllowancesTableAdmin";
+//import LeaveTableViewManager from "./LeaveTableViewManager";
+//import LeaveTableManager from "./LeaveTableManager";
+//import ExpenseTableView from "./ExpenseTableView";
+//import ExpenseTableManager from "./ExpenseTableManager";
+//import PayslipTableViewManager from "./PayslipTableViewManager";
+//import PayslipTableAdmin from "./PayslipTableAdmin";
+//import DailyAllowancesTableView from "./DailyAllowancesTableView";
+//import DailyAllowancesTableAdmin from "./DailyAllowancesTableAdmin";
 //import OnLeavesView from "./OnLeavesView";
 //import WPExpiryView from "./WPExpiryView";
 import { useDailyAllowsStatus } from "./dailyallows/useDailyAllowsStatus";
+
+const LeaveTableViewManager = React.lazy(() => import("./LeaveTableViewManager"));
+const LeaveTableManager = React.lazy(() => import("./LeaveTableManager"));
+const ExpenseTableView = React.lazy(() => import("./ExpenseTableView"));
+const ExpenseTableManager = React.lazy(() => import("./ExpenseTableManager"));
+const PayslipTableViewManager = React.lazy(() => import("./PayslipTableViewManager"));
+const PayslipTableAdmin = React.lazy(() => import("./PayslipTableAdmin"));
+const DailyAllowancesTableViewManager = React.lazy(() => import("./DailyAllowancesTableViewManager"));
+const DailyAllowancesTableManager = React.lazy(() => import("./DailyAllowancesTableManager"));
 
 const drawerWidth = 240;
 
@@ -93,9 +102,11 @@ const EmployeeView = () => {
     loadPendingDailyAllowances(FILTERSTRING);
   };
 
-  useEffect(() => {
-    setDailyAllowsStatusId("Verified");
-  },[])
+  // useEffect(() => {
+  //   setDailyAllowsStatusId("Verified");
+  // },[])
+  
+  const dailyallowsfiltered = dailyallowancesdata.filter((r)=>r.status === "Submitted" || r.status === "Verified");
 
   return (
     <div>
@@ -127,7 +138,7 @@ const EmployeeView = () => {
               title="Site Allowances pending for approval"
               handleClick={handleDailyAllowancesDialogOpen}
             >
-              <DailyAllowancesTableView />
+              <DailyAllowancesTableViewManager />
             </CardLayout3>
           </Grid>
 
@@ -193,9 +204,9 @@ const EmployeeView = () => {
           isFullscreen={true}
           isFullwidth={false}
         >
-          <DailyAllowancesTableAdmin
+          <DailyAllowancesTableManager
             setDailyAllowancesdata={setDailyAllowancesdata}
-            dailyallowancesdata={dailyallowancesdata}
+            dailyallowancesdata={dailyallowsfiltered}
             handleDialogClose={handleDailyAllowancesDialogClose}
           />
         </CustomDialog>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { useInstitutes } from "./institutes/useInstitutes";
@@ -6,19 +6,22 @@ import { useUpdateInstitutes } from "./institutes/useUpdateInstitutes";
 import { useDeleteInstitutes } from "./institutes/useDeleteInstitutes";
 import { useAddInstitutes } from "./institutes/useAddInstitutes";
 
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-  },
-];
-
 export default function UpdateInstitutes() {
   const classes = useStyles();
   const { institutes } = useInstitutes();
   const updateInstitutes = useUpdateInstitutes();
   const deleteInstitutes = useDeleteInstitutes();
   const addInstitutes = useAddInstitutes();
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+      },
+    ],
+    []
+  );
 
   const update_Institute = (data) => {
     const { id, rec_id, ...fields } = data;

@@ -1,49 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { Button, Icon, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useEmployeesContext } from "../context/employees_context";
 import { useTablesContext } from "../context/tables_context";
-
-const columns = [
-  {
-    title: "Company",
-    field: "company",
-  },
-  {
-    title: "Location",
-    field: "location",
-  },
-  {
-    title: "Position",
-    field: "position",
-  },
-  {
-    title: "From Date",
-    field: "from_date",
-    type: "date",
-    editComponent: (props) => (
-      <TextField
-        //defaultValue={props.value || new Date()}
-        onChange={(e) => props.onChange(e.target.value)}
-        type="date"
-      />
-    ),
-  },
-  {
-    title: "To Date",
-    field: "to_date",
-    type: "date",
-    editComponent: (props) => (
-      <TextField
-        //defaultValue={props.value || new Date()}
-        onChange={(e) => props.onChange(e.target.value)}
-        type="date"
-      />
-    ),
-  },
-  { title: "Remark", field: "remark" },
-];
 
 export default function EmpExperiencesStaff({
   experiencedata,
@@ -60,6 +20,46 @@ export default function EmpExperiencesStaff({
     updateExperience,
     singlebatch_experience_loading,
   } = useTablesContext();
+
+  const columns = useMemo(() => [
+    {
+      title: "Company",
+      field: "company",
+    },
+    {
+      title: "Location",
+      field: "location",
+    },
+    {
+      title: "Position",
+      field: "position",
+    },
+    {
+      title: "From Date",
+      field: "from_date",
+      type: "date",
+      editComponent: (props) => (
+        <TextField
+          //defaultValue={props.value || new Date()}
+          onChange={(e) => props.onChange(e.target.value)}
+          type="date"
+        />
+      ),
+    },
+    {
+      title: "To Date",
+      field: "to_date",
+      type: "date",
+      editComponent: (props) => (
+        <TextField
+          //defaultValue={props.value || new Date()}
+          onChange={(e) => props.onChange(e.target.value)}
+          type="date"
+        />
+      ),
+    },
+    { title: "Remark", field: "remark" },
+  ],[]);
 
   useEffect(() => {}, [experiencedata]);
 

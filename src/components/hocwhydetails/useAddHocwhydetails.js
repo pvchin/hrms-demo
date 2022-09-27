@@ -21,6 +21,12 @@ export function useAddHocwhydetails(data) {
         status: "success",
       });
     },
+    onError: () => {
+      toast({
+        title: "Network Error! Please check your internet connection!",
+        status: "warning",
+      });
+    },
   });
 
   return mutate;

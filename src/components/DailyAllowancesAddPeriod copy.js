@@ -58,19 +58,9 @@ const DailyAllowancesAddPeriod = ({ handleDialogClose }) => {
     });
   }, []);
 
-  // const periodExists = (data) => {
-  //   console.log('add period', data)
-  //   return dailyallows.some(function (el) {
-  //     return el.period === data && el.empid === loginLevel.loginUserId;
-  //   });
-  // };
-
   const periodExists = (data) => {
-    console.log("add period", data);
-    return dailyallows
-      .filter((r)=> r.period === data && r.empid === loginLevel.loginUserId)
-      .map(function (el) {
-      return el
+    return dailyallows.some(function (el) {
+      return el.period === data && el.empid === loginLevel.loginUserId;
     });
   };
 
@@ -79,7 +69,6 @@ const DailyAllowancesAddPeriod = ({ handleDialogClose }) => {
       input.fromdate.substring(0, 4) + "-" + input.fromdate.substring(5, 7);
 
     const isExist = periodExists(period);
-    console.log('exist', isExist)
     if (isExist) {
       toast({
         title: "Site Allowance period is existed!",

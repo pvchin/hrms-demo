@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
@@ -25,37 +25,12 @@ import { useUpdateDailyAllows } from "./dailyallows/useUpdateDailyAllows";
 
 //const FILTERSTRING = "Pending";
 
-const columns = [
-  // { title: "Period", field: "period" },
-  {
-    title: "Payrun Batch",
-    field: "payrun",
-    type: "date",
-    dateSetting: { locale: "en-GB" },
-  },
-  // {
-  //   title: "Pay Date",
-  //   field: "pay_date",
-  //   type: "date",
-  //   dateSetting: { locale: "en-GB" },
-  // },
-  { title: "Total Wages", field: "totalwages", type: "currency" },
-  { title: "TAP Amount", field: "totaltap", type: "currency" },
-  { title: "SCP Amount", field: "totalscp", type: "currency" },
-  { title: "Site Allowances", field: "totalsitesallows", type: "currency" },
-  { title: "Expenses Claims", field: "totalexpensesclaims", type: "currency" },
-  { title: "Total Allowances", field: "totalallows", type: "currency" },
-  { title: "Total Deductions", field: "totaldeducts", type: "currency" },
-  { title: "Total Payroll", field: "totalpayroll", type: "currency" },
-  { title: "Status", field: "status" },
-];
-
 export default function PayslipTable() {
   let navigate = useNavigate();
   const toast = useCustomToast();
   const classes = useStyles();
   const { payrun } = usePayrun();
-  const { payslipsbatch,  setPSBPayrunId } = usePayslipsBatch();
+  const { payslipsbatch, setPSBPayrunId } = usePayslipsBatch();
   const { expensespayrun, setExpPayrunId } = useExpensesPayrun();
   const { dailyallowspayrun, setDailyAllowsPayrunId } = useDailyAllowsPayrun();
   const updateExpenses = useUpdateExpenses();
@@ -90,6 +65,38 @@ export default function PayslipTable() {
     //pending_payslips,
     //loadPendingPayslips,
   } = usePayslipsContext();
+
+  const columns = useMemo(
+    () => [
+      // { title: "Period", field: "period" },
+      {
+        title: "Payrun Batch",
+        field: "payrun",
+        type: "date",
+        dateSetting: { locale: "en-GB" },
+      },
+      // {
+      //   title: "Pay Date",
+      //   field: "pay_date",
+      //   type: "date",
+      //   dateSetting: { locale: "en-GB" },
+      // },
+      { title: "Total Wages", field: "totalwages", type: "currency" },
+      { title: "TAP Amount", field: "totaltap", type: "currency" },
+      { title: "SCP Amount", field: "totalscp", type: "currency" },
+      { title: "Site Allowances", field: "totalsitesallows", type: "currency" },
+      {
+        title: "Expenses Claims",
+        field: "totalexpensesclaims",
+        type: "currency",
+      },
+      { title: "Total Allowances", field: "totalallows", type: "currency" },
+      { title: "Total Deductions", field: "totaldeducts", type: "currency" },
+      { title: "Total Payroll", field: "totalpayroll", type: "currency" },
+      { title: "Status", field: "status" },
+    ],
+    []
+  );
 
   useEffect(() => {
     setPSBPayrunId("XXX");
@@ -255,7 +262,7 @@ export default function PayslipTable() {
               },
             }),
             (rowData) => ({
-              disabled: rowData.status !== "Pending",
+              disabled: rowData.status === "Approved",
               icon: "delete",
               tooltip: "Delete Record",
               position: "row",

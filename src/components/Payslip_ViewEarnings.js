@@ -1,8 +1,8 @@
-import React, {  useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
-import {  useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import {
   payPeriodState,
   //payPeriodEndMonthState,
@@ -35,13 +35,16 @@ export default function Payslip_ViewEarnings({ setCalc }) {
   //const { allowances } = useTablesContext();
   //console.log("recoil", payPeriod, payPeriodEmpId);
 
-const columns = [
-  {
-    title: "Name",
-    field: "description",
-  },
-  { title: "Amount", field: "amount", type: "currency" },
-];
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "description",
+      },
+      { title: "Amount", field: "amount", type: "currency" },
+    ],
+    []
+  );
 
   useEffect(() => {
     getSingleBatchPayslipEarnings(payPeriodEmpId, payPeriod);

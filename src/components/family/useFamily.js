@@ -22,7 +22,7 @@ export function useFamily(empid) {
 
   const fallback = [];
   const { data: family = fallback } = useQuery(
-    [queryKeys.family, { familyId }],
+    [queryKeys.family, familyId ],
     () => getFamily(familyId),
     {
       select: filter !== "all" ? selectFn : undefined,

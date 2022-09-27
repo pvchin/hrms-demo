@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@chakra-ui/react";
@@ -27,19 +27,6 @@ import { useDailyAllowsPeriod } from "./dailyallows/useDailyAllowsPeriod";
 
 //const FILTERSTRING = "Submitted";
 
-const columns = [
-  {
-    title: "Name",
-    field: "name",
-  },
-  { title: "Period", field: "period" },
-  { title: "Location", field: "location" },
-  { title: "Manager", field: "manager_name" },
-  { title: "Days", field: "no_of_days", type: "numeric" },
-  { title: "Amount", field: "amount", type: "currency" },
-  { title: "Status", field: "status" },
-];
-
 export default function DailyAllowancesTable({ month, year }) {
   //let history = useHistory();
   const classes = useStyles();
@@ -67,19 +54,32 @@ export default function DailyAllowancesTable({ month, year }) {
   //   getSingleBatchDailyAllowance,
   // } = useDailyAllowancesContext();
 
+  const columns = useMemo(() => [
+    {
+      title: "Name",
+      field: "name",
+    },
+    { title: "Period", field: "period" },
+    { title: "Location", field: "location" },
+    { title: "Manager", field: "manager" },
+    { title: "Days", field: "no_of_days", type: "numeric" },
+    { title: "Amount", field: "amount", type: "currency" },
+    { title: "Status", field: "status" },
+  ],[]);
+
   useEffect(() => {
     setDailyAllowsPeriodId(period);
   }, []);
 
   //const handleDialogOpen = () => {
-    //console.log("allowsdetls", allowsdata, allowsdataRef, singlebatch_dailyallowsdetl);
-    //setAllowsdata({ singlebatch_dailyallowsdetl });
-    //setIsDialogOpen(true);
+  //console.log("allowsdetls", allowsdata, allowsdataRef, singlebatch_dailyallowsdetl);
+  //setAllowsdata({ singlebatch_dailyallowsdetl });
+  //setIsDialogOpen(true);
   //};
 
   //const handleDialogClose = () => {
-    //setIsDialogOpen(false);
-    //getSingleBatchDailyAllowance(dailyallowance_period);
+  //setIsDialogOpen(false);
+  //getSingleBatchDailyAllowance(dailyallowance_period);
   //};
 
   return (
