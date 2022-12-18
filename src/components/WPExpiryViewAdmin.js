@@ -71,6 +71,7 @@ const WPExpiryViewAdmin = () => {
   } = useEmployeesContext();
   const emp = employees.filter(
     (i) =>
+      !i.hasresigned  &&
       differenceInDays(new Date(i.workpermit_expirydate), new Date(today)) < 90
   );
   // const handleEmailButtonClick = () => {

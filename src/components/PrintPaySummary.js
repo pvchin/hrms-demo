@@ -1,4 +1,4 @@
-import pdfMake from "pdfmake/build/pdfmake";
+import pdfMake from "pdfmake/build/pdfmake.min";
 import vfsFonts from "pdfmake/build/vfs_fonts";
 import { formatPriceZero } from "../helpers/Utils";
 

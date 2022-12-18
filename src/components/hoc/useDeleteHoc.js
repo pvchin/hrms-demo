@@ -16,6 +16,7 @@ export function useDeleteHoc(data) {
   const { mutate } = useMutation((data) => deleteHoc(data), {
     onSuccess: () => {
       queryClient.invalidateQueries("hoc");
+      queryClient.invalidateQueries("hocperiod");
       toast({
         title: "Hoc record being deleted!",
         status: "warning",

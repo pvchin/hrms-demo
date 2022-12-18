@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Icon,
@@ -6,6 +6,7 @@ import {
   Paper,
   Typography,
   Divider,
+  MenuItem,
 } from "@material-ui/core";
 import * as emailjs from "emailjs-com";
 import { useRecoilState } from "recoil";
@@ -19,6 +20,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useAddLeaves } from "./leaves/useAddLeaves";
 //import { useDeleteLeaves } from "./leaves/useDeleteLeaves";
 import { useUpdateLeaves } from "./leaves/useUpdateLeaves";
+import { useLeavestypes } from "./leavestypes/useLeavestypes";
 
 const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICEID;
 const TEMPLATE_ID = "template_1y8odlq";
@@ -47,6 +49,7 @@ const LeaveForm = ({
   //const { leaves, filter, setFilter, setLeaveId } = useLeaves();
   const updateLeaves = useUpdateLeaves();
   const addLeaves = useAddLeaves();
+  const { leavestypes, setLeaveId } = useLeavestypes();
   //const [state, setState] = useState(initial_state);
   const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
   const { handleSubmit, control } = useForm();
@@ -108,6 +111,10 @@ const LeaveForm = ({
   //   setState({ ...formdata });
   //   console.log("laeve form",state)
   // }, [initialValues]);
+
+  // useEffect(() => {
+  //   setGroupId("Leaves");
+  // }, []);
 
   return (
     <div>
@@ -304,6 +311,46 @@ const LeaveForm = ({
               // rules={{ required: "Reason is required" }}
             />
           </div>
+          <div>
+            <Controller
+              name="leavetype"
+              control={control}
+              defaultValue={formdata.leavetype}
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => {
+                return (
+                  <TextField
+                    label="Type of Leave"
+                    id="margin-normal"
+                    name="leavetype"
+                    defaultValue={formdata.leavetype}
+                    className={classes.textField}
+                    onChange={onChange}
+                    error={!!error}
+                    helperText={error ? error.message : null}
+                    // InputProps={{
+                    //   readOnly: true,
+                    // }}
+                    select
+                  >
+                    {/* <MenuItem value="">None</MenuItem> */}
+                    {leavestypes
+                      .map((rec) => {
+                      return (
+                        <MenuItem value={rec.description}>
+                          {rec.description}
+                        </MenuItem>
+                      );
+                    })}
+                  </TextField>
+                );
+              }}
+              //rules={{ required: "Status is required" }}
+            />
+          </div>
+
           <div>
             <Controller
               name="status"

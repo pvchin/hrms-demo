@@ -18,6 +18,7 @@ export function useUpdateHoc(data) {
   const { mutate } = useMutation((data) => updateHoc(data), {
     onSuccess: () => {
       queryClient.invalidateQueries("hoc");
+      queryClient.invalidateQueries("hocperiod");
       toast({
         title: "Hoc record being updated!",
         status: "success",

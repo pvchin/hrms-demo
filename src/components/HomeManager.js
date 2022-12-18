@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 //import clsx from "clsx";
 //import dayjs from "dayjs";
+import { format } from "date-fns";
 import {
   Box,
   Button,
@@ -48,8 +49,9 @@ import {
 //import PayslipTableViewSummary from "./PayslipTableViewSummary";
 //import PayslipSummaryTableView from "./PayslipSummaryTableView";
 //import { useExpensesPeriod } from "./expenses/useExpensesPeriod";
+import { CustomDialog } from "../helpers/CustomDialog";
+import { HiOutlineFolderAdd } from "react-icons/hi";
 import { useHoc } from "./hoc/useHoc";
-
 
 const EmployeeTableLeaveView = React.lazy(() =>
   import("./EmployeeTableLeaveView")
@@ -68,6 +70,8 @@ const LeavesTableViewSummary = React.lazy(() =>
   import("./LeavesTableViewSummary")
 );
 const Export2ExcelDialog = React.lazy(() => import("./Export2ExcelDialog"));
+
+const HocForm = React.lazy(() => import("./HocForm"));
 
 const drawerWidth = 240;
 
@@ -90,6 +94,24 @@ const initial_expdata = [
   },
 ];
 
+const initial_hocform = {
+  findings: "",
+  category: "",
+  what: "",
+  what_details: "",
+  why: "",
+  why_details: "",
+  discussion: "No",
+  action: "",
+  isfollowup: "No",
+  isworkrelated: "No",
+  raisedby: "",
+  email: "",
+  raisedon: null,
+  company: "APPSMITH SUTERA",
+  location: " ",
+};
+
 const initial_exp2excel = {
   year: "",
   month: "",
@@ -108,15 +130,22 @@ const HomeManager = () => {
   const [selectsiteallowsyear, setSelectSiteAllowsYear] = useState("");
   const [selectpayrollyear, setSelectPayrollYear] = useState("");
   const [selecthocyear, setSelectHocYear] = useState("");
+  const [formdata, setFormdata] = useState(initial_hocform);
   const [exp2excelstate, setExp2excelstate] = useState(initial_exp2excel);
   const currentyear = new Date().getFullYear();
   const currentmonth = new Date().getMonth();
   const { hoc, filter, setFilter, setHocId } = useHoc();
- 
+
   const {
     isOpen: isExport2ExcelOpen,
     onOpen: onExport2ExcelOpen,
     onClose: onExport2ExcelClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isNewHOCOpen,
+    onOpen: onNewHOCOpen,
+    onClose: onNewHOCClose,
   } = useDisclosure();
 
   const handleExportHoc2Excel = () => {
@@ -133,13 +162,32 @@ const HomeManager = () => {
     onExport2ExcelOpen();
   };
 
+  const handleNewHOC = () => {
+    let today = format(new Date(), "yyyy-MM-dd");
+    //console.log("today", today);
+    setFormdata(
+      (prev) =>
+        (prev = {
+          ...initial_hocform,
+          //raisedby: loginLevel.loginUser,
+          //email: loginLevel.loginEmail,
+          company: "APPSMITHS SUTERA",
+          raisedon: today,
+        })
+    );
+    onNewHOCOpen();
+  };
+
+  const handleHOCDialogClose = () => {
+    console.log("hoc");
+  };
+
   useEffect(() => {
     setSelectLeaveYear(currentyear);
     setSelectExpenseYear(currentyear);
     setSelectSiteAllowsYear(currentyear);
     setSelectPayrollYear(currentyear);
     setSelectHocYear(currentyear);
-   
   }, []);
 
   return (
@@ -865,6 +913,16 @@ const HomeManager = () => {
                             Export To Excel
                           </Button>
                         </Box>
+                        <Box size="xl" py={2}>
+                          <Button
+                            leftIcon={<HiOutlineFolderAdd size="30" />}
+                            colorScheme="teal"
+                            variant="solid"
+                            onClick={() => handleNewHOC()}
+                          >
+                            New HOC
+                          </Button>
+                        </Box>
                       </HStack>
                     </Box>
                   </HStack>
@@ -997,6 +1055,22 @@ const HomeManager = () => {
             </ModalBody>
           </ModalContent>
         </Modal>
+        <CustomDialog
+          isOpen={isNewHOCOpen}
+          handleClose={onNewHOCClose}
+          title=""
+          showButton={true}
+          isFullscreen={false}
+          isFullwidth={false}
+          isEditId=""
+        >
+          <HocForm
+            formdata={formdata}
+            setFormdata={setFormdata}
+            handleDialogClose={onNewHOCClose}
+            isNew={true}
+          />
+        </CustomDialog>
       </Box>
     </Container>
     // </div>

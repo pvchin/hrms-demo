@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState,  useMemo } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
@@ -14,7 +14,7 @@ import {
   empidState,
 } from "./data/atomdata";
 //import { fetchDailyAllowancesSelector } from "./data/selectordata";
-import { useCustomToast } from "../helpers/useCustomToast";
+//import { useCustomToast } from "../helpers/useCustomToast";
 import AddIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -25,7 +25,7 @@ import { CustomDialog } from "../helpers/CustomDialog";
 import { useDailyAllowancesContext } from "../context/dailyallowances_context";
 //import { useEmployeesContext } from "../context/employees_context";
 import DailyAllowsDetlsTable from "./DailyAllowsDetlsTable";
-import { useDailyAllows } from "./dailyallows/useDailyAllows";
+//import { useDailyAllows } from "./dailyallows/useDailyAllows";
 
 export default function DailyAllowancesTable() {
   let navigate = useNavigate();

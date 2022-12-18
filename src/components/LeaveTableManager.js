@@ -17,6 +17,7 @@ import { AlertDialogBox } from "../helpers/AlertDialogBox";
 import { useLeavesContext } from "../context/leaves_context";
 import { useEmployeesContext } from "../context/employees_context";
 import { useEmployees } from "./employees/useEmployees";
+import { useLeaves } from "./leaves/useLeaves";
 
 const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICEID;
 const TEMPLATE_ID = "template_1y8odlq";
@@ -24,7 +25,7 @@ const USER_ID = process.env.REACT_APP_EMAILJS_USERID;
 const ADMINMANAGER_EMAIL = process.env.ADMINMANAGER_EMAIL;
 
 export default function LeaveTable({
-  leavesdata,
+  //leavesdata,
   //setLeavesdata,
   handleDialogClose,
 }) {
@@ -34,6 +35,7 @@ export default function LeaveTable({
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const { employees } = useEmployees();
+  const { leaves } = useLeaves();
   const {
     editLeaveID,
     updateLeave,
@@ -42,6 +44,7 @@ export default function LeaveTable({
     update_leave_error,
   } = useLeavesContext();
 
+  const leavesdata = leaves.filter((r)=>r.status === "Pending")
   const { updateEmployee } = useEmployeesContext();
 
   const columns = useMemo(

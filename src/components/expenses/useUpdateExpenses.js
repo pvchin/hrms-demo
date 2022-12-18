@@ -18,6 +18,8 @@ export function useUpdateExpenses(data) {
   const { mutate } = useMutation((data) => updateExpenses(data), {
     onSuccess: () => {
       queryClient.invalidateQueries("expenses");
+      queryClient.invalidateQueries("expensesperiod");
+       queryClient.invalidateQueries("expensesstatus");
       toast({
         title: "Expense record being updated!",
         status: "success",

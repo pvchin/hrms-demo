@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 //import clsx from "clsx";
-import { Grid,  Container, Box } from "@material-ui/core";
+import { Grid, Container, Box } from "@material-ui/core";
+import { useDisclosure } from "@chakra-ui/react";
 //import CardLayout from "../helpers/CardLayout";
 //import CardLayout2 from "../helpers/CardLayout2";
 import CardLayout3 from "../helpers/CardLayout3";
@@ -25,14 +26,23 @@ import { useDailyAllowancesContext } from "../context/dailyallowances_context";
 //import WPExpiryView from "./WPExpiryView";
 import { useDailyAllowsStatus } from "./dailyallows/useDailyAllowsStatus";
 
-const LeaveTableViewManager = React.lazy(() => import("./LeaveTableViewManager"));
+const LeaveTableViewManager = React.lazy(() =>
+  import("./LeaveTableViewManager")
+);
 const LeaveTableManager = React.lazy(() => import("./LeaveTableManager"));
 const ExpenseTableView = React.lazy(() => import("./ExpenseTableView"));
 const ExpenseTableManager = React.lazy(() => import("./ExpenseTableManager"));
-const PayslipTableViewManager = React.lazy(() => import("./PayslipTableViewManager"));
+const PayslipTableViewManager = React.lazy(() =>
+  import("./PayslipTableViewManager")
+);
 const PayslipTableAdmin = React.lazy(() => import("./PayslipTableAdmin"));
-const DailyAllowancesTableViewManager = React.lazy(() => import("./DailyAllowancesTableViewManager"));
-const DailyAllowancesTableManager = React.lazy(() => import("./DailyAllowancesTableManager"));
+const DailyAllowancesTableViewManager = React.lazy(() =>
+  import("./DailyAllowancesTableViewManager")
+);
+const DailyAllowancesTableManager = React.lazy(() =>
+  import("./DailyAllowancesTableManager")
+);
+
 
 const drawerWidth = 240;
 
@@ -54,9 +64,9 @@ const EmployeeView = () => {
   const { dailyallowsstatus, setDailyAllowsStatusId } = useDailyAllowsStatus();
   const { leaves, loadPendingLeaves } = useLeavesContext();
   const { expenses, loadPendingExpenses } = useExpensesContext();
-  const {  loadPendingPayslips } = usePayslipsContext();
-  const {  loadPendingDailyAllowances } =
-    useDailyAllowancesContext();
+  const { loadPendingPayslips } = usePayslipsContext();
+  const { loadPendingDailyAllowances } = useDailyAllowancesContext();
+ 
 
   const handleLeaveDialogOpen = () => {
     setLeavesdata([]);
@@ -71,7 +81,8 @@ const EmployeeView = () => {
 
   const handleExpenseDialogOpen = () => {
     setExpensesdata([]);
-    setExpensesdata([...expenses]);
+    setExpensesdata({ ...expenses });
+    setExpensesdata({ ...expenses });
     setIsExpenseDialogOpen(true);
   };
 
@@ -105,8 +116,10 @@ const EmployeeView = () => {
   // useEffect(() => {
   //   setDailyAllowsStatusId("Verified");
   // },[])
-  
-  const dailyallowsfiltered = dailyallowancesdata.filter((r)=>r.status === "Submitted" || r.status === "Verified");
+
+  const dailyallowsfiltered = dailyallowancesdata.filter(
+    (r) => r.status === "Submitted" || r.status === "Verified"
+  );
 
   return (
     <div>
@@ -164,7 +177,7 @@ const EmployeeView = () => {
         >
           <LeaveTableManager
             setLeavesdata={setLeavesdata}
-            leavesdata={leavesdata}
+            //leavesdata={leavesdata}
             handleDialogClose={handleLeaveDialogClose}
           />
         </CustomDialog>
@@ -178,7 +191,7 @@ const EmployeeView = () => {
         >
           <ExpenseTableManager
             setExpensesdata={setExpensesdata}
-            expensesdata={expensesdata}
+            //expensesdata={expensesdata}
             handleDialogClose={handleExpenseDialogClose}
           />
         </CustomDialog>

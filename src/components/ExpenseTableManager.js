@@ -18,6 +18,7 @@ import { useExpensesContext } from "../context/expenses_context";
 import { CustomDialog } from "../helpers/CustomDialog";
 import { AlertDialogBox } from "../helpers/AlertDialogBox";
 import { useEmployees } from "./employees/useEmployees";
+import { useExpenses } from "./expenses/useExpenses";
 
 const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICEID;
 const TEMPLATE_ID = "template_1y8odlq";
@@ -26,7 +27,6 @@ const ADMINMANAGER_EMAIL = process.env.ADMINMANAGER_EMAIL;
 const FILTERSTRING = "Pending";
 
 export default function ExpenseTable({
-  expensesdata,
   setExpensesdata,
   handleDialogClose,
 }) {
@@ -37,6 +37,7 @@ export default function ExpenseTable({
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const { employees } = useEmployees();
+  const { expenses } = useExpenses();
   const {
     editExpenseID,
     updateExpense,
@@ -45,6 +46,8 @@ export default function ExpenseTable({
     deleteExpense,
     loadPendingExpenses,
   } = useExpensesContext();
+
+  const expensesdata = expenses.filter((r)=>r.status === "Pending")
 
   const columns = useMemo(
     () => [

@@ -1,7 +1,9 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box } from "@chakra-ui/react";
+import { Box, useDisclosure } from "@chakra-ui/react";
+import { GrTask } from "react-icons/gr";
+import { useRecoilState } from "recoil";
 //import { useHistory } from "react-router-dom";
 //import { useSetRecoilState } from "recoil";
 import //payPeriodState,
@@ -9,18 +11,31 @@ import //payPeriodState,
 //payPeriodEmpIdState,
 "./data/atomdata";
 //import { usePayslipsContext } from "../context/payslips_context";
+import { CustomDialog } from "../helpers/CustomDialog";
 import { usePayrunStatus } from "./payrun/usePayrunStatus";
+import { loginLevelState } from "./data/atomdata";
+import { useUpdatePayrun } from "./payrun/useUpdatePayrun";
+import ApprovalManagerScreen from "./ApprovalManagerScreen";
 
 //const FILTERSTRING = "Pending";
 
 export default function PayslipTableVIew({ status }) {
   //let history = useHistory();
   const classes = useStyles();
+   const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
   //const setPayPeriodEmpId = useSetRecoilState(payPeriodEmpIdState);
   //const { payrun, getPayrun,payrun_loading, loadPendingPayslips } =
   //  usePayslipsContext();
   //const { loadEmployees, employees } = useEmployeesContext();
+  const updatePayrun = useUpdatePayrun()
   const { payrunstatus, setPayrunStatusId } = usePayrunStatus();
+  const [payrunID, setPayrunID] = useState("")
+  const [formdata, setFormdata] = useState({});
+  const {
+    isOpen: isAppScreenOpen,
+    onOpen: onAppScreenOpen,
+    onClose: onAppScreenClose,
+  } = useDisclosure();
 
   const columns = useMemo(
     () => [
@@ -54,6 +69,30 @@ export default function PayslipTableVIew({ status }) {
     []
   );
 
+  const Update_Payrun = (data) => {
+     const { id, rec_id, tableData, ...fields } = data;
+     const editData = { ...fields };
+
+     setFormdata({ ...editData });
+     setFormdata({ ...editData });
+     setPayrunID(id);
+     handleAppScreenOpen();
+  }
+
+  const handleAppScreenOpen = () => {
+    onAppScreenOpen();
+  };
+  const handleAppScreenClose = () => {
+    onAppScreenClose();
+  };
+
+   const handleOnUpdateConfirm = (data) => {
+     console.log("update", data);
+     const posted = data.status === "Delete" ? "D" : "";
+     const upddata = { ...data };
+     updatePayrun({ id: payrunID, ...upddata });
+  };
+  
   useEffect(() => {
     setPayrunStatusId(status);
   }, []);
@@ -65,6 +104,16 @@ export default function PayslipTableVIew({ status }) {
           columns={columns}
           data={payrunstatus}
           title="Payslips"
+          actions={[
+            (rowData) => ({
+              icon: () => <GrTask size="23px" />,
+              hidden: loginLevel.loginLevel !== "Manager",
+              tooltip: "Edit",
+              onClick: (event, rowData) => {
+                Update_Payrun(rowData);
+              },
+            }),
+          ]}
           options={{
             filtering: false,
             search: false,
@@ -78,6 +127,21 @@ export default function PayslipTableVIew({ status }) {
           }}
         />
       </Box>
+      <CustomDialog
+        isOpen={isAppScreenOpen}
+        handleClose={handleAppScreenClose}
+        title=""
+        showButton={true}
+        isFullscree={false}
+      >
+        <ApprovalManagerScreen
+          formdata={formdata}
+          setFormdata={setFormdata}
+          handleDialogClose={handleAppScreenClose}
+          onConfirm={handleOnUpdateConfirm}
+          tabIndex={3}
+        />
+      </CustomDialog>
     </div>
   );
 }

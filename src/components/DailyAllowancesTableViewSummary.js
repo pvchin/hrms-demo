@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useMemo } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box } from "@chakra-ui/react";
+import { Box, useDisclosure } from "@chakra-ui/react";
+import { GrTask } from "react-icons/gr";
 import {
   //useSetRecoilState,
   useRecoilValue,
-  //useRecoilState,
+  useRecoilState,
   //useRecoilValueLoadable,
 } from "recoil";
 import {
   allowsPeriodState,
+  loginLevelState,
   //allowsDataState,
   //empidState,
 } from "./data/atomdata";
@@ -23,13 +25,17 @@ import {
 //import { CustomDialog } from "../helpers/CustomDialog";
 //import { useDailyAllowancesContext } from "../context/dailyallowances_context";
 //import { useEmployeesContext } from "../context/employees_context";
+import { CustomDialog } from "../helpers/CustomDialog";
+import { useCustomToast } from "../helpers/useCustomToast";
 import { useDailyAllowsPeriod } from "./dailyallows/useDailyAllowsPeriod";
-
+import { useUpdateDailyAllows } from "./dailyallows/useUpdateDailyAllows";
+import ApprovalManagerScreen from "./ApprovalManagerScreen";
 //const FILTERSTRING = "Submitted";
 
 export default function DailyAllowancesTable({ month, year }) {
   //let history = useHistory();
   const classes = useStyles();
+  const toast = useCustomToast();
   const period = `${year}-${month}`;
 
   //const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -39,7 +45,16 @@ export default function DailyAllowancesTable({ month, year }) {
   //const [allowsdata, setAllowsdata] = useRecoilState(allowsDataState);
   //const setEmpID = useSetRecoilState(empidState);
   const title = `Site Allowances (${allows_period})`;
+  const updateDailyAllows = useUpdateDailyAllows();
+  const [formdata, setFormdata] = useState({});
+  const [editDailyAllowsID, setEditDailyAllowsID] = useState("");
+  const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
   const { dailyallowsperiod, setDailyAllowsPeriodId } = useDailyAllowsPeriod();
+  const {
+    isOpen: isAppScreenOpen,
+    onOpen: onAppScreenOpen,
+    onClose: onAppScreenClose,
+  } = useDisclosure();
   // const {
   //   dailyallowances,
   //   loadPendingDailyAllowances,
@@ -54,18 +69,51 @@ export default function DailyAllowancesTable({ month, year }) {
   //   getSingleBatchDailyAllowance,
   // } = useDailyAllowancesContext();
 
-  const columns = useMemo(() => [
-    {
-      title: "Name",
-      field: "name",
-    },
-    { title: "Period", field: "period" },
-    { title: "Location", field: "location" },
-    { title: "Manager", field: "manager" },
-    { title: "Days", field: "no_of_days", type: "numeric" },
-    { title: "Amount", field: "amount", type: "currency" },
-    { title: "Status", field: "status" },
-  ],[]);
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+      },
+      { title: "Period", field: "period" },
+      { title: "Location", field: "location" },
+      { title: "Manager", field: "manager" },
+      { title: "Days", field: "no_of_days", type: "numeric" },
+      { title: "Amount", field: "amount", type: "currency" },
+      { title: "Status", field: "status" },
+    ],
+    []
+  );
+
+  const Update_DailyAllows = (data) => {
+    //console.log("del data", data);
+    const { id, attachmentid, rec_id, tableData, ...fields } = data;
+    const editData = { ...fields };
+
+    setFormdata({ ...editData });
+    setFormdata({ ...editData });
+    setEditDailyAllowsID(id);
+    data.payrun
+      ? toast({
+          title: "This allowance has been paid. It can not be modified!",
+          status: "error",
+        })
+      : handleAppScreenOpen();
+  };
+
+  const handleAppScreenOpen = () => {
+    onAppScreenOpen();
+  };
+  const handleAppScreenClose = () => {
+    onAppScreenClose();
+  };
+
+  const handleOnUpdateConfirm = (data) => {
+    console.log("update", data);
+    const posted = data.status === "Delete" ? "D" : "";
+    const upddata = { ...data };
+    updateDailyAllows({ id: editDailyAllowsID, ...upddata });
+  };
 
   useEffect(() => {
     setDailyAllowsPeriodId(period);
@@ -89,6 +137,16 @@ export default function DailyAllowancesTable({ month, year }) {
           columns={columns}
           data={dailyallowsperiod}
           title={title}
+          actions={[
+            (rowData) => ({
+              icon: () => <GrTask size="23px" />,
+              hidden: loginLevel.loginLevel !== "Manager",
+              tooltip: "Edit",
+              onClick: (event, rowData) => {
+                Update_DailyAllows(rowData);
+              },
+            }),
+          ]}
           options={{
             filtering: false,
             search: false,
@@ -102,6 +160,21 @@ export default function DailyAllowancesTable({ month, year }) {
           }}
         />
       </Box>
+      <CustomDialog
+        isOpen={isAppScreenOpen}
+        handleClose={handleAppScreenClose}
+        title=""
+        showButton={true}
+        isFullscree={false}
+      >
+        <ApprovalManagerScreen
+          formdata={formdata}
+          setFormdata={setFormdata}
+          handleDialogClose={handleAppScreenClose}
+          onConfirm={handleOnUpdateConfirm}
+          tabIndex={2}
+        />
+      </CustomDialog>
     </div>
   );
 }

@@ -20,6 +20,7 @@ import DailyAllowances from "./DailyAllowancesPage";
 import DailyAllowancesStaff from "./DailyAllowancesStaffPage";
 import PrivateRoute from "./PrivateRoute";
 import Clients from "./ClientsPage";
+import HOCUpdTables from "./HOCUpdTablesPage";
 import Error from "./ErrorPage";
 
 export {
@@ -31,6 +32,7 @@ export {
   TrainingsStaff,
   Expenses,
   Hoc,
+  HOCUpdTables,
   ExpensesStaff,
   Payslip,
   PayslipStaff,

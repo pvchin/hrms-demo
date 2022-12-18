@@ -12,7 +12,7 @@ import { Loading } from "./components/app/Loading";
 //   deepOrange,
 // } from "@material-ui/core/colors";
 //import DashboardMain from "./components/DashboardMain";
-import Main from "./components/Main";
+//import Main from "./components/Main";
 import MainMenu from "./components/MainMenu";
 
 const App = () => {

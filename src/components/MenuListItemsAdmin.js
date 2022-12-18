@@ -1,28 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Text } from "@chakra-ui/react";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListSubheader from "@material-ui/core/ListSubheader";
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListSubheader,
+  Collapse,
+} from "@material-ui/core";
+//import ListItem from "@material-ui/core/ListItem";
+//import ListItemIcon from "@material-ui/core/ListItemIcon";
+//import ListItemText from "@material-ui/core/ListItemText";
+//import ListSubheader from "@material-ui/core/ListSubheader";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import FlightIcon from "@material-ui/icons/Flight";
+//import FlightIcon from "@material-ui/icons/Flight";
 import PeopleIcon from "@material-ui/icons/People";
 import LayersIcon from "@material-ui/icons/Layers";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
 
 const MenuListItems = () => {
   const classes = useStyles();
-  //const [openPay, setOpenPay] = useState(false);
-  //const [openTable, setOpenTable] = useState(false);
+  const [openPay, setOpenPay] = useState(false);
+  const [openTable, setOpenTable] = useState(false);
 
-  // const handleClickPay = () => {
-  //   setOpenPay(!openPay);
-  // };
+  const handleClickPay = () => {
+    setOpenPay(!openPay);
+  };
 
-  // const handleClickTable = () => {
-  //   setOpenTable(!openTable);
-  // };
+  const handleClickTable = () => {
+    setOpenTable(!openTable);
+  };
 
   return (
     <div className={classes.content}>
@@ -80,7 +90,7 @@ const MenuListItems = () => {
         </ListItem>
       </Link> */}
 
-      <Link to="/tables">
+      {/* <Link to="/tables">
         <ListItem button>
           <ListItemIcon className={classes.itemIcon}>
             <LayersIcon />
@@ -90,7 +100,7 @@ const MenuListItems = () => {
             className={classes.categoryHeaderPrimary}
           />
         </ListItem>
-      </Link>
+      </Link> */}
 
       {/* <Link to="/example">
         <ListItem button>
@@ -104,7 +114,7 @@ const MenuListItems = () => {
         </ListItem>
       </Link> */}
 
-      {/* <ListItem button onClick={handleClickTable}>
+      <ListItem button onClick={handleClickTable}>
         <ListItemIcon className={classes.itemIcon}>
           <LayersIcon />
         </ListItemIcon>
@@ -113,35 +123,23 @@ const MenuListItems = () => {
       </ListItem>
       <Collapse in={openTable} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <Link to="/clients">
+          <Link to="/tables">
             <ListItem button className={classes.nested}>
               <ListItemIcon></ListItemIcon>
-              <ListItemText primary="Clients" className={classes.item} />
+              <ListItemText primary="Tables" className={classes.item} />
             </ListItem>
           </Link>
 
-          <Link to="/departments">
+          <Link to="/hocupdtables">
             <ListItem button className={classes.nested}>
               <ListItemIcon></ListItemIcon>
-              <ListItemText primary="Departments" className={classes.item} />
+              <ListItemText primary="HOC Tables" className={classes.item} />
             </ListItem>
           </Link>
 
-          <Link to="/designation">
-            <ListItem button className={classes.nested}>
-              <ListItemIcon></ListItemIcon>
-              <ListItemText primary="Designation" className={classes.item} />
-            </ListItem>
-          </Link>
-
-          <Link to="/allowances">
-            <ListItem button className={classes.nested}>
-              <ListItemIcon></ListItemIcon>
-              <ListItemText primary="Allowances" className={classes.item} />
-            </ListItem>
-          </Link>
+       
         </List>
-      </Collapse> */}
+      </Collapse>
     </div>
   );
 };

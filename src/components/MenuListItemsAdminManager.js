@@ -23,15 +23,15 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 const MenuListItems = () => {
   const classes = useStyles();
   const [openPay, setOpenPay] = useState(false);
-  //const [openTable, setOpenTable] = useState(false);
+  const [openTable, setOpenTable] = useState(false);
 
   const handleClickPay = () => {
     setOpenPay(!openPay);
   };
 
-  // const handleClickTable = () => {
-  //   setOpenTable(!openTable);
-  // };
+  const handleClickTable = () => {
+     setOpenTable(!openTable);
+  };
 
   return (
     <div className={classes.content}>
@@ -137,17 +137,30 @@ const MenuListItems = () => {
           />
         </ListItem>
       </Link> */}
-      <Link to="/tables">
-        <ListItem button>
-          <ListItemIcon className={classes.itemIcon}>
-            <LayersIcon />
-          </ListItemIcon>
-          <ListItemText
-            primary="Tables"
-            className={classes.categoryHeaderPrimary}
-          />
-        </ListItem>
-      </Link>
+      <ListItem button onClick={handleClickTable}>
+        <ListItemIcon className={classes.itemIcon}>
+          <LayersIcon />
+        </ListItemIcon>
+        <ListItemText primary="Tables" className={classes.item} />
+        {openTable ? <ExpandLess /> : <ExpandMore />}
+      </ListItem>
+      <Collapse in={openTable} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <Link to="/tables">
+            <ListItem button className={classes.nested}>
+              <ListItemIcon></ListItemIcon>
+              <ListItemText primary="Tables" className={classes.item} />
+            </ListItem>
+          </Link>
+
+          <Link to="/hocupdtables">
+            <ListItem button className={classes.nested}>
+              <ListItemIcon></ListItemIcon>
+              <ListItemText primary="HOC Tables" className={classes.item} />
+            </ListItem>
+          </Link>
+        </List>
+      </Collapse>
 
       {/* <ListItem button onClick={handleClickTable}>
         <ListItemIcon className={classes.itemIcon}>

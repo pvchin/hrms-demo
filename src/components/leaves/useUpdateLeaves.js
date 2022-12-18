@@ -18,6 +18,9 @@ export function useUpdateLeaves(data) {
   const { mutate } = useMutation((data) => updateLeaves(data), {
     onSuccess: () => {
       queryClient.invalidateQueries("leaves");
+      queryClient.invalidateQueries("leavesperiod");
+      queryClient.invalidateQueries("leavesstatus");
+      queryClient.invalidateQueries("leavesperiodbymth");
       // toast({
       //   title: "Leave record being updated!",
       //   status: "success",

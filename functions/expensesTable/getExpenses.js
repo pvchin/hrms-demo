@@ -88,7 +88,7 @@ module.exports = async (event) => {
   }
 
   try {
-    const expenses = await table.select().firstPage();
+    const expenses = await table.select({ view: "sortedview" }).firstPage();
     const formattedExpenses = expenses.map((expense) => ({
       id: expense.id,
       ...expense.fields,

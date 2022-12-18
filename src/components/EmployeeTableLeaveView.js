@@ -26,7 +26,6 @@ export default function EmployeeTableLeaveView() {
   const { leavesperiod, setLeavePeriodYrId } = useLeavesPeriod();
   const [empdata, setEmpData] = useState([]);
   const [toBuild, setToBuild] = useState(true);
- 
 
   const {
     //editEmployeeID,
@@ -41,71 +40,82 @@ export default function EmployeeTableLeaveView() {
     //getSingleEmployee,
   } = useEmployeesContext();
 
-  const columns = useMemo(() => [
-    {
-      title: "Name",
-      field: "name",
-      cellStyle: {
-        width: 250,
-        maxWidth: 250,
+  const columns = useMemo(
+    () => [
+      {
+        title: "Name",
+        field: "name",
+        cellStyle: {
+          width: 250,
+          maxWidth: 250,
+        },
       },
-    },
-    // { title: "IC No", field: "ic_no" },
-    // { title: "Gender", field: "gender" },
-    { title: "Emp No", field: "empno" },
-    { title: "Designation", field: "designation" },
-    { title: "Department", field: "department" },
+      // { title: "IC No", field: "ic_no" },
+      // { title: "Gender", field: "gender" },
+      { title: "Emp No", field: "empno" },
+      { title: "Designation", field: "designation" },
+      // { title: "Department", field: "department" },
 
-    {
-      title: "Leave Entitled",
-      field: "leave_entitled",
-      type: "numeric",
-      cellStyle: {
-        width: 60,
+      {
+        title: "Leave Entitled",
+        field: "leave_entitled",
+        type: "numeric",
+        cellStyle: {
+          width: 60,
+        },
       },
-    },
-    {
-      title: "Leave C/F",
-      field: "leave_bf",
-      type: "numeric",
-      cellStyle: {
-        width: 60,
+      {
+        title: "Leave C/F",
+        field: "leave_bf",
+        type: "numeric",
+        cellStyle: {
+          width: 60,
+        },
       },
-    },
-    {
-      title: "Total Leave",
-      field: "leave_total",
-      type: "numeric",
-      cellStyle: {
-        width: 60,
+      {
+        title: "Total Leave",
+        field: "leave_total",
+        type: "numeric",
+        cellStyle: {
+          width: 60,
+        },
       },
-    },
-    {
-      title: "Leave Taken",
-      field: "leave_taken",
-      type: "numeric",
-      cellStyle: {
-        width: 60,
+      {
+        title: "Leave Taken",
+        field: "leave_taken",
+        type: "numeric",
+        cellStyle: {
+          width: 60,
+        },
       },
-    },
-    // {
-    //   title: "Leave Pending",
-    //   field: "leave_pending",
-    //   type: "numeric",
-    //   cellStyle: {
-    //     width: 60,
-    //   },
-    // },
-    {
-      title: "Leave Balance",
-      field: "leave_bal",
-      type: "numeric",
-      cellStyle: {
-        width: 60,
+      // {
+      //   title: "Leave Pending",
+      //   field: "leave_pending",
+      //   type: "numeric",
+      //   cellStyle: {
+      //     width: 60,
+      //   },
+      // },
+      {
+        title: "Leave Balance",
+        field: "leave_bal",
+        type: "numeric",
+        cellStyle: {
+          width: 60,
+        },
       },
-    },
-    // { title: "Email", field: "email" },
-  ],[]);
+      {
+        title: "Others",
+        field: "leave_others",
+        type: "numeric",
+        cellStyle: {
+          width: 60,
+        },
+      },
+      // { title: "Email", field: "email" },
+    ],
+    []
+  );
 
   const update_Employee = (data) => {
     const { id } = data;
@@ -145,7 +155,10 @@ export default function EmployeeTableLeaveView() {
 
           console.log("leavedata", YEAR, leavesdata);
           const leaveTaken = leavesdata.reduce((acc, item) => {
-            if (item.status === "Approved") {
+            if (
+              item.status === "Approved" &&
+              item.leavetype === "Annual Leave"
+            ) {
               return acc + item.no_of_days;
             } else {
               return acc;
@@ -153,6 +166,16 @@ export default function EmployeeTableLeaveView() {
           }, 0);
           const leavePending = leavesdata.reduce((acc, item) => {
             if (item.status === "Pending") {
+              return acc + item.no_of_days;
+            } else {
+              return acc;
+            }
+          }, 0);
+          const leaveOthers = leavesdata.reduce((acc, item) => {
+            if (
+              item.status === "Approved" &&
+              item.leavetype !== "Annual Leave"
+            ) {
               return acc + item.no_of_days;
             } else {
               return acc;
@@ -168,6 +191,7 @@ export default function EmployeeTableLeaveView() {
           emp[index].leave_total = leaveEntitled + leaveBf;
           emp[index].leave_taken = leaveTaken + leaveCd;
           emp[index].leave_pending = leavePending;
+          emp[index].leave_others = leaveOthers;
           emp[index].leave_bal = leaveEntitled + leaveBf - leaveCd - leaveTaken;
           setEmpData(emp);
         });

@@ -18,6 +18,9 @@ export function useUpdateDailyAllows(data) {
   const { mutate } = useMutation((data) => updateDailyAllows(data), {
     onSuccess: () => {
       queryClient.invalidateQueries("dailyallows");
+      queryClient.invalidateQueries("dailyallowspayrun");
+      queryClient.invalidateQueries("dailyallowsperiod");
+      queryClient.invalidateQueries("dailyallowsstatus");
       toast({
         title: "Site Allowance record being updated!",
         status: "success",

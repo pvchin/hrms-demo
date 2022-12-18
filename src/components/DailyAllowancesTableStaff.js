@@ -43,7 +43,7 @@ export default function DailyAllowancesTableStaff() {
   //const updateDailyAllows = useUpdateDailyAllows();
   const deleteDailyAllows = useDeleteDailyAllows();
   const deleteDailyAllowsDetls = useDeleteDailyAllowsDetls();
-  const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
+  const [loginLevel] = useRecoilState(loginLevelState);
   const [isAddPeriodDialogOpen, setIsAddPeriodDialogOpen] = useState(false);
   //const [tmpallowsdata, setTmpallowsdata] = useState([]);
   const [allowsdata, setAllowsdata] = useRecoilState(allowsDataState);

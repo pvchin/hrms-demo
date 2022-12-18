@@ -9,6 +9,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 //import { useExpensesContext } from "../context/expenses_context";
 import { Controller, useForm } from "react-hook-form";
 import { useCustomToast } from "../helpers/useCustomToast";
+import { useEmployees } from "./employees/useEmployees";
 import { useHoc } from "./hoc/useHoc";
 import { useAddHoc } from "./hoc/useAddHoc";
 //import { useDeleteHoc } from "./hoc/useDeleteHoc";
@@ -24,10 +25,17 @@ const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICEID;
 const TEMPLATE_ID = "template_1y8odlq";
 const USER_ID = process.env.REACT_APP_EMAILJS_USERID;
 
-const HocForm = ({ formdata, setFormdata, handleDialogClose, isEditId }) => {
+const HocForm = ({
+  formdata,
+  setFormdata,
+  handleDialogClose,
+  isEditId,
+  isNew,
+}) => {
   const classes = useStyles();
   const toast = useCustomToast();
   //const { hoc, filter, setFilter, setHocId } = useHoc();
+  const { employees } = useEmployees();
   const { hocwhat } = useHocwhat();
   const { hocwhatdetails, setHocwhatdetailsId } = useHocwhatdetails();
   const { hocwhy, setHocwhyId } = useHocwhy();
@@ -40,6 +48,9 @@ const HocForm = ({ formdata, setFormdata, handleDialogClose, isEditId }) => {
   const [category, setCategory] = useState("" || formdata.category);
   const [whatstatus, setWhatstatus] = useState("" || formdata.what);
   const [whystatus, setWhystatus] = useState("" || formdata.why);
+  const [useremail, setUserEmail] = useState("");
+
+  console.log("formdata", formdata);
 
   const { handleSubmit, control } = useForm({
     defaultValues: {
@@ -78,13 +89,20 @@ const HocForm = ({ formdata, setFormdata, handleDialogClose, isEditId }) => {
   const onSubmit = (data, e) => {
     e.preventDefault();
 
-    if (data.id) {
-      const { id, tableData, ...fields } = data;
-      updateHoc({ id, ...fields });
-    } else {
+    if (isNew) {
       const { tableData, ...fields } = data;
-      addHoc({ ...fields, empid: loginLevel.loginUserId });
-      //handleSentEmail(data);
+      const emp = employees.filter((r) => r.name === data.raisedby);
+      console.log("emp", emp);
+      addHoc({ ...fields, empid: emp[0].id, email: emp[0].email });
+    } else {
+      if (data.id) {
+        const { id, tableData, ...fields } = data;
+        updateHoc({ id, ...fields });
+      } else {
+        const { tableData, ...fields } = data;
+        addHoc({ ...fields, empid: loginLevel.loginUserId });
+        //handleSentEmail(data);
+      }
     }
 
     handleDialogClose();
@@ -104,9 +122,10 @@ const HocForm = ({ formdata, setFormdata, handleDialogClose, isEditId }) => {
 
   useEffect(() => {
     if (category === "Positive Act") {
-      setHocwhyId((prev) => (prev = "none"));
+      //setHocwhyId((prev) => (prev = "none"));
       setHocwhydetailsId((prev) => (prev = "none"));
     } else {
+      setHocwhyId((prev) => (prev = ""));
       setHocwhydetailsId((prev) => (prev = whystatus));
     }
   }, [whystatus, category]);
@@ -217,7 +236,6 @@ const HocForm = ({ formdata, setFormdata, handleDialogClose, isEditId }) => {
               rules={{ required: "Category is required" }}
             />
           </div>
-
           <div>
             <Controller
               name="what"
@@ -246,10 +264,18 @@ const HocForm = ({ formdata, setFormdata, handleDialogClose, isEditId }) => {
                     {hocwhat &&
                       hocwhat
                         .filter((r) => {
-                          if (category === "Positive Act") {
-                            return r.positiveact;
-                          } else {
-                            return r.unsafeact;
+                          // if (category === "Positive Act") {
+                          //   return r.positiveact;
+                          // } else {
+                          //   return r.unsafeact;
+                          // }
+                          switch (category) {
+                            case "Positive Act":
+                              return r.positiveact;
+                            case "Quality":
+                              return r.quality;
+                            default:
+                              return r.unsafeact;
                           }
                         })
                         .map((rec) => {
@@ -291,10 +317,18 @@ const HocForm = ({ formdata, setFormdata, handleDialogClose, isEditId }) => {
                     {hocwhatdetails &&
                       hocwhatdetails
                         .filter((r) => {
-                          if (category === "Positive Act") {
-                            return r.positiveact;
-                          } else {
-                            return r.unsafeact;
+                          // if (category === "Positive Act") {
+                          //   return r.positiveact;
+                          // } else {
+                          //   return r.unsafeact;
+                          // }
+                          switch (category) {
+                            case "Positive Act":
+                              return r.positiveact;
+                            case "Quality":
+                              return r.quality;
+                            default:
+                              return r.unsafeact;
                           }
                         })
                         .map((rec) => {
@@ -339,7 +373,16 @@ const HocForm = ({ formdata, setFormdata, handleDialogClose, isEditId }) => {
                     <MenuItem value="">None</MenuItem>
                     {hocwhy &&
                       hocwhy
-                        //.filter((r) => category === "Positive Art")
+                        .filter((r) => {
+                          switch (category) {
+                            case "Positive Act":
+                              return r.positiveact;
+                            case "Quality":
+                              return r.quality;
+                            default:
+                              return r.unsafeact;
+                          }
+                        })
                         .map((rec) => {
                           return (
                             <MenuItem key={rec.id} value={rec.description}>
@@ -503,32 +546,77 @@ const HocForm = ({ formdata, setFormdata, handleDialogClose, isEditId }) => {
               //rules={{ required: "Status is required" }}
             />
           </div>
-          <div>
-            <Controller
-              name="raisedby"
-              control={control}
-              defaultValue={formdata.raisedby}
-              render={({
-                field: { onChange, value },
-                fieldState: { error },
-              }) => {
-                return (
-                  <TextField
-                    label="Raised By"
-                    id="margin-raisedby"
-                    name="raisedby"
-                    defaultValue={formdata.raisedby}
-                    className={classes.textField}
-                    onChange={onChange}
-                    error={!!error}
-                    helperText={error ? error.message : null}
-                    inputProps={{ readOnly: true }}
-                  ></TextField>
-                );
-              }}
-              //rules={{ required: "Status is required" }}
-            />
-          </div>
+          {formdata.raisedby ? (
+            <div>
+              <Controller
+                name="raisedby"
+                control={control}
+                defaultValue={formdata.raisedby}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => {
+                  return (
+                    <TextField
+                      label="Raised By"
+                      id="margin-raisedby"
+                      name="raisedby"
+                      defaultValue={formdata.raisedby}
+                      className={classes.textField}
+                      onChange={onChange}
+                      error={!!error}
+                      helperText={error ? error.message : null}
+                      inputProps={{ readOnly: true }}
+                    ></TextField>
+                  );
+                }}
+                //rules={{ required: "Status is required" }}
+              />
+            </div>
+          ) : (
+            <div>
+              <Controller
+                name="raisedby"
+                control={control}
+                defaultValue={formdata.raisedby}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => {
+                  return (
+                    <TextField
+                      label="Raised By"
+                      id="margin-raisedby"
+                      name="raisedby"
+                      defaultValue={formdata.raisedby}
+                      className={classes.textField}
+                      onChange={onChange}
+                      error={!!error}
+                      helperText={error ? error.message : null}
+                      //inputProps={{ readOnly: true }}
+                      select
+                    >
+                      <MenuItem value="">None</MenuItem>
+                      {employees &&
+                        employees
+                          .filter((r) => !r.hasresigned)
+                          .sort((a, b) =>
+                            a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+                          )
+                          .map((rec) => {
+                            return (
+                              <MenuItem key={rec.id} value={rec.name}>
+                                {rec.name}
+                              </MenuItem>
+                            );
+                          })}
+                    </TextField>
+                  );
+                }}
+                //rules={{ required: "Status is required" }}
+              />
+            </div>
+          )}
           <div>
             <Controller
               name="raisedon"

@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useRecoilState } from "recoil";
 import { loginLevelState } from "./data/atomdata";
 import { useLeavesContext } from "../context/leaves_context";
+import { useLeaves } from "./leaves/useLeaves";
 //import { useEmployeesContext } from "../context/employees_context";
 
 const FILTERSTRING = "Pending";
@@ -13,21 +14,22 @@ export default function LeaveTableView() {
   const classes = useStyles();
   //const [isDialogOpen, setIsDialogOpen] = useState(false);
   //const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const { leaves} = useLeaves()
   const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
   //const { loadEmployees } = useEmployeesContext();
-  const {
-    leaves,
-    //leaves_error,
-    //editLeaveID,
-    //leaves_loading,
-    //deleteLeave,
-    loadPendingLeaves,
-    //getSingleLeave,
-    //setEditLeaveID,
-    //setIsLeaveEditingOn,
-    //setIsLeaveEditingOff,
-    //resetSingleLeave,
-  } = useLeavesContext();
+  // const {
+  //   leaves,
+  //   leaves_error,
+  //   editLeaveID,
+  //   leaves_loading,
+  //   deleteLeave,
+  //   loadPendingLeaves,
+  //   getSingleLeave,
+  //   setEditLeaveID,
+  //   setIsLeaveEditingOn,
+  //   setIsLeaveEditingOff,
+  //   resetSingleLeave,
+  // } = useLeavesContext();
 
   const columns = useMemo(
     () => [
@@ -73,9 +75,9 @@ export default function LeaveTableView() {
     []
   );
 
-  useEffect(() => {
-    loadPendingLeaves(FILTERSTRING);
-  }, []);
+  // useEffect(() => {
+  //   loadPendingLeaves(FILTERSTRING);
+  // }, []);
 
   // const handleDialogOpen = () => {
   //   setIsDialogOpen(true);
@@ -110,7 +112,7 @@ export default function LeaveTableView() {
           // data={leaves.filter(
           //   (r) => r.reporting_email === loginLevel.loginEmail
           // )}
-          data={leaves}
+          data={leaves.filter((r)=>r.status === "Pending")}
           title="Leave Application"
           options={{
             filtering: false,

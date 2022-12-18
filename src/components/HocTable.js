@@ -63,7 +63,6 @@ const initial_form = {
   raisedon: null,
   company: "APPSMITH SUTERA",
   location: " ",
-  department: "",
 };
 
 export default function HocTable({ year, month }) {
@@ -351,6 +350,7 @@ export default function HocTable({ year, month }) {
             formdata={formdata}
             setFormdata={setFormdata}
             handleDialogClose={handleDialogClose}
+            isNew={false}
           />
         </CustomDialog>
 

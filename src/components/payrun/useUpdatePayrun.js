@@ -18,6 +18,7 @@ export function useUpdatePayrun(data) {
   const { mutate } = useMutation((data) => updatePayrun(data), {
     onSuccess: () => {
       queryClient.invalidateQueries("payrun");
+       queryClient.invalidateQueries("payrunstatus");
       toast({
         title: "Payrun batch being updated!",
         status: "success",

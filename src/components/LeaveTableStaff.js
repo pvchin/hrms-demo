@@ -35,6 +35,7 @@ const initial_form = {
   to_date: "",
   from_date: "",
   reason: "",
+  leavetype: "Annual Leave",
   status: "Pending",
   no_of_days: 0,
   leave_bal: 0,
@@ -137,6 +138,11 @@ export default function LeaveTableStaff() {
         editable: "never",
       },
       {
+        title: "Type of Leaves",
+        field: "leavetype",
+        editable: "never",
+      },
+      {
         title: "Status",
         field: "status",
         editComponent: (props) => (
@@ -185,7 +191,7 @@ export default function LeaveTableStaff() {
     // );
     const { leave_bf, leave_entitled, leave_cd } = loginLevel;
     const leaveTaken = leaves.reduce((acc, item) => {
-      if (item.status === "Approved") {
+      if (item.status === "Approved" && item.leavetype === "Annual Leave") {
         return acc + item.no_of_days;
       } else {
         return acc;
@@ -198,6 +204,13 @@ export default function LeaveTableStaff() {
         return acc;
       }
     }, 0);
+     const leaveOthers = leaves.reduce((acc, item) => {
+       if (item.status === "Approved" && item.leavetype !== "Annual Leave") {
+         return acc + item.no_of_days;
+       } else {
+         return acc;
+       }
+     }, 0);
     const leaveEntitled = isNaN(leave_entitled) ? 0 : leave_entitled;
     const leaveBf = isNaN(leave_bf) ? 0 : leave_bf;
     const leaveCd = isNaN(leave_cd) ? 0 : leave_cd;
@@ -211,6 +224,7 @@ export default function LeaveTableStaff() {
       leave_taken: leaveTaken + leaveCd,
       leave_pending: leavePending,
       leave_bal: bal,
+      leave_others: leaveOthers,
     };
     setLeaveState((prev) => (prev = rec));
     //console.log("leavestate", leavestate)
@@ -298,41 +312,46 @@ export default function LeaveTableStaff() {
       <Box>
         <Grid
           p={1}
-          h="100px"
-          templateRows="repeat(2, 1fr)"
-          templateColumns="repeat(12, 1fr)"
-          gap={6}
+          h="120px"
+          //templateRows="repeat(2, 1fr)"
+          templateColumns="repeat(14, 1fr)"
+          gap={2}
           border="1px solid blue"
           bg="gray.200"
         >
           <GridItem colSpan={2} align="center">
-            <Heading pt={3} size="xs">
+            <Heading pt={2} size="xs">
               Leave Entitlement
             </Heading>
           </GridItem>
           <GridItem colSpan={2} align="center">
-            <Heading pt={3} size="xs">
+            <Heading pt={2} size="xs">
               Leave Carried Forward
             </Heading>
           </GridItem>
           <GridItem colSpan={2} align="center">
-            <Heading pt={3} size="xs">
+            <Heading pt={2} size="xs">
               Total Leaves Days
             </Heading>
           </GridItem>
           <GridItem colSpan={2} align="center">
-            <Heading pt={3} size="xs">
+            <Heading pt={2} size="xs">
               Leave Taken
             </Heading>
           </GridItem>
           <GridItem colSpan={2} align="center">
-            <Heading pt={3} size="xs">
+            <Heading pt={2} size="xs">
               Leave Pending
             </Heading>
           </GridItem>
           <GridItem colSpan={2} align="center">
-            <Heading pt={3} size="xs">
+            <Heading pt={2} size="xs">
               Balance Leave Days
+            </Heading>
+          </GridItem>
+          <GridItem colSpan={2} align="center">
+            <Heading pt={2} size="xs">
+              Others
             </Heading>
           </GridItem>
 
@@ -360,6 +379,11 @@ export default function LeaveTableStaff() {
           <GridItem colSpan={2} bg="white" align="center">
             <Text fontSize="20">
               {selectleaveyear === currentyear ? leavestate.leave_bal : 0}
+            </Text>
+          </GridItem>
+          <GridItem colSpan={2} bg="white" align="center">
+            <Text fontSize="20">
+              {selectleaveyear === currentyear ? leavestate.leave_others : 0}
             </Text>
           </GridItem>
         </Grid>

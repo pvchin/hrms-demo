@@ -1,19 +1,21 @@
 import React, { useEffect, useMemo } from "react";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
+
 //import {
 //payPeriodState,
 //payPeriodEndMonthState,
 //payPeriodEmpIdState,
 //} from "./data/atomdata";
 import { usePayslipsContext } from "../context/payslips_context";
+import { loginLevelState } from "./data/atomdata";
+import ApprovalManagerScreen from "./ApprovalManagerScreen";
 
 const FILTERSTRING = "Verified";
 
 export default function PayslipTableVIew() {
   //et history = useHistory();
   const classes = useStyles();
-
   const {
     batchpayrun,
     getBatchPayrun,
@@ -104,6 +106,7 @@ export default function PayslipTableVIew() {
           columns={columns}
           data={batchpayrun}
           title="Payslips"
+       
           options={{
             filtering: false,
             search: false,

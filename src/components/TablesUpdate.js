@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  
-  Divider,
-  Grid,
-  
-} from "@material-ui/core";
+import { Divider, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 //import { useHistory } from "react-router-dom";
 
@@ -21,11 +16,12 @@ import UpdateDepartments from "./DepartmentsTable";
 import UpdateDesignations from "./DesignationsTable";
 import UpdateInstitutes from "./InstitutesTable";
 import UpdateCurrency from "./CurrencyTable";
+import UpdateGroups from "./GroupsTable";
+import UpdateLeavestype from "./LeavestypesTable"
 
 const TablesUpdate = () => {
-  
   const classes = useStyles();
-  
+
   return (
     <div>
       <Grid container alignItems="center" className={classes.grid}>
@@ -52,6 +48,9 @@ const TablesUpdate = () => {
         </Grid>
         <Grid xs={12}>
           <UpdateCurrency />
+        </Grid>
+        <Grid xs={12}>
+          <UpdateLeavestype />
         </Grid>
       </Grid>
     </div>

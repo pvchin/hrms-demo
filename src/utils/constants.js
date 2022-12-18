@@ -1,7 +1,9 @@
-export const hrmsversion = "HRMS V2.2 - AppSmiths Sutera Sdn Bhd";
+export const hrmsversion = "HRMS V2.9 - AppSmiths Sutera Sdn Bhd";
 export const employees_url = "/api/employees";
 export const wpexpiry_url = "/api/wpexpiryview";
+export const groups_url = "/api/groups";
 export const leaves_url = "/api/leaves";
+export const leavestypes_url = "/api/leavestypes";
 export const onleaves_url = "/api/onleavesview";
 export const expenses_url = "/api/expenses";
 export const expensesattachments_url = "/api/expensesattachments";
