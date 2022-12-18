@@ -1,6 +1,9 @@
-import pdfMake from "pdfmake/build/pdfmake.min";
+import loadable from "@loadable/component"
+//import pdfMake from "pdfmake/build/pdfmake.min";
 import vfsFonts from "pdfmake/build/vfs_fonts";
 import { formatPriceZero } from "../helpers/Utils";
+
+const pdfMake = loadable.lib(()=> import('pdfmake/build/pdfmake.min'))
 
 const PrintPaySummary = ({ singlebatchpayslip }) => {
   const period = singlebatchpayslip[0].period;
