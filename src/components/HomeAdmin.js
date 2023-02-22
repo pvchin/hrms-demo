@@ -34,7 +34,7 @@ import { useLeavesContext } from "../context/leaves_context";
 import { useExpensesContext } from "../context/expenses_context";
 import { usePayslipsContext } from "../context/payslips_context";
 import { useDailyAllowancesContext } from "../context/dailyallowances_context";
-
+import { usePeriods } from "./periods/usePeriods";
 //import CardLayout from "../helpers/CardLayout";
 import CardLayout2 from "../helpers/CardLayout2";
 //import CardLayout3 from "../helpers/CardLayout3";
@@ -97,6 +97,7 @@ const EmployeeView = () => {
   const [selecthocyear, setSelectHocYear] = useState("");
   const currentyear = new Date().getFullYear();
   const currentmonth = new Date().getMonth();
+  const { periods} = usePeriods()
   const { hoc, filter, setFilter, setHocId } = useHoc();
   const {
     isOpen: isExport2ExcelOpen,
@@ -271,8 +272,13 @@ const EmployeeView = () => {
                                 setSelectLeaveYear(e.target.value)
                               }
                             >
-                              <option value="2021">2021</option>
-                              <option value="2022">2022</option>
+                              {periods.map((row) => {
+                                return (
+                                  <option key={row.period} value={row.period}>
+                                    {row.period}
+                                  </option>
+                                );
+                              })}
                             </Select>
                             {/* <Box size="xl" py={2}>
                               <Text fontSize="lg">
@@ -467,8 +473,13 @@ const EmployeeView = () => {
                               fontSize={20}
                               onChange={(e) => setSelectHocYear(e.target.value)}
                             >
-                              <option value="2021">2021</option>
-                              <option value="2022">2022</option>
+                              {periods.map((row) => {
+                                return (
+                                  <option key={row.period} value={row.period}>
+                                    {row.period}
+                                  </option>
+                                );
+                              })}
                             </Select>
                             <Box size="xl" py={2}>
                               <Button

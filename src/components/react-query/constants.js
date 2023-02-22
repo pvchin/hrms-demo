@@ -35,6 +35,7 @@ export const queryKeys = {
   user: "user",
   currency: "currency",
   hoc: "hoc",
+  hocall: "hocall",
   hocperiod: "hocperiod",
   hoclookup: "hoclookup",
   hoclocation: "hoclocation",
@@ -46,4 +47,5 @@ export const queryKeys = {
   yearendleavebal: "yearendleavebal",
   jobhistory: "jobhistory",
   jobstatus: "jobstatus",
+  periods: "periods",
 };

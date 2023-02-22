@@ -41,6 +41,7 @@ import {
   //Tabs,
 } from "@chakra-ui/react";
 import { useHocPeriod } from "./hoc/useHocPeriod";
+import { usePeriods } from "./periods/usePeriods";
 //import Export2Excel from "./Export2Excel";
 
 // const initial_state = {
@@ -50,7 +51,7 @@ import { useHocPeriod } from "./hoc/useHocPeriod";
 //   filename: "",
 //};
 
-const Export2Excel = React.lazy(()=> import("./Export2Excel"))
+const Export2Excel = React.lazy(() => import("./Export2Excel"));
 
 const months = [
   { name: "January", value: 1 },
@@ -71,7 +72,7 @@ const Export2ExcelDialog = ({ state, setState, dataset, onClose }) => {
   const field_width = "138";
   const [isLoad, setIsload] = useState(true);
   const { hocperiod, setHocPeriodYrId, setHocPeriodMthId } = useHocPeriod();
-  //console.log("expstate", state);
+  const { periods } = usePeriods();
 
   const handleChange = (evt) => {
     const value = evt.target.value;
@@ -177,8 +178,13 @@ const Export2ExcelDialog = ({ state, setState, dataset, onClose }) => {
                 //ref={ref}
                 //placeholder="category"
               >
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
+                {periods.map((row) => {
+                  return (
+                    <option key={row.period} value={row.period}>
+                      {row.period}
+                    </option>
+                  );
+                })}
               </Select>
             </HStack>
           </InputGroup>

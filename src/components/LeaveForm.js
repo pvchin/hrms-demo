@@ -276,7 +276,7 @@ const LeaveForm = ({
                     className={classes.textField}
                     //onChange={onChange}
                     onChange={(e) => {
-                      onChange(parseInt(e.target.value, 10));
+                      onChange(parseFloat(e.target.value, 10));
                     }}
                     error={!!error}
                     helperText={error ? error.message : null}
@@ -336,8 +336,7 @@ const LeaveForm = ({
                     select
                   >
                     {/* <MenuItem value="">None</MenuItem> */}
-                    {leavestypes
-                      .map((rec) => {
+                    {leavestypes.map((rec) => {
                       return (
                         <MenuItem value={rec.description}>
                           {rec.description}

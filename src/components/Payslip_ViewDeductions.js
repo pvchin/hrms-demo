@@ -11,7 +11,7 @@ import {
 import { usePayslipsContext } from "../context/payslips_context";
 //import { useTablesContext } from "../context/tables_context";
 
-export default function Payslip_ViewDeductions() {
+export default function PayslipViewDeductions() {
   const classes = useStyles();
   const payPeriodEmpId = useRecoilValue(payPeriodEmpIdState);
   const payPeriod = useRecoilValue(payPeriodState);

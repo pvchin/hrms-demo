@@ -21,6 +21,7 @@ import DailyAllowancesStaff from "./DailyAllowancesStaffPage";
 import PrivateRoute from "./PrivateRoute";
 import Clients from "./ClientsPage";
 import HOCUpdTables from "./HOCUpdTablesPage";
+import LeavesBFTable from "./LeavesBFTablePage";
 import Error from "./ErrorPage";
 
 export {
@@ -44,6 +45,7 @@ export {
   Tables,
   DailyAllowances,
   DailyAllowancesStaff,
+  LeavesBFTable,
   Clients,
   Allowances,
   PrivateRoute,

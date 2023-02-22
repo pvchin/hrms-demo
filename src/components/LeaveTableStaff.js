@@ -29,6 +29,7 @@ import { useLeaves } from "./leaves/useLeaves";
 import { useDeleteLeaves } from "./leaves/useDeleteLeaves";
 //import { useUpdateLeaves } from "./leaves/useUpdateLeaves";
 //import { useSingleEmployee } from "./employees/useSingleEmployee";
+import { usePeriods } from "./periods/usePeriods";
 
 const initial_form = {
   name: "",
@@ -74,6 +75,7 @@ export default function LeaveTableStaff() {
   const classes = useStyles();
   //const { singleemployee, setSingleEmployeeId } = useSingleEmployee();
   const { leaves, setLeaveYr, setLeaveId } = useLeaves();
+  const { periods } = usePeriods();
   //const updateLeaves = useUpdateLeaves();
   //const addLeaves = useAddLeaves();
   const deleteLeaves = useDeleteLeaves();
@@ -204,13 +206,13 @@ export default function LeaveTableStaff() {
         return acc;
       }
     }, 0);
-     const leaveOthers = leaves.reduce((acc, item) => {
-       if (item.status === "Approved" && item.leavetype !== "Annual Leave") {
-         return acc + item.no_of_days;
-       } else {
-         return acc;
-       }
-     }, 0);
+    const leaveOthers = leaves.reduce((acc, item) => {
+      if (item.status === "Approved" && item.leavetype !== "Annual Leave") {
+        return acc + item.no_of_days;
+      } else {
+        return acc;
+      }
+    }, 0);
     const leaveEntitled = isNaN(leave_entitled) ? 0 : leave_entitled;
     const leaveBf = isNaN(leave_bf) ? 0 : leave_bf;
     const leaveCd = isNaN(leave_cd) ? 0 : leave_cd;
@@ -304,8 +306,13 @@ export default function LeaveTableStaff() {
             maxWidth={100}
             onChange={(e) => UpdateLeaveYear(e)}
           >
-            <option value={2021}>2021</option>
-            <option value={2022}>2022</option>
+            {periods.map((row) => {
+              return (
+                <option key={row.period} value={row.period}>
+                  {row.period}
+                </option>
+              );
+            })}
           </Select>
         </HStack>
       </Box>

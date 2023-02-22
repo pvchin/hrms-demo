@@ -10,7 +10,7 @@ import {
 } from "./data/atomdata";
 import { usePayslipsContext } from "../context/payslips_context";
 
-export default function Payslip_ViewEarnings({ setCalc }) {
+const PayslipViewEarnings = ({ setCalc }) => {
   //let history = useHistory();
   //const [load, setLoad] = useState(true);
   const classes = useStyles();
@@ -91,10 +91,12 @@ export default function Payslip_ViewEarnings({ setCalc }) {
       </div>
     </div>
   );
-}
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: 0,
   },
 }));
+
+export default PayslipViewEarnings;

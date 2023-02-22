@@ -5,7 +5,7 @@ import {
   Box,
   Grid,
   GridItem,
-    Heading,
+  Heading,
   IconButton,
   Spacer,
   Stack,
@@ -26,6 +26,7 @@ const TrainingsTableViewAdmin = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   //const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const { employees } = useEmployees();
   const { trainings } = useTrainings();
   //const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
   const today = Date().toLocaleString();
@@ -48,6 +49,7 @@ const TrainingsTableViewAdmin = () => {
   // }, []);
 
   const handleOnClick = (id) => {
+    console.log("id", id)
     resetSingleEmployee();
     resetEmployees();
     setEditEmployeeID(id);
@@ -81,46 +83,56 @@ const TrainingsTableViewAdmin = () => {
               differenceInDays(new Date(today), new Date(i.expiry_date)) < 0
           )
           .map((row) => {
-            return (
-              <Grid templateColumns="repeat(13, 1fr)" gap={3} p={1}>
-                <GridItem colSpan={1}>
-                  <Box w="100%">
-                    <IconButton
-                      size="sm"
-                      aria-label="Edit"
-                      icon={<ViewIcon />}
-                      onClick={() => handleOnClick(row.empid)}
-                    />
-                  </Box>
-                </GridItem>
-                <GridItem colSpan={3}>
-                  <Box w="100%">{row.name}</Box>
-                </GridItem>
-                <GridItem colSpan={3}>
-                  <Box w="100%">{row.course}</Box>
-                </GridItem>
-                <GridItem colSpan={3}>
-                  <Box w="100%">{row.institute}</Box>
-                </GridItem>
-                <GridItem colSpan={3}>
-                  <Box w="100%">{row.expiry_date}</Box>
-                </GridItem>
-              </Grid>
-              // <ListItem key={row.id}>
-              //   <Grid item sm={3} align="center">
-              //     <ListItemText>{row.name}</ListItemText>
-              //   </Grid>
-              //   <Grid item sm={3} align="center">
-              //     <ListItemText>{row.institute}</ListItemText>
-              //   </Grid>
-              //   <Grid item sm={3} align="center">
-              //     <ListItemText>{row.course}</ListItemText>
-              //   </Grid>
-              //   <Grid item sm={3} align="center">
-              //     <ListItemText>{row.expiry_date}</ListItemText>
-              //   </Grid>
-              // </ListItem>
+            const emp = employees.filter(
+              (r) => r.id === row.empid && !r.hasresigned
             );
+            if (emp.length > 0) {
+              return (
+                <Grid
+                  templateColumns="repeat(13, 1fr)"
+                  gap={3}
+                  p={1}
+                  key={row.id}
+                >
+                  <GridItem colSpan={1}>
+                    <Box w="100%">
+                      <IconButton
+                        size="sm"
+                        aria-label="Edit"
+                        icon={<ViewIcon />}
+                        onClick={() => handleOnClick(row.empid)}
+                      />
+                    </Box>
+                  </GridItem>
+                  <GridItem colSpan={3}>
+                    <Box w="100%">{row.name}</Box>
+                  </GridItem>
+                  <GridItem colSpan={3}>
+                    <Box w="100%">{row.course}</Box>
+                  </GridItem>
+                  <GridItem colSpan={3}>
+                    <Box w="100%">{row.institute}</Box>
+                  </GridItem>
+                  <GridItem colSpan={3}>
+                    <Box w="100%">{row.expiry_date}</Box>
+                  </GridItem>
+                </Grid>
+                // <ListItem key={row.id}>
+                //   <Grid item sm={3} align="center">
+                //     <ListItemText>{row.name}</ListItemText>
+                //   </Grid>
+                //   <Grid item sm={3} align="center">
+                //     <ListItemText>{row.institute}</ListItemText>
+                //   </Grid>
+                //   <Grid item sm={3} align="center">
+                //     <ListItemText>{row.course}</ListItemText>
+                //   </Grid>
+                //   <Grid item sm={3} align="center">
+                //     <ListItemText>{row.expiry_date}</ListItemText>
+                //   </Grid>
+                // </ListItem>
+              );
+            }
           })}
       </Grid>
     </List>

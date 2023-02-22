@@ -25,6 +25,7 @@ import Copyright from "./Copyright";
 import { CustomDialog } from "../helpers/CustomDialog";
 //import { useRecoilState } from "recoil";
 //import { loginLevelState } from "./data/atomdata";
+import { usePeriods } from "./periods/usePeriods";
 import { useLeavesContext } from "../context/leaves_context";
 import { useExpensesContext } from "../context/expenses_context";
 import { usePayslipsContext } from "../context/payslips_context";
@@ -85,7 +86,7 @@ const EmployeeView = () => {
   const [dailyallowancesdata, setDailyAllowancesdata] = useState([]);
   const [isDailyAllowancesDialogOpen, setIsDailyAllowancesDialogOpen] =
     useState(false);
-
+  const { periods} = usePeriods()
   const {  loadPendingLeaves } = useLeavesContext();
   const {  loadPendingExpenses } = useExpensesContext();
   const {  loadPendingPayslips } = usePayslipsContext();
@@ -246,8 +247,13 @@ const EmployeeView = () => {
                                 setSelectLeaveYear(e.target.value)
                               }
                             >
-                              <option value="2021">2021</option>
-                              <option value="2022">2022</option>
+                              {periods.map((row) => {
+                                return (
+                                  <option key={row.period} value={row.period}>
+                                    {row.period}
+                                  </option>
+                                );
+                              })}
                             </Select>
                             {/* <Box size="xl" py={2}>
                               <Text fontSize="lg">
@@ -444,8 +450,13 @@ const EmployeeView = () => {
                                 setSelectSiteAllowsYear(e.target.value)
                               }
                             >
-                              <option value="2021">2021</option>
-                              <option value="2022">2022</option>
+                              {periods.map((row) => {
+                                return (
+                                  <option key={row.period} value={row.period}>
+                                    {row.period}
+                                  </option>
+                                );
+                              })}
                             </Select>
                             {/* <Box size="xl" py={2}>
                               <Text fontSize="lg">

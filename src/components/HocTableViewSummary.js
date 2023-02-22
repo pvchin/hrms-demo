@@ -11,13 +11,15 @@ import { Box } from "@chakra-ui/react";
 //import { CustomDialog } from "../helpers/CustomDialog";
 //import { AlertDialog } from "../helpers/AlertDialogBox";
 import { useHocPeriod } from "./hoc/useHocPeriod";
+import { useHocAll} from "./hoc/useHocAll"
 
 //const FILTERSTRING = "Pending";
 
 export default function HocTableViewSummary({ year, month }) {
   const classes = useStyles();
   const { hocperiod, setHocPeriodYrId, setHocPeriodMthId } = useHocPeriod();
-
+  const { hocall } = useHocAll()
+  
   const columns = useMemo(
     () => [
       {

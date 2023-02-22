@@ -1,4 +1,4 @@
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 //import clsx from "clsx";
 import {
@@ -24,12 +24,12 @@ const TrainingsTableViewStaff = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   //const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const { trainings,  setFilter } = useTrainings();
+  const { trainings, setTrainingId } = useTrainings();
   const [loginLevel, setLoginLevel] = useRecoilState(loginLevelState);
   const today = Date().toLocaleString();
 
   useEffect(() => {
-    setFilter(loginLevel.loginUserId);
+    setTrainingId(loginLevel.loginUserId);
   }, []);
 
   return (
@@ -54,22 +54,32 @@ const TrainingsTableViewStaff = () => {
         {trainings
           .filter(
             (i) =>
+              i.empid === loginLevel.loginUserId &&
               differenceInDays(new Date(i.expiry_date), new Date(today)) < 90 &&
               differenceInDays(new Date(today), new Date(i.expiry_date)) < 0
           )
-          .forEach((row) => {
+          .map((row) => {
             return (
-              <Grid templateColumns="repeat(9, 1fr)" gap={3} p={1}>
+              <Grid
+                templateColumns="repeat(12, 1fr)"
+                gap={3}
+                p={1}
+                key={row.id}
+              >
                 <GridItem colSpan={3}>
-                  <Box w="100%">{row.institute}</Box>
+                  <Box w="100%">{row.name}</Box>
                 </GridItem>
                 <GridItem colSpan={3}>
                   <Box w="100%">{row.course}</Box>
                 </GridItem>
                 <GridItem colSpan={3}>
+                  <Box w="100%">{row.institute}</Box>
+                </GridItem>
+                <GridItem colSpan={3}>
                   <Box w="100%">{row.expiry_date}</Box>
                 </GridItem>
               </Grid>
+
               // <ListItem key={row.id}>
               //   <Grid item sm={3} align="center">
               //     <ListItemText>{row.institute}</ListItemText>

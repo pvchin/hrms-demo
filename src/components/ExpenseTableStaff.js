@@ -61,6 +61,7 @@ export default function ExpenseTable() {
     setIsExpenseEditingOff,
   } = useExpensesContext();
 
+  
   const columns = useMemo(() => [
     { title: "Name", field: "name", editable: "never" },
     {

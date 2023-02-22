@@ -1,1 +1,0 @@
-export { EmployeeTableLeaveView as default } from "./EmployeeTableLeaveView";

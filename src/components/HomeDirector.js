@@ -40,6 +40,7 @@ import {
 //import PayslipSummaryTableView from "./PayslipSummaryTableView";
 //import LeavesTableApproval from "./LeaveTableApproval";
 //import { useExpensesPeriod } from "./expenses/useExpensesPeriod";
+import { usePeriods } from "./periods/usePeriods";
 const LeaveTableApproval = React.lazy(() => import("./LeaveTableApproval"));
 const EmployeeTableLeaveView = React.lazy(() =>
   import("./EmployeeTableLeaveView")
@@ -92,6 +93,7 @@ const HomeManager = () => {
    const [selecthocyear, setSelectHocYear] = useState("");
   const currentyear = new Date().getFullYear();
   const currentmonth = new Date().getMonth();
+  const { periods} = usePeriods()
 
   // const Build_ExpData = () => {
   //   const currentmonth = new Date().getMonth();
@@ -203,8 +205,13 @@ const HomeManager = () => {
                           fontSize={20}
                           onChange={(e) => setSelectLeaveYear(e.target.value)}
                         >
-                          <option value="2021">2021</option>
-                          <option value="2022">2022</option>
+                          {periods.map((row) => {
+                            return (
+                              <option key={row.period} value={row.period}>
+                                {row.period}
+                              </option>
+                            );
+                          })}
                         </Select>
                         {/* <Box size="xl" py={2}>
                           <Text fontSize="lg">
@@ -375,8 +382,13 @@ const HomeManager = () => {
                           fontSize={20}
                           onChange={(e) => setSelectExpenseYear(e.target.value)}
                         >
-                          <option value="2021">2021</option>
-                          <option value="2022">2022</option>
+                          {periods.map((row) => {
+                            return (
+                              <option key={row.period} value={row.period}>
+                                {row.period}
+                              </option>
+                            );
+                          })}
                         </Select>
                         {/* <Box size="xl" py={2}>
                           <Text fontSize="lg">
@@ -573,8 +585,13 @@ const HomeManager = () => {
                             setSelectSiteAllowsYear(e.target.value)
                           }
                         >
-                          <option value="2021">2021</option>
-                          <option value="2022">2022</option>
+                          {periods.map((row) => {
+                            return (
+                              <option key={row.period} value={row.period}>
+                                {row.period}
+                              </option>
+                            );
+                          })}
                         </Select>
                         {/* <Box size="xl" py={2}>
                           <Text fontSize="lg">
@@ -826,8 +843,13 @@ const HomeManager = () => {
                           fontSize={20}
                           onChange={(e) => setSelectHocYear(e.target.value)}
                         >
-                          <option value="2021">2021</option>
-                          <option value="2022">2022</option>
+                          {periods.map((row) => {
+                            return (
+                              <option key={row.period} value={row.period}>
+                                {row.period}
+                              </option>
+                            );
+                          })}
                         </Select>
                         {/* <Box size="xl" py={2}>
                           <Text fontSize="lg">

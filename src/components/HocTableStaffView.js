@@ -25,10 +25,12 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import HocTable from "./HocTable";
+import { usePeriods } from "./periods/usePeriods";
 
 const HocTableStaffView = () => {
   const currentyear = new Date().getFullYear();
   const currentmonth = new Date().getMonth();
+  const { periods} = usePeriods()
   const [selecthocyear, setSelectHocYear] = useState("");
   
 
@@ -51,8 +53,13 @@ const HocTableStaffView = () => {
               fontSize={20}
               onChange={(e) => setSelectHocYear(e.target.value)}
             >
-              <option value="2021">2021</option>
-              <option value="2022">2022</option>
+              {periods.map((row) => {
+                return (
+                  <option key={row.period} value={row.period}>
+                    {row.period}
+                  </option>
+                );
+              })}
             </Select>
             {/* <Box size="xl" py={2}>
                 <Button

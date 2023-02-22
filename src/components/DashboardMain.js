@@ -63,6 +63,7 @@ const DailyAllowances = React.lazy(() =>
 );
 const Tables = React.lazy(() => import("../pages/TablesPage"));
 const HocUpdTables = React.lazy(() => import("../pages/HOCUpdTablesPage"));
+const LeavesBFTable = React.lazy(() => import("../pages/LeavesBFTablePage"));
 const SingleEmployee = React.lazy(() => import("./SingleEmployee"));
 const SingleLeave = React.lazy(() => import("./SingleLeave"));
 const SinglePayslip = React.lazy(() => import("./SinglePayslip"));
@@ -340,6 +341,17 @@ export default function DashboardMain() {
               element={
                 <React.Suspense fallback={<>...</>}>
                   <HocUpdTables />
+                </React.Suspense>
+              }
+            />
+          )}
+          {loginLevel.loginRole > 1 && (
+            <Route
+              exact
+              path="/leavesbftables"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <LeavesBFTable />
                 </React.Suspense>
               }
             />

@@ -7,7 +7,7 @@ module.exports = async (event) => {
   // console.log(filterValue, filterField);
 
   try {
-    const periods = await table.select().firstPage();
+    const periods = await table.select({ view: "sortedview" }).firstPage();
     const formattedPeriods = periods.map((period) => ({
       id: period.id,
       ...period.fields,

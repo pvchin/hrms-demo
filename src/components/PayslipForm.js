@@ -25,8 +25,8 @@ import {
 } from "./data/atomdata";
 
 import { usePayslipsContext } from "../context/payslips_context";
-import Payslip_ViewEarnings from "./Payslip_ViewEarnings";
-import Payslip_ViewDeductions from "./Payslip_ViewDeductions";
+import PayslipViewEarnings from "./Payslip_ViewEarnings";
+import PayslipViewDeductions from "./Payslip_ViewDeductions";
 import Payslip_Earnings from "./Payslip_Earnings";
 import Payslip_Deductions from "./Payslip_Deductions";
 
@@ -557,7 +557,7 @@ const PayslipForm = () => {
                   title="Earnings"
                   handleClick={handleEarningsDialogOpen}
                 >
-                  <Payslip_ViewEarnings />
+                  <PayslipViewEarnings />
                 </CardLayout>
               </div>
             </Grid>
@@ -567,7 +567,7 @@ const PayslipForm = () => {
                   title="Deductions"
                   handleClick={handleDeductionsDialogOpen}
                 >
-                  <Payslip_ViewDeductions />
+                  <PayslipViewDeductions />
                 </CardLayout>
               </div>
             </Grid>
