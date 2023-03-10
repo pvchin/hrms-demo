@@ -20,11 +20,14 @@ import PeopleIcon from "@material-ui/icons/People";
 import LayersIcon from "@material-ui/icons/Layers";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
+import { Construction } from "@material-ui/icons"
+import { MdHandyman } from "react-icons/md";
 
 const MenuListItems = () => {
   const classes = useStyles();
   const [openPay, setOpenPay] = useState(false);
   const [openTable, setOpenTable] = useState(false);
+  const [openUtilities, setOpenUtilities] = useState(false);
 
   const handleClickPay = () => {
     setOpenPay(!openPay);
@@ -32,6 +35,10 @@ const MenuListItems = () => {
 
   const handleClickTable = () => {
     setOpenTable(!openTable);
+  };
+
+  const handleClickUtility = () => {
+    setOpenUtilities(!openUtilities);
   };
 
   return (
@@ -140,7 +147,27 @@ const MenuListItems = () => {
           <Link to="/leavesbftables">
             <ListItem button className={classes.nested}>
               <ListItemIcon></ListItemIcon>
-              <ListItemText primary="Leaves B/F Tables" className={classes.item} />
+              <ListItemText
+                primary="Leaves B/F Tables"
+                className={classes.item}
+              />
+            </ListItem>
+          </Link>
+        </List>
+      </Collapse>
+      <ListItem button onClick={handleClickUtility}>
+        <ListItemIcon className={classes.itemIcon}>
+          <MdHandyman size="25"/>
+        </ListItemIcon>
+        <ListItemText primary="Utilities" className={classes.item} />
+        {openUtilities ? <ExpandLess /> : <ExpandMore />}
+      </ListItem>
+      <Collapse in={openUtilities} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <Link to="/tables">
+            <ListItem button className={classes.nested}>
+              <ListItemIcon></ListItemIcon>
+              <ListItemText primary="Convert EMails" className={classes.item} />
             </ListItem>
           </Link>
         </List>
