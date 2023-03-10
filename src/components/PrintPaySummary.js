@@ -74,7 +74,7 @@ const PrintPaySummary = ({ singlebatchpayslip }) => {
     pageSize: "A4",
     pageOrientation: "landscape",
     content: [
-      { text: "AppSmith Sutera Sdn Bhd", style: "header" },
+      { text: "Simpay HRMS", style: "header" },
       { text: subtitle, style: "subheader" },
 
       {

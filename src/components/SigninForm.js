@@ -26,7 +26,7 @@ import { loginLevelState } from "./data/atomdata";
 import { useEmployeesContext } from "../context/employees_context";
 //import { setStoredUser } from "./user-storage";
 //import { useAuthContext } from "../context/auth_context";
-import img from "../assets/AppSutLogo.jpg";
+import img from "../assets/SimPay2.png";
 import App from "../utils/firebase";
 
 const initial_values = {
@@ -219,7 +219,7 @@ const SigninForm = () => {
             </AspectRatio>
           </Box>
           <Stack align="center" py={3}>
-            <Heading size="md">Log In to Appsmiths Sutera HRMS</Heading>
+            <Heading size="md">Log In to HRMS</Heading>
           </Stack>
           <form onSubmit={handleSubmit(handleLogin)}>
             <VStack

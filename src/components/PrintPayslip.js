@@ -529,7 +529,8 @@ const PrintPayslip = ({ data, emp }) => {
       //font: "Helvetica",
     },
     images: {
-      logo: "https://res.cloudinary.com/dlmzwvakr/image/upload/v1658466681/appsmiths/AppSutLogo_tijr4l.jpg",
+      //logo: "https://res.cloudinary.com/dlmzwvakr/image/upload/v1658466681/appsmiths/AppSutLogo_tijr4l.jpg",
+      logo: "https://res.cloudinary.com/dlmzwvakr/image/upload/v1678459865/appsmiths/SimPay2header_nh4d9j.png",
       img1: "./AppSutLogo.jpg",
     },
   };
